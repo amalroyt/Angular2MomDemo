@@ -1,0 +1,50 @@
+<div class="meetingListModal container">
+<div><h1>DOMO MEETING</h1></div>
+<div class="meetingList">
+<div class="newMeeting">
+  <button class="btn btn-success createButton">Create new meeting</button>
+</div>
+  <div class = "panel panel-primary tableForm">
+
+      <div class = "panel-heading text-center">Meeting List</div>
+
+      <div class = "panel-body">
+          <!--Table-->
+          <div class = "table-responsive">
+              <table class = "table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>
+              <span>Meeting ID</span>
+          </th>
+          <th>
+              <span>Meeting Title</span>
+          </th>
+          <th>
+            <span>........</span>
+          </th>
+      </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let meeting of meetingList">
+    <td>
+      {{meeting.id}}
+    </td>
+    <td>
+      {{meeting.meetingTitle}}
+    </td>
+    <td>
+      <button class="btn btn-success">Edit</button>
+      <button class="btn btn-primary">Generate</button>
+      <button class="btn btn-info">Details</button>
+      <button class="btn btn-danger">Delete</button>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<footer><span style="font-family:Tahoma;color:Gray;">&#169; Cybage Software Pvt.Ltd.</span></footer>
+</div>
