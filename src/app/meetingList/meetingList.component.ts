@@ -17,4 +17,9 @@ export class MeetingListComponent {
   getMeetingList() {
     this._meetingListService.getMeetingList().then((meetingList: Meeting[]) => this.meetingList = meetingList);
   }
+  goDetails() {
+      console.log("hi");
+    window.location.href='http://localhost:4200/moreDetails';
+    console.log("hello");
+  }
 }
