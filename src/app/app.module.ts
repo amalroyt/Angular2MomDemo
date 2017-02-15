@@ -11,6 +11,8 @@ import { LoginModule } from './login/login.module';
 import { MeetingListModule } from './meetingList/meetingList.module';
 import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
+import { DiscussionModule } from './discussion/discussion.module';
+import { ActionModule } from './action/action.module';
 
 const appRoutes: Routes = [
   { path: '', component:AppComponent }
@@ -24,12 +26,14 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    Ng2DatetimePickerModule,
+    //Ng2DatetimePickerModule,
     HomeModule,
     LoginModule,
     MeetingListModule,
     MoreDetailsModule,
     MeetingModule,
+    DiscussionModule,
+    ActionModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [{provide: APP_BASE_HREF, useValue : '/' }],
