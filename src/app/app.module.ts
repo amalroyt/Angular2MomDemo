@@ -1,16 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { DatePickerModule } from 'ng2-datepicker';
+import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from './login/login.module';
-import { DiscussionModule } from './discussion/discussion.module';
-import { ActionModule } from './action/action.module';
-
+import { MeetingModule } from './meeting/meeting.module';
 const appRoutes: Routes = [
   { path: '', component:AppComponent }
 ];
@@ -22,13 +20,11 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpModule,
+    Ng2DatetimePickerModule,
     HomeModule,
     LoginModule,
-    DiscussionModule,
-    ActionModule,
-    DatePickerModule,
+    MeetingModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
