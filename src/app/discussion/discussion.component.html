@@ -1,0 +1,70 @@
+<div class="modal fade" id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="discmodal-container">
+      <h1>Add Discussion Points</h1><br>
+      <div>
+        <form (ngSubmit)="onSubmit()" #discForm="ngForm">
+          <div class="form-group">
+            <label for="meetingId">Meeting Id</label>
+            <input type="text" class="form-control" id="meetingId" required [(ngModel)]="model.meetingId" name="meetingId" #meetingId="ngModel" placeholder="DOMO123">
+            <div [hidden]="meetingId.valid || meetingId.pristine" class="alert alert-danger" style="color:red;">
+              Meeting Id is required
+            </div>
+            <br/>
+          </div>
+          <div class="form-group">
+            <label for="discussionBy">Discussion By</label>
+            <select class="form-control" id="discussionBy" required [(ngModel)]="model.discussionBy" name="discussionBy" #discussionBy="ngModel">
+              <option *ngFor="let dec of discussions" [value]="dec">{{dec}}</option>
+            </select>
+            <br/>
+            <div [hidden]="discussionBy.valid || discussionBy.pristine" class="alert alert-danger" style="color:red;">
+              Discussion By is required
+            </div>
+            <br/>
+          </div>
+          <div class="form-group">
+            <label for="discussionType">Discussion Type</label>
+            <select class="form-control" id="discussionType" required [(ngModel)]="model.discussionType" name="discussionType" #discussionType="ngModel">
+              <option *ngFor="let type of discussionTypes" [value]="type">{{type}}</option>
+            </select>
+            <br/>
+            <div [hidden]="discussionType.valid || discussionType.pristine" class="alert alert-danger" style="color:red;">
+              Discussion Type is required
+            </div>
+            <br/>
+          </div>
+          <div class="form-group">
+            <label for="discussion">Discussion</label>
+            <textarea type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" name="discussion" #discussion="ngModel" placeholder="Discussion Points"></textarea>
+            <div [hidden]="discussion.valid || discussion.pristine" class="alert alert-danger" style="color:red;">
+              Discussion is required
+            </div>
+            <br/>
+          </div>
+          <div class="form-group">
+            <label for="decisionBy">Decision By</label>
+            <select class="form-control" id="decisionBy" required [(ngModel)]="model.decisionBy" name="decisionBy" #decisionBy="ngModel">
+              <option *ngFor="let dec of decisions" [value]="dec">{{dec}}</option>
+            </select>
+            <br/>
+            <div [hidden]="decisionBy.valid || decisionBy.pristine" class="alert alert-danger" style="color:red;">
+              DecisionBy is required
+            </div>
+            <br/>
+          </div>
+          <div class="form-group">
+            <label for="decision">Decision</label>
+            <textarea type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" name="decision" #decision="ngModel" placeholder="Decision Taken"></textarea>
+            <div [hidden]="decision.valid || decision.pristine" class="alert alert-danger" style="color:red;">
+              Decision is required
+            </div>
+            <br/>
+          </div>
+          <input type="submit" value="Submit" class="btn btn-success discmodal-submit" [disabled]="!discForm.form.valid">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
