@@ -1,0 +1,145 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<router-outlet>
+<body class="wrapper">
+
+
+  <div class="links">
+    <ol style="float:left;height:30px;" class="breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">List</a></li>
+      <li class="active">Add Meeting</li>
+    </ol>
+    <div class="menu"><span>Welcome User</span>
+      <img src="./app/images/login.jpg">
+    </div>
+  </div>
+
+  <div class="Wrapper1">
+    <form (ngSubmit)="onSubmit()" name="userForm" #meetingForm="ngForm">
+      <h3>CREATE A NEW MEETING</h3>
+
+      <div class="form-group row">
+        <label for="example-text-input" class="col-md-2 col-form-label">Meeting Id* :</label>
+          <div class="col-md-4">
+            <input class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meeting.meeting_id" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Meeting ID is required</div>
+          </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
+          <div class="radio col-md-4">
+            <label>
+					          <input #open name="status" type="radio" value="Open" (click)="status = open.value" checked/>
+					              Open
+				    </label>
+            <label>
+			             <input #closed name="status" type="radio" value="Closed" (click)="status = closed.value" />
+				               Closed
+			      </label>
+          </div>
+
+        <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
+          <div class="col-md-4">
+            <select class="form-control" required [(ngModel)]="meeting.meeting_type" name="type">
+              <option *ngFor="let type of types" [value]="type">{{type}}</option>
+						</select>
+            </div>
+      </div>
+      <div class="form-group row">
+          <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
+            <div class="col-md-4">
+                <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input"  required [(ngModel)]="meeting.meeting_title" #title="ngModel">
+                  <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required</div>
+            </div>
+
+          <label for="example-text-input" class="col-md-2 col-form-label">Meeting Purpose* :</label>
+              <div class="col-md-4">
+                  <input class="form-control" name="purpose" type="text" placeholder="Enter the Meeting Purpose" id="example-text-input"  required [(ngModel)]="meeting.meeting_purpose" #purpose="ngModel">
+                    <div [hidden]="purpose.valid || purpose.pristine" class="alert alert-danger">Meeting purpose is required</div>
+              </div>
+      </div>
+      <div class="form-group row">
+          <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
+              <div class="col-md-4">
+                  <select class="form-control" name="facilitator" [(ngModel)]="meeting.meeting_facilitator" required>
+                      <option *ngFor="let fac of facilitator" [value]="fac">{{fac}}</option>
+						      </select>
+              </div>
+
+            <label for="example-text-input" class="col-md-2 col-form-label">Recorder* : </label>
+                <div class="col-md-4">
+                    <input class="form-control" name="recorder" type="text" placeholder="Recorder" id="example-text-input" required [(ngModel)]="meeting.meeting_recorder" #recorder="ngModel">
+                      <div [hidden]="recorder.valid || recorder.pristine" class="alert alert-danger">Recorder is required</div>
+                </div>
+      </div>
+      <div class="form-group row">
+          <label for="example-number-input" class="col-md-2 col-form-label">Venue* :</label>
+            <div class="col-md-4">
+                <input class="form-control" type="text" placeholder="Enter Venue" id="example-number-input" name="venue" required [(ngModel)]="meeting.meeting_venue" #venue="ngModel">
+                  <div [hidden]="venue.valid || venue.pristine" class="alert alert-danger">Meeting Venue is required</div>
+            </div>
+
+          <label for="example-email-input" class="col-md-2 col-form-label">Date* :</label>
+              <div class="col-md-4">
+                <!--<input class="form-control" type="date" required [(ngModel)]="myDate" name="date" ng2-datetime-picker date-only="true" />-->
+                  <input class="form-control" type="date" required [(ngModel)]="meeting.meeting_date" name="date" #date="ngModel">
+                    <div [hidden]="date.valid || date.pristine" class="alert alert-danger">Meeting Date is required</div>
+              </div>
+      </div>
+      <div class="form-group row">
+          <label for="example-text-input" class="col-md-2 col-form-label">Start Time* :</label>
+              <div class="col-md-4">
+                  <input class="form-control" type="text" name="st" placeholder="Enter Start Time" required [(ngModel)]="meeting.meeting_starttime" #st="ngModel">
+                    <div [hidden]="st.valid || st.pristine" class="alert alert-danger">Meeting Start Time is required</div>
+              </div>
+              <label for="example-url-input" class="col-md-2 col-form-label">End Time* : </label>
+                  <div class="col-md-4">
+                      <input class="form-control" name="et" type="text" placeholder="Enter End Time" required [(ngModel)]="meeting.meeting_endtime" #et="ngModel">
+                        <div [hidden]="et.valid || et.pristine" class="alert alert-danger">Meeting End Time is required</div>
+                  </div>
+      </div>
+      <div class="form-group row">
+          <label for="example-url-input" class="col-md-2 col-form-label">Agenda :</label>
+              <div class="col-md-4">
+                  <textarea class="form-control" name="agenda" rows="5" [(ngModel)]="meeting.meeting_agenda" #name="ngModel"></textarea>
+              </div>
+          <label for="example-url-input" class="col-md-2 col-form-label">Attendees* :</label>
+              <div class="col-md-4">
+                  <input #SN type="checkbox" id="inlineCheckbox1" value="SandeepNabar" (change)="SandeepNabar = SN.checked"> Sandeep Nabar
+                  <input #VJ type="checkbox" id="inlineCheckbox2" value="VikasJadhav" (change)="VikasJadhav = VJ.checked"> Vikas Jadhav
+              </div>
+              <div class="col-md-4">
+                  <input #SS type="checkbox" id="inlineCheckbox3" value="SajuSasidharan" (change)="SajuSasidharan = SS.checked"> Saju Sasidharan
+                  <input #PK type="checkbox" id="inlineCheckbox4" value="PravinKatta" (change)="PravinKatta = PK.checked"> Pravin Katta
+              </div>
+          <label class="col-md-2"></label>
+              <div class="col-md-4">
+                  <input #RD type="checkbox" id="inlineCheckbox5" value="RavikumarDandhaniya" (change)="RavikumarDandhaniya = RD.checked"> Ravikumar Dandhaniya
+                  <input #DA type="checkbox" id="inlineCheckbox6" value="DurgeshAhire" (change)="DurgeshAhire = DA.checked"> Durgesh Ahire
+              </div>
+        <label class="col-md-2"></label>
+            <div class="col-md-4">
+                <input #PS type="checkbox" id="inlineCheckbox7" value="PranavKishore" (change)="PranavKishore = PS.checked">Pranav Kishore
+                <input #SG type="checkbox" id="inlineCheckbox8" value="SagarGaikwad" (change)="SagarGaikwad = SG.checked"> Sagar Gaikwad
+            </div>
+        <label class="col-md-2"></label>
+            <div class="col-md-4">
+                <input #AW type="checkbox" id="inlineCheckbox9" value=" AnjaliWalke" (change)="AnjaliWalke = AW.checked"> Anjali Walke
+                <input #RR type="checkbox" id="inlineCheckbox10" value="RupeshRamteke" (change)="RupeshRamteke = RR.checked"> Rupesh Ramteke
+            </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-10 col-lg-offset-3 text-center">
+          <button type="submit" class="btn btn-primary" [disabled]="!meetingForm.form.valid">Submit</button>
+          <button type="reset" class="btn btn-warning">Reset</button>
+          <button class="btn btn-danger">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</body>
+</router-outlet>

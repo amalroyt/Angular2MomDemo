@@ -1,5 +1,5 @@
 footer {
-    width: 100% !important;
+  width: 100% !important;
   position: absolute;
   bottom: 0px;
   margin: 0px auto;
@@ -16,3 +16,4 @@ header {
 img {
   height: 68px;
 }
+
