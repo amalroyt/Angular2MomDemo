@@ -1,0 +1,105 @@
+
+<div class="container">
+<div class="panel panel-primary tableForm">
+  <div class="panel-heading text-center"><label for="meetingId">Meeting Id : </label>
+  <span *ngFor="let meeting of moreDetailsList">{{meeting.meetingId}}</span>
+  </div>
+  <div class="panel-body">
+    <!--Table-->
+    <div class="panel-heading text-center">Discussion Points</div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>
+              <span>Discussion By</span>
+            </th>
+            <th>
+              <span>Discussion Type</span>
+            </th>
+            <th>
+              <span>Discussion</span>
+            </th>
+            <th>
+              <span>Decision By</span>
+            </th>
+            <th>
+              <span>Decision</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let meeting of moreDetailsPointsList">
+            <td>
+              {{meeting.discussionBy}}
+            </td>
+            <td>
+              {{meeting.discussionType}}
+            </td>
+            <td>
+              {{meeting.discussion}}
+            </td>
+            <td>
+              {{meeting.decisionBy}}
+            </td>
+            <td>
+              {{meeting.decision}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--Table-->
+    <div class="panel-heading text-center">Action Points</div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>
+              <span>Action Description</span>
+            </th>
+            <th>
+              <span>Responsible</span>
+            </th>
+            <th>
+              <span>Open Since</span>
+            </th>
+            <th>
+              <span>Expected Completion</span>
+            </th>
+            <th>
+              <span>Actual Completion</span>
+            </th>
+            <th>
+              <span>Status</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let meeting of moreDetailsActionList">
+            <td>
+              {{meeting.actionDesc}}
+            </td>
+            <td>
+              {{meeting.responsible}}
+            </td>
+            <td>
+              {{meeting.openSince}}
+            </td>
+            <td>
+              {{meeting.expectedCompletion}}
+            </td>
+            <td>
+              {{meeting.actualCompletion}}
+            </td>
+            <td>
+              {{meeting.status}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<router-outlet></router-outlet>
