@@ -8,14 +8,20 @@ import { contentHeaders } from '../common/headers';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+}
 
   ngOnInit() {
   }
 
   login(event, userName, userPassword) {
     event.preventDefault();
-    let body = JSON.stringify({ userName, userPassword });
+    var loginInfo = [{name:'amalroyt',password:'#!lama'},{name:'sanjivanig',password:'@!sanju'},{name:'ritujas',password:'!!ritu'}];
+    for (var val in loginInfo) {
+      if ( loginInfo[val].name === userName && loginInfo[val].password === userPassword ) {
+        window.location.href='http://localhost:4200/meetingList';
+      }
+    }
 
   }
 }
