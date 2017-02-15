@@ -1,0 +1,35 @@
+.Wrapper1{
+			border: 1px solid black;
+			margin : 0 auto;
+			background-color : #D7E9F4;
+			padding :10px;
+		}
+		footer{
+			border-bottom : 1px solid black;
+			border-left : 1px solid black;
+			border-right : 1px solid black;
+		}
+		header{
+			height :70px;
+			border : 1px solid black;
+
+		}
+		img{
+
+			height : 68px;
+
+		}
+		.links{
+				width : 100%;
+				height : 30px;
+				border-left : 1px solid black;
+			border-right : 1px solid black;
+		}
+		.menu>img{
+			height : 30px;
+			width : 30px;
+
+		}
+		.menu{
+			float:right;
+		}
