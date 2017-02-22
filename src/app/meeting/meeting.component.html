@@ -8,8 +8,8 @@
 
   <div class="links">
     <ol style="float:left;height:30px;" class="breadcrumb">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">List</a></li>
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/meetinglist" routerLinkActive="active">List</a></li>
       <li class="active">Add Meeting</li>
     </ol>
     <div class="menu"><span>Welcome User</span>
@@ -18,25 +18,25 @@
   </div>
 
   <div class="Wrapper1">
-    <form (ngSubmit)="onSubmit()" name="userForm" #meetingForm="ngForm">
+    <form (ngSubmit)="onSubmit(meeting)" name="userForm" #meetingForm="ngForm">
       <h3>CREATE A NEW MEETING</h3>
 
-      <div class="form-group row">
+    <!--  <div class="form-group row">
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Id* :</label>
           <div class="col-md-4">
             <input class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meeting.meeting_id" #id="ngModel">
             <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Meeting ID is required</div>
           </div>
-      </div>
+      </div> -->
       <div class="form-group row">
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
           <div class="radio col-md-4">
             <label>
-					          <input #open name="status" type="radio" value="Open" (click)="status = open.value" checked/>
+					          <input #open name="status" type="radio" value="1" (click)="meeting.meeting_status = open.value" checked/>
 					              Open
 				    </label>
             <label>
-			             <input #closed name="status" type="radio" value="Closed" (click)="status = closed.value" />
+			             <input #closed name="status" type="radio" value="2" (click)="meeting.meeting_status = closed.value" />
 				               Closed
 			      </label>
           </div>
@@ -44,7 +44,7 @@
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
           <div class="col-md-4">
             <select class="form-control" required [(ngModel)]="meeting.meeting_type" name="type">
-              <option *ngFor="let type of types" [value]="type">{{type}}</option>
+              <option *ngFor="let type of types" [value]="type.id" [selected]="type.meetingType == 'Sprint Meet'">{{type.meetingType}}</option>
 						</select>
             </div>
       </div>
@@ -65,15 +65,22 @@
           <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
               <div class="col-md-4">
                   <select class="form-control" name="facilitator" [(ngModel)]="meeting.meeting_facilitator" required>
-                      <option *ngFor="let fac of facilitator" [value]="fac">{{fac}}</option>
+                      <option *ngFor="let fac of facilitator" [value]="fac.id">{{fac.firstlast}}</option>
 						      </select>
               </div>
 
-            <label for="example-text-input" class="col-md-2 col-form-label">Recorder* : </label>
+
+              <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
+                  <div class="col-md-4">
+                      <select class="form-control" name="recorder" [(ngModel)]="meeting.meeting_recorder" required>
+                          <option *ngFor="let rec of recorder" [value]="rec.id">{{rec.firstlast}}</option>
+    						      </select>
+                  </div>
+            <!--<label for="example-text-input" class="col-md-2 col-form-label">Recorder* : </label>
                 <div class="col-md-4">
                     <input class="form-control" name="recorder" type="text" placeholder="Recorder" id="example-text-input" required [(ngModel)]="meeting.meeting_recorder" #recorder="ngModel">
                       <div [hidden]="recorder.valid || recorder.pristine" class="alert alert-danger">Recorder is required</div>
-                </div>
+                </div>-->
       </div>
       <div class="form-group row">
           <label for="example-number-input" class="col-md-2 col-form-label">Venue* :</label>
@@ -106,9 +113,15 @@
               <div class="col-md-4">
                   <textarea class="form-control" name="agenda" rows="5" [(ngModel)]="meeting.meeting_agenda" #name="ngModel"></textarea>
               </div>
+
           <label for="example-url-input" class="col-md-2 col-form-label">Attendees* :</label>
-              <div class="col-md-4">
-                  <input #SN type="checkbox" id="inlineCheckbox1" value="SandeepNabar" (change)="SandeepNabar = SN.checked"> Sandeep Nabar
+              <div class="col-md-4" >
+                <div *ngFor="let option of options">
+        <label>
+            <input  type="checkbox" name="option" [attr.name]="options"  [value]="option.firstlast" (change)="updateChecked(option.firstlast, $event)" >{{option.firstlast}}
+        </label>
+      </div>
+                <!--  <input #SN type="checkbox" id="inlineCheckbox1" value="SandeepNabar" (change)="SandeepNabar = SN.checked"> Sandeep Nabar
                   <input #VJ type="checkbox" id="inlineCheckbox2" value="VikasJadhav" (change)="VikasJadhav = VJ.checked"> Vikas Jadhav
               </div>
               <div class="col-md-4">
@@ -129,8 +142,9 @@
             <div class="col-md-4">
                 <input #AW type="checkbox" id="inlineCheckbox9" value=" AnjaliWalke" (change)="AnjaliWalke = AW.checked"> Anjali Walke
                 <input #RR type="checkbox" id="inlineCheckbox10" value="RupeshRamteke" (change)="RupeshRamteke = RR.checked"> Rupesh Ramteke
-            </div>
+            </div>-->
     </div>
+  </div>
     <div class="form-group row">
         <div class="col-lg-10 col-lg-offset-3 text-center">
           <button type="submit" class="btn btn-primary" [disabled]="!meetingForm.form.valid">Submit</button>
