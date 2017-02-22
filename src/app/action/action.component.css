@@ -1,11 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
-
-/****** LOGIN MODAL ******/
-
 .actionmodal-container {
   padding: 30px;
-  max-width: 400px;
-  width: 100% !important;
   background-color: #F7F7F7;
   margin: 0 auto;
   border-radius: 2px;
@@ -21,43 +16,34 @@
 }
 
 .actionmodal-container input[type=submit] {
-  width: 100%;
+  width: 100px;
   display: block;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
   position: relative;
 }
 
-.actionmodal-container input[type=text], textarea[type=text], input[type=date] {
-  height: 44px;
+.addButton {
+  width: 100px;
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  background-color: #4d90fe;
+  font-family: roboto;
+  font-size: 14px;
+}
+
+.actionmodal-container input[type=text] {
   font-size: 16px;
-  width: 100%;
-  margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
   border: 1px solid #d9d9d9;
   border-top: 1px solid #c0c0c0;
-  /* border-radius: 2px; */
   padding: 0 8px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
 
-.actionmodal-container textarea[type=text] {
-  height: 80px;
-  font-size: 16px;
-  width: 100%;
-  margin-bottom: 10px;
-  -webkit-appearance: none;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
-  /* border-radius: 2px; */
-  padding: 0 8px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-.actionmodal-container input[type=text]:hover, textarea[type=text]:hover {
+.actionmodal-container input[type=text]:hover {
   border: 1px solid #b9b9b9;
   border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -72,9 +58,6 @@
   font-weight: 700;
   height: 36px;
   padding: 0 8px;
-  /* border-radius: 3px; */
-  /* -webkit-user-select: none;
-  user-select: none; */
 }
 
 .actionmodal-submit {
@@ -83,21 +66,15 @@
   color: #fff;
   text-shadow: 0 1px rgba(0, 0, 0, 0.1);
   background-color: #4d90fe;
-  padding: 17px 0px;
+  //padding: 10px 0px;
   font-family: roboto;
   font-size: 14px;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
 
-.discmodal-submit:hover {
+.actionmodal-submit:hover {
   /* border: 1px solid #2f5bb7; */
   border: 0px;
   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   background-color: #357ae8;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
-}
-
-#responsible, #status {
-  width: 100%;
-  height: 44px;
 }

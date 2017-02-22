@@ -13,8 +13,16 @@ import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
 import { DiscussionModule } from './discussion/discussion.module';
 import { ActionModule } from './action/action.module';
+import { DiscussionComponent } from './discussion/discussion.component';
+import { ActionComponent } from './action/action.component';
+import { MeetingListComponent } from './meetingList/meetingList.component';
+
 const appRoutes: Routes = [
-  { path: '', component:AppComponent }
+  { path: '', component: AppComponent },
+  { path: 'dicussion', component: DiscussionComponent },
+  { path: 'action', component: ActionComponent },
+  { path: 'meetingList', component: MeetingListComponent },
+
 ];
 
 @NgModule({
