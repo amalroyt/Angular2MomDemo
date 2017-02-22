@@ -1,42 +1,56 @@
-import { Component } from '@angular/core';
+
+import {OnInit, OnDestroy, Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {contentHeaders } from '../common/headers';
-
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MoreDetails} from './moreDetails/moreDetailsList';
-import {MoreDetailsListService} from './moreDetails/moreDetailsList.service';
-
 import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
-import {MoreDetailsPointsListService} from './moreDetailsPoints/moreDetailsPointsList.service';
-
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
-import {MoreDetailsActionListService} from './moreDetailsAction/moreDetailsActionList.service';
+
 
 @Component({
   selector: 'app-moreDetails',
   templateUrl: './moreDetails.component.html',
   styleUrls: ['./moreDetails.component.css'],
-  providers: [MoreDetailsListService,MoreDetailsPointsListService,MoreDetailsActionListService]
+  providers: []
 })
-export class MoreDetailsComponent {
+export class MoreDetailsComponent implements OnInit {
   public moreDetailsList: MoreDetails[];
   public moreDetailsPointsList: MoreDetailsPoints[];
   public moreDetailsActionList: MoreDetailsAction[];
-  constructor(private _moreDetailsListService: MoreDetailsListService, private _moreDetailsPointsListService: MoreDetailsPointsListService, private _moreDetailsActionListService: MoreDetailsActionListService) {
-    this.getMoreDetailsList();
-    this.getMoreDetailsPointsList();
-    this.getMoreDetailsActionList();
-  }
-  
-  getMoreDetailsList() {
-    this._moreDetailsListService.getMoreDetailsList().then((moreDetailsList: MoreDetails[]) => this.moreDetailsList = moreDetailsList);
-    }
 
-  getMoreDetailsPointsList() {
-    this._moreDetailsPointsListService.getMoreDetailsPointsList().then((moreDetailsPointsList: MoreDetailsPoints[]) => this.moreDetailsPointsList = moreDetailsPointsList);
-  }
-
-  getMoreDetailsActionList() {
-    this._moreDetailsActionListService.getMoreDetailsActionList().then((moreDetailsActionList: MoreDetailsAction[]) => this.moreDetailsActionList = moreDetailsActionList);
-    console.log();
+  ngOnInit() { }
+  constructor(private http: Http, private activatedRoute: ActivatedRoute) {
+    var meetingId;
+    this.activatedRoute.params.subscribe((params: Params) => {
+      meetingId = params['id'];
+    });
+    //To get the meeting details
+    this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })
+      .subscribe(
+      response => {
+        this.moreDetailsList = response.json();
+      },
+      error => {
+        console.log(error.text());
+      });
+    //To get the meeting discussion points details
+    this.http.get('http://localhost:8081/moreDetailsPoints/' + meetingId, { headers: contentHeaders })
+      .subscribe(
+      response => {
+        this.moreDetailsPointsList = response.json();
+      },
+      error => {
+        console.log(error.text());
+      });
+    //To get the meeting action details
+    this.http.get('http://localhost:8081/moreDetailsAction/' + meetingId, { headers: contentHeaders })
+      .subscribe(
+      response => {
+        this.moreDetailsActionList = response.json();
+      },
+      error => {
+        console.log(error.text());
+      });
   }
 }

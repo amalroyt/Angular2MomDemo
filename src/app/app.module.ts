@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-//import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
-
+import {APP_BASE_HREF} from '@angular/common';
+import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,6 +16,7 @@ import { ActionModule } from './action/action.module';
 import { DiscussionComponent } from './discussion/discussion.component';
 import { ActionComponent } from './action/action.component';
 import { MeetingListComponent } from './meetingList/meetingList.component';
+import { routes } from './app.routes';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -33,7 +34,6 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    //Ng2DatetimePickerModule,
     HomeModule,
     LoginModule,
     MeetingListModule,
@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     MeetingModule,
     DiscussionModule,
     ActionModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
