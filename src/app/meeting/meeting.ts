@@ -1,7 +1,7 @@
 export class Meeting {
 
   constructor(
-    public meeting_id: string,
+  //  public meeting_id: string,
     public meeting_type: string,
     public meeting_status: string,
     public meeting_title: string,

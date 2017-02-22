@@ -10,6 +10,5 @@ export interface Meeting {
     meeting_date: string;
     meeting_starttime: string;
     meeting_endtime: string;
-
     agenda?: string; // checkbox toggle either 'toggled' or 'untoggled'
 }
