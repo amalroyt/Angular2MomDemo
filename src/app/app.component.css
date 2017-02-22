@@ -1,4 +1,8 @@
 footer {
+  width: 100% !important;
+  position: absolute;
+  bottom: 0px;
+  margin: 0px auto;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -12,3 +16,4 @@ header {
 img {
   height: 68px;
 }
+
