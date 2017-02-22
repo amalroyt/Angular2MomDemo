@@ -1,70 +1,100 @@
-<div class="modal fade" id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="discmodal-container">
-      <h1>Add Discussion Points</h1><br>
-      <div>
-        <form (ngSubmit)="onSubmit()" #discForm="ngForm">
-          <div class="form-group">
-            <label for="meetingId">Meeting Id</label>
-            <input type="text" class="form-control" id="meetingId" required [(ngModel)]="model.meetingId" name="meetingId" #meetingId="ngModel" placeholder="DOMO123">
-            <div [hidden]="meetingId.valid || meetingId.pristine" class="alert alert-danger" style="color:red;">
+<br/>
+<div id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="discmodal-container">
+    <b><h1>ADD DISCUSSION POINTS</h1></b><br>
+    <div>
+      <form #discForm="ngForm" class="form-horizontal" novalidate>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-1">
+              <label for="meetingId">Meeting Id</label>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control" id="meetingId" required [(ngModel)]="model.meetingId" name="meetingId" #meetingId="ngModel">
+                 <option *ngFor="let dec of meetingIds" [value]="dec.meetingId">{{dec.meetingId}}</option>
+               </select>
+            </div>
+            <div [hidden]="meetingId.valid || meetingId.pristine" style="color:red;">
               Meeting Id is required
             </div>
             <br/>
           </div>
+
+        </div>
+        <div *ngFor="let model of models">
           <div class="form-group">
-            <label for="discussionBy">Discussion By</label>
-            <select class="form-control" id="discussionBy" required [(ngModel)]="model.discussionBy" name="discussionBy" #discussionBy="ngModel">
-              <option *ngFor="let dec of discussions" [value]="dec">{{dec}}</option>
-            </select>
-            <br/>
-            <div [hidden]="discussionBy.valid || discussionBy.pristine" class="alert alert-danger" style="color:red;">
-              Discussion By is required
+            <div class="row">
+              <div class="col-md-2">
+                <label for="discussionBy">Discussion By</label>
+                <select class="form-control" id="discussionBy" required [(ngModel)]="model.discussionBy" [ngModelOptions]="{standalone: true}" name="discussionBy" #discussionBy="ngModel">
+                   <option *ngFor="let dec of userName" [value]="dec.id">{{dec.fullUserName}}</option>
+                 </select>
+                <div [hidden]="discussionBy.valid || discussionBy.pristine" style="color:red;">
+                  Discussion By is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="discussionType">Discussion Type</label>
+                <select class="form-control" id="discussionType" required [(ngModel)]="model.discussionType" [ngModelOptions]="{standalone: true}" name="discussionType" #discussionType="ngModel">
+                 <option *ngFor="let type of discussionTypes" [value]="type.id">{{type.discussionType}}</option>
+               </select>
+
+                <div [hidden]="discussionType.valid || discussionType.pristine" style="color:red;">
+                  Discussion Type is required
+                </div>
+
+              </div>
+              <div class="col-md-3">
+                <label for="discussion">Discussion</label>
+                <input type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" [ngModelOptions]="{standalone: true}" name="discussion" #discussion="ngModel" placeholder="Discussion Points">
+                <div [hidden]="discussion.valid || discussion.pristine" style="color:red;">
+                  Discussion is required
+                </div>
+
+              </div>
+              <div class="col-md-2">
+                <label for="decisionBy">Decision By</label>
+                <select class="form-control" id="decisionBy" required [(ngModel)]="model.decisionBy" [ngModelOptions]="{standalone: true}" name="decisionBy" #decisionBy="ngModel">
+                 <option *ngFor="let dec of userName" [value]="dec.id">{{dec.fullUserName}}</option>
+               </select>
+
+                <div [hidden]="decisionBy.valid || decisionBy.pristine" style="color:red;">
+                  DecisionBy is required
+                </div>
+
+              </div>
+              <div class="col-md-3">
+                <label for="decision">Decision</label>
+                <input type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" [ngModelOptions]="{standalone: true}" name="decision" #decision="ngModel" placeholder="Decision Taken">
+                <div [hidden]="decision.valid || decision.pristine" style="color:red;">
+                  Decision is required
+                </div>
+              </div>
             </div>
-            <br/>
+
           </div>
-          <div class="form-group">
-            <label for="discussionType">Discussion Type</label>
-            <select class="form-control" id="discussionType" required [(ngModel)]="model.discussionType" name="discussionType" #discussionType="ngModel">
-              <option *ngFor="let type of discussionTypes" [value]="type">{{type}}</option>
-            </select>
-            <br/>
-            <div [hidden]="discussionType.valid || discussionType.pristine" class="alert alert-danger" style="color:red;">
-              Discussion Type is required
-            </div>
-            <br/>
+        </div>
+        <br/>
+        <div class="row">
+          <div class=col-md-3>
           </div>
-          <div class="form-group">
-            <label for="discussion">Discussion</label>
-            <textarea type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" name="discussion" #discussion="ngModel" placeholder="Discussion Points"></textarea>
-            <div [hidden]="discussion.valid || discussion.pristine" class="alert alert-danger" style="color:red;">
-              Discussion is required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="button" value="Add New" class="btn btn-success addButton" (click)="addNewChoice()">
           </div>
-          <div class="form-group">
-            <label for="decisionBy">Decision By</label>
-            <select class="form-control" id="decisionBy" required [(ngModel)]="model.decisionBy" name="decisionBy" #decisionBy="ngModel">
-              <option *ngFor="let dec of decisions" [value]="dec">{{dec}}</option>
-            </select>
-            <br/>
-            <div [hidden]="decisionBy.valid || decisionBy.pristine" class="alert alert-danger" style="color:red;">
-              DecisionBy is required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="button" value="Delete New" class="btn btn-success addButton" (click)="removeNewChoice()">
           </div>
-          <div class="form-group">
-            <label for="decision">Decision</label>
-            <textarea type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" name="decision" #decision="ngModel" placeholder="Decision Taken"></textarea>
-            <div [hidden]="decision.valid || decision.pristine" class="alert alert-danger" style="color:red;">
-              Decision is required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="submit" value="Submit" class="btn btn-success discmodal-submit" (click)="onSubmit(model.meetingId)" [disabled]="!discForm.form.valid">
           </div>
-          <input type="submit" value="Submit" class="btn btn-success discmodal-submit" [disabled]="!discForm.form.valid">
-        </form>
-      </div>
+          <div class=col-md-3>
+          </div>
+
+        </div>
+      </form>
     </div>
   </div>
+
 </div>
+<br/>
 <router-outlet></router-outlet>
