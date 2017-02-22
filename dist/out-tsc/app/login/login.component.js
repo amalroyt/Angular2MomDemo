@@ -8,21 +8,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
+import { contentHeaders } from '../common/headers';
 var LoginComponent = (function () {
-    function LoginComponent(http) {
+    function LoginComponent(http, router) {
         this.http = http;
+        this.router = router;
+        this.onSubmit = function () {
+            var _this = this;
+            console.log(this.user.value);
+            this.http.post('http://localhost:8081/login', JSON.stringify(this.user.value), { headers: contentHeaders })
+                .subscribe(function (response) {
+                console.log(response.json().token);
+                if (response.json().token) {
+                    _this.router.navigate(['/meetingList']);
+                }
+            }, function (error) {
+                console.log(error.text());
+            });
+        };
     }
     LoginComponent.prototype.ngOnInit = function () {
-    };
-    LoginComponent.prototype.login = function (event, userName, userPassword) {
-        event.preventDefault();
-        var loginInfo = [{ name: 'amalroyt', password: '#!lama' }, { name: 'sanjivanig', password: '@!sanju' }, { name: 'ritujas', password: '!!ritu' }];
-        for (var val in loginInfo) {
-            if (loginInfo[val].name === userName && loginInfo[val].password === userPassword) {
-                window.location.href = 'http://localhost:4200/meetingList';
-            }
-        }
+        this.user = new FormGroup({
+            userName: new FormControl('', Validators.required),
+            userPassword: new FormControl('', Validators.required)
+        });
     };
     return LoginComponent;
 }());
@@ -32,7 +44,7 @@ LoginComponent = __decorate([
         templateUrl: './login.component.html',
         styleUrls: ['./login.component.css']
     }),
-    __metadata("design:paramtypes", [Http])
+    __metadata("design:paramtypes", [Http, Router])
 ], LoginComponent);
 export { LoginComponent };
 //# sourceMappingURL=../../../../src/app/login/login.component.js.map

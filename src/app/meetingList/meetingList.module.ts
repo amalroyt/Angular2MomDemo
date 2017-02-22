@@ -8,7 +8,7 @@ import { MeetingListComponent } from '.';
 import { RouterModule, Routes } from '@angular/router';
 
 const loginRoutes: Routes = [
-  { path: 'meetingList', component: MeetingListComponent}
+  { path: 'meetingList', component: MeetingListComponent }
 ];
 
 @NgModule({

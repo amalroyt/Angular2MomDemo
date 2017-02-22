@@ -2,14 +2,16 @@
   <div class="modal-dialog">
     <div class="loginmodal-container">
       <h1>Login to Your Account</h1><br>
-      <form role="form" (submit)="login(event,name.value, password.value)">
-        <div class="form-group">
-          <input type="text" #name class="form-control" name="name" placeholder="Username">
+      <form novalidate (ngSubmit)="onSubmit(user)" [formGroup]="user">
+        <input type="text" placeholder="Username" formControlName="userName">
+        <div class="error" style="color:red" *ngIf="user.get('userName').touched && user.get('userName').hasError('required')">
+          UserName is required
         </div>
-        <div class="form-group">
-          <input type="password" #password class="form-control" name="pass" placeholder="Password">
+        <input type="password" placeholder="Password" formControlName="userPassword">
+        <div class="error" style="color:red" *ngIf="user.get('userPassword').touched && user.get('userPassword').hasError('required')">
+          Password is required
         </div>
-        <input (click)="goLogin()" type="submit" name="login" class="login loginmodal-submit" value="Login">
+        <input type="submit" name="login" class="login loginmodal-submit" [disabled]="user.invalid" value="Login">
       </form>
       <div class="login-help">
         <a href="#">Register</a> - <a href="#">Forgot Password</a>

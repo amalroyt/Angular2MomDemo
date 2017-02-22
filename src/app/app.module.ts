@@ -2,17 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {APP_BASE_HREF} from '@angular/common';
+
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from './login/login.module';
+import { MeetingModule } from './meeting/meeting.module';
+import { DiscussionModule } from './discussion/discussion.module';
+import { ActionModule } from './action/action.module';
 import { MeetingListModule } from './meetingList/meetingList.module';
 import { MoreDetailsModule } from './moreDetails/moreDetails.module';
+import { routes } from './app.routes';
 
-const appRoutes: Routes = [
-  { path: '', component:AppComponent }
-];
 
 @NgModule({
   declarations: [
@@ -26,9 +27,12 @@ const appRoutes: Routes = [
     LoginModule,
     MeetingListModule,
     MoreDetailsModule,
-    RouterModule.forRoot(appRoutes)
+    MeetingModule,
+    DiscussionModule,
+    ActionModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [{provide: APP_BASE_HREF, useValue : '/' }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

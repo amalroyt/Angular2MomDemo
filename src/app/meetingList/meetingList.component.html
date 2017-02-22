@@ -4,9 +4,7 @@
       <button class="btn btn-success createButton">Create new meeting</button>
     </div>
     <div class="panel panel-primary tableForm">
-
       <div class="panel-heading text-center">Meeting List</div>
-
       <div class="panel-body">
         <!--Table-->
         <div class="table-responsive">
@@ -14,28 +12,23 @@
             <thead>
               <tr>
                 <th>
-                  <span>Meeting ID</span>
-                </th>
-                <th>
                   <span>Meeting Title</span>
                 </th>
                 <th>
-                  <span>........</span>
+                  <span></span>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let meeting of meetingList">
                 <td>
-                  {{meeting.id}}
-                </td>
-                <td>
                   {{meeting.meetingTitle}}
                 </td>
                 <td>
                   <button class="btn btn-success">Edit</button>
-                  <button class="btn btn-primary">Generate</button>
-                  <button (click)="goDetails()" class="btn btn-info">Details</button>
+                  <button *ngIf="meeting.generatedExcel == 'NULL'" (click)="generateExcel(meeting.meetingId)" class="btn btn-primary">Generate</button>
+                  <button *ngIf="meeting.generatedExcel != 'NULL'" (click)="downloadExcel(meeting.meetingTitle)" class="btn btn-primary">Download</button>
+                  <button (click)="moreDetails(meeting.meetingId)" class="btn btn-info">Details</button>
                   <button class="btn btn-danger">Delete</button>
                 </td>
               </tr>
