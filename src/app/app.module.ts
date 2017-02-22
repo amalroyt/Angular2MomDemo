@@ -8,12 +8,23 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from './login/login.module';
+import { MeetingListModule } from './meetingList/meetingList.module';
+import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
 import { DiscussionModule } from './discussion/discussion.module';
 import { ActionModule } from './action/action.module';
-import { MeetingListModule } from './meetingList/meetingList.module';
-import { MoreDetailsModule } from './moreDetails/moreDetails.module';
+import { DiscussionComponent } from './discussion/discussion.component';
+import { ActionComponent } from './action/action.component';
+import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
+
+const appRoutes: Routes = [
+  { path: '', component: AppComponent },
+  { path: 'dicussion', component: DiscussionComponent },
+  { path: 'action', component: ActionComponent },
+  { path: 'meetingList', component: MeetingListComponent },
+
+];
 
 @NgModule({
   declarations: [

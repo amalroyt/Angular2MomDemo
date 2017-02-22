@@ -1,3 +1,4 @@
+
 import {OnInit, OnDestroy, Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {contentHeaders } from '../common/headers';
@@ -5,6 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MoreDetails} from './moreDetails/moreDetailsList';
 import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
+
 
 @Component({
   selector: 'app-moreDetails',

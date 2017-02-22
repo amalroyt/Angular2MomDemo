@@ -1,97 +1,101 @@
-<div class="modal fade" id="action-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="actionmodal-container">
-      <h1>Add Meeting Actions</h1><br>
-      <div>
-        <form (ngSubmit)="onSubmit()" #discForm="ngForm">
-          <div class="form-group">
-            <label for="meetingId">Meeting Id</label>
-            <input type="text" class="form-control" id="meetingId" required [(ngModel)]="model.meetingId" name="meetingId" #meetingId="ngModel" placeholder="DOMO123">
-            <div [hidden]="meetingId.valid || meetingId.pristine" class="alert alert-danger" style="color:red;">
+<br/>
+<div id="action-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="actionmodal-container">
+    <b><h1>ADD MEETING ACTIONS</h1></b><br>
+    <div>
+      <form #actionForm="ngForm" class="form-horizontal" novalidate>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-1">
+              <label for="meetingId">Meeting Id</label>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control" id="meetingId" required [(ngModel)]="model.meetingId" name="meetingId" #meetingId="ngModel">
+                 <option *ngFor="let dec of meetingIds" [value]="dec.meetingId">{{dec.meetingId}}</option>
+               </select>
+            </div>
+            <div [hidden]="meetingId.valid || meetingId.pristine" style="color:red;">
               Meeting Id is required
             </div>
             <br/>
           </div>
+
+        </div>
+
+        <div *ngFor="let model of models">
           <div class="form-group">
-            <label for="actionDesc">Action Description</label>
-            <textarea type="text" class="form-control" id="actionDesc" required [(ngModel)]="model.actionDesc" name="actionDesc" #actionDesc="ngModel" placeholder="Add Action Details"></textarea>
-            <br/>
-            <div [hidden]="actionDesc.valid || actionDesc.pristine" class="alert alert-danger" style="color:red;">
-              Action Description is required
+            <div class="row">
+              <div class="col-md-2">
+                <label for="actionDesc">Action Description</label>
+                <input type="text" class="form-control" id="actionDesc" required [(ngModel)]="model.actionDesc" [ngModelOptions]="{standalone: true}" #actionDesc="ngModel" placeholder="Add Action Details">
+                <div [hidden]="actionDesc.valid || actionDesc.pristine" style="color:red;">
+                  Action Description is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="responsible">Responsible Person</label>
+                <select class="form-control" id="responsible" required [(ngModel)]="model.responsible" [ngModelOptions]="{standalone: true}" name="responsible" #responsible="ngModel">
+                 <option *ngFor="let dec of userName" [value]="dec.id">{{dec.fullUserName}}</option>
+               </select>
+                <div [hidden]="responsible.valid || responsible.pristine" style="color:red;">
+                  Responsible Person is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="openSince">Open Since</label>
+                <input type="date" class="form-control" id="openSince" required [(ngModel)]="model.openSince" [ngModelOptions]="{standalone: true}" name="openSince" #openSince="ngModel">
+                <div [hidden]="openSince.valid || openSince.pristine" style="color:red;">
+                  Open Since is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="expectedCompletion">Expected Completion</label>
+                <input type="date" class="form-control" id="expectedCompletion" required [(ngModel)]="model.expectedCompletion" [ngModelOptions]="{standalone: true}" name="expectedCompletion" #expectedCompletion="ngModel">
+                <div [hidden]="expectedCompletion.valid || expectedCompletion.pristine" style="color:red;">
+                  Expected Completion is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="actualCompletion">Actual Completion</label>
+                <input type="date" class="form-control" id="actualCompletion" required [(ngModel)]="model.actualCompletion" [ngModelOptions]="{standalone: true}" name="actualCompletion" #actualCompletion="ngModel">
+                <div [hidden]="actualCompletion.valid || actualCompletion.pristine" style="color:red;">
+                  Actual Completion is required
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" required [(ngModel)]="model.status" [ngModelOptions]="{standalone: true}" name="status" #status="ngModel">
+                 <option *ngFor="let state of statusValue" [value]="state.id">{{state.status}}</option>
+               </select>
+                <div [hidden]="status.valid || status.pristine" style="color:red;">
+                  Status is required
+                </div>
+              </div>
             </div>
-            <br/>
+
           </div>
-          <div class="form-group">
-            <label for="responsible">Responsible Person</label>
-            <select class="form-control" id="responsible" required [(ngModel)]="model.responsible" name="responsible" #responsible="ngModel">
-              <option *ngFor="let res of responsibles" [value]="res">{{res}}</option>
-            </select>
-            <br/>
-            <div [hidden]="responsible.valid || responsible.pristine" class="alert alert-danger" style="color:red;">
-              Responsible Person is required
-            </div>
-            <br/>
+        </div>
+        <br/>
+        <div class="row">
+          <div class=col-md-3>
           </div>
-          <div class="form-group">
-            <label for="openSince">Open Since</label>
-            <input type="date" class="form-control" id="openSince" required [(ngModel)]="model.openSince" name="openSince" #openSince="ngModel">
-            <div [hidden]="openSince.valid || openSince.pristine" class="alert alert-danger" style="color:red;">
-              Open Since Id required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="button" value="Add New" class="btn btn-success addButton" (click)="addNewChoice()">
           </div>
-          <br/>
-          <div class="form-group">
-            <label for="expectedCompletion">Expected Completion</label>
-            <input type="date" class="form-control" id="expectedCompletion" required [(ngModel)]="model.expectedCompletion" name="expectedCompletion" #expectedCompletion="ngModel">
-            <div [hidden]="expectedCompletion.valid || expectedCompletion.pristine" class="alert alert-danger" style="color:red;">
-              Expected Completion is required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="button" value="Delete New" class="btn btn-success addButton" (click)="removeNewChoice()">
           </div>
-          <br/>
-          <div class="form-group">
-            <label for="actualCompletion">Actual Completion</label>
-            <input type="date" class="form-control" id="actualCompletion" required [(ngModel)]="model.actualCompletion" name="actualCompletion" #actualCompletion="ngModel">
-            <div [hidden]="actualCompletion.valid || actualCompletion.pristine" class="alert alert-danger" style="color:red;">
-              Actual Completion is required
-            </div>
-            <br/>
+          <div class=col-md-2>
+            <input type="submit" value="Submit" class="btn btn-success discmodal-submit" (click)="onSubmit(model.meetingId)" [disabled]="!actionForm.form.valid">
           </div>
-          <br/>
-          <!-- <div class="form-group">
-            <label for="openSince">Open Since</label>
-            <ng2-datepicker [(ngModel)]="date"></ng2-datepicker>
-            Selected date is: {{ date }}
-            <br/>
-          </div> -->
-            <!-- <div class="form-group">
-            <label for="expectedCompletion">Expected Completion</label>
-            <ng2-datepicker [(ngModel)]="date"></ng2-datepicker>
-            Selected date is: {{ date }}
-            <br/>
+          <div class=col-md-3>
           </div>
-          <div class="form-group">
-            <label for="actualCompletion">Actual Completion</label>
-            <ng2-datepicker [(ngModel)]="date"></ng2-datepicker>
-            Selected date is: {{ date }}
-            <br/>
-          </div> -->
-          <div class="form-group">
-            <label for="status">Status</label>
-            <select class="form-control" id="status" required [(ngModel)]="model.status" name="status" #status="ngModel">
-              <option *ngFor="let state of statusValue" [value]="state">{{state}}</option>
-            </select>
-            <br/>
-            <div [hidden]="status.valid || status.pristine" class="alert alert-danger" style="color:red;">
-              Status is required
-            </div>
-            <br/>
-          </div>
-          <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" [disabled]="!discForm.form.valid">
-        </form>
-      </div>
+
+        </div>
+      </form>
     </div>
   </div>
+
 </div>
+<br/>
 <router-outlet></router-outlet>
