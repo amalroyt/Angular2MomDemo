@@ -8,15 +8,12 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginModule } from './login/login.module';
-import { MeetingListModule } from './meetingList/meetingList.module';
-import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
 import { DiscussionModule } from './discussion/discussion.module';
 import { ActionModule } from './action/action.module';
-
-const appRoutes: Routes = [
-  { path: '', component:AppComponent }
-];
+import { MeetingListModule } from './meetingList/meetingList.module';
+import { MoreDetailsModule } from './moreDetails/moreDetails.module';
+import { routes } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -26,7 +23,6 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    //Ng2DatetimePickerModule,
     HomeModule,
     LoginModule,
     MeetingListModule,
@@ -34,9 +30,9 @@ const appRoutes: Routes = [
     MeetingModule,
     DiscussionModule,
     ActionModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(routes)
   ],
-  providers: [{provide: APP_BASE_HREF, useValue : '/' }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

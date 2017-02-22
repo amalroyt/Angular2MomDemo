@@ -8,31 +8,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { MoreDetailsListService } from './moreDetails/moreDetailsList.service';
-import { MoreDetailsPointsListService } from './moreDetailsPoints/moreDetailsPointsList.service';
-import { MoreDetailsActionListService } from './moreDetailsAction/moreDetailsActionList.service';
+import { Http } from '@angular/http';
+import { contentHeaders } from '../common/headers';
+import { ActivatedRoute } from '@angular/router';
 var MoreDetailsComponent = (function () {
-    function MoreDetailsComponent(_moreDetailsListService, _moreDetailsPointsListService, _moreDetailsActionListService) {
-        this._moreDetailsListService = _moreDetailsListService;
-        this._moreDetailsPointsListService = _moreDetailsPointsListService;
-        this._moreDetailsActionListService = _moreDetailsActionListService;
-        this.getMoreDetailsList();
-        this.getMoreDetailsPointsList();
-        this.getMoreDetailsActionList();
+    function MoreDetailsComponent(http, activatedRoute) {
+        var _this = this;
+        this.http = http;
+        this.activatedRoute = activatedRoute;
+        var meetingId;
+        this.activatedRoute.params.subscribe(function (params) {
+            meetingId = params['id'];
+        });
+        this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })
+            .subscribe(function (response) {
+            _this.moreDetailsList = response.json();
+        }, function (error) {
+            console.log(error.text());
+        });
+        this.http.get('http://localhost:8081/moreDetailsPoints/' + meetingId, { headers: contentHeaders })
+            .subscribe(function (response) {
+            _this.moreDetailsPointsList = response.json();
+        }, function (error) {
+            console.log(error.text());
+        });
+        this.http.get('http://localhost:8081/moreDetailsAction/' + meetingId, { headers: contentHeaders })
+            .subscribe(function (response) {
+            _this.moreDetailsActionList = response.json();
+        }, function (error) {
+            console.log(error.text());
+        });
     }
-    MoreDetailsComponent.prototype.getMoreDetailsList = function () {
-        var _this = this;
-        this._moreDetailsListService.getMoreDetailsList().then(function (moreDetailsList) { return _this.moreDetailsList = moreDetailsList; });
-    };
-    MoreDetailsComponent.prototype.getMoreDetailsPointsList = function () {
-        var _this = this;
-        this._moreDetailsPointsListService.getMoreDetailsPointsList().then(function (moreDetailsPointsList) { return _this.moreDetailsPointsList = moreDetailsPointsList; });
-    };
-    MoreDetailsComponent.prototype.getMoreDetailsActionList = function () {
-        var _this = this;
-        this._moreDetailsActionListService.getMoreDetailsActionList().then(function (moreDetailsActionList) { return _this.moreDetailsActionList = moreDetailsActionList; });
-        console.log();
-    };
+    MoreDetailsComponent.prototype.ngOnInit = function () { };
     return MoreDetailsComponent;
 }());
 MoreDetailsComponent = __decorate([
@@ -40,9 +47,9 @@ MoreDetailsComponent = __decorate([
         selector: 'app-moreDetails',
         templateUrl: './moreDetails.component.html',
         styleUrls: ['./moreDetails.component.css'],
-        providers: [MoreDetailsListService, MoreDetailsPointsListService, MoreDetailsActionListService]
+        providers: []
     }),
-    __metadata("design:paramtypes", [MoreDetailsListService, MoreDetailsPointsListService, MoreDetailsActionListService])
+    __metadata("design:paramtypes", [Http, ActivatedRoute])
 ], MoreDetailsComponent);
 export { MoreDetailsComponent };
 //# sourceMappingURL=../../../../src/app/moreDetails/moreDetails.component.js.map
