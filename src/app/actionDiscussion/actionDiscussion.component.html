@@ -1,0 +1,252 @@
+<br/>
+<br/>
+  <div class="container">
+    <div id="loader"></div>
+    <div style="display:none;" id="loadDiv" class="animate-bottom">
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Discussion Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirm Before Deleting</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete?.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeNewChoice()">Yes</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal fade" id="myActionModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Action Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirm Before Deleting</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete?.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeNewRow()">Yes</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#discussion">Dicussion Points Form</a></li>
+      <li style="text-align:centre;"><a data-toggle="pill" href="#action">Action Items Form</a></li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+      <div id="discussion" class="tab-pane fade in active">
+        <div id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="discmodal-container">
+            <b><h1>ADD DISCUSSION POINTS</h1></b><br>
+            <div>
+              <form #discForm="ngForm" class="form-horizontal" novalidate>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label for="meetingId">Meeting Title</label>
+                    </div>
+                    <div class="col-md-2">
+                      <div *ngFor="let title of moreDetailsList">
+                        <div class="dispMeetingTitle">{{title.meetingTitle}}</div>
+                      </div>
+                    </div>
+                    <div class=col-md-1></div>
+                    <div class=col-md-8>
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="resetDiscussionForm()">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Click here to Reset"></span>
+                  </button>
+                      <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Select Rows and Click Delete"></span>
+                  </button>
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="addNewChoice()">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="tooltip" title="Add New Row"></span>
+                  </button>
+                    </div>
+                  </div>
+                </div>
+                <table>
+                  <tr *ngFor="let model of models">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-2" style="padding-left:5px; padding-right:5px;">
+                          <label for="discussionBy">Discussion By</label>
+                          <select class="form-control" id="discussionBy" required [(ngModel)]="model.discussionBy" [ngModelOptions]="{standalone: true}" name="discussionBy" #discussionBy="ngModel">
+                        <option *ngFor="let dec of userName" [value]="dec.id">{{dec.firstlast}}</option>
+                      </select>
+                          <div [hidden]="discussionBy.valid || discussionBy.pristine" style="color:red;">
+                            Discussion By is required
+                          </div>
+                        </div>
+                        <div class="col-md-1" style="padding-left:5px; padding-right:5px;">
+                          <label for="discussionType">Type</label>
+                          <select class="form-control" id="discussionType" required [(ngModel)]="model.discussionType" [ngModelOptions]="{standalone: true}" name="discussionType" #discussionType="ngModel">
+                        <option *ngFor="let type of discussionTypes" [value]="type.id">{{type.discussionType}}</option>
+                      </select>
+                          <div [hidden]="discussionType.valid || discussionType.pristine" style="color:red;">
+                            Discussion Type is required
+                          </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left:5px; padding-right:5px;">
+                          <label for="discussion">Discussion</label>
+                          <textarea type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" [ngModelOptions]="{standalone: true}" name="discussion" #discussion="ngModel" placeholder="Discussion Points"></textarea>
+                          <div [hidden]="discussion.valid || discussion.pristine" style="color:red;">
+                            Discussion is required
+                          </div>
+                        </div>
+                        <div class="col-md-2" style="padding-left:5px; padding-right:5px;">
+                          <label for="decisionBy">Decision By</label>
+                          <select class="form-control" id="decisionBy" required [(ngModel)]="model.decisionBy" [ngModelOptions]="{standalone: true}" name="decisionBy" #decisionBy="ngModel">
+                        <option *ngFor="let dec of userName" [value]="dec.id">{{dec.firstlast}}</option>
+                      </select>
+                          <div [hidden]="decisionBy.valid || decisionBy.pristine" style="color:red;">
+                            DecisionBy is required
+                          </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left:5px; padding-right:5px;">
+                          <label for="decision">Decision</label>
+                          <textarea type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" [ngModelOptions]="{standalone: true}" name="decision" #decision="ngModel" placeholder="Decision Taken"></textarea>
+                          <div [hidden]="decision.valid || decision.pristine" style="color:red;">
+                            Decision is required
+                          </div>
+                        </div>
+                        <div class="col-md-1" style="padding-left:5px; padding-right:5px;">
+                          <label>Delete Row</label>
+                          <input type="checkbox" value="{{model.id}}">
+                        </div>
+                      </div>
+                    </div>
+                  </tr>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+      <div id="action" class="tab-pane fade">
+        <div id="action-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="actionmodal-container">
+            <div class="row">
+              <div class="col-md-10"></div>
+              <div class="col-md-2">
+                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" (click)="onSubmit(); onSubmitAction()" [disabled]="!actionForm.form.valid">
+              </div>
+            </div>
+            <b><h1>ADD MEETING ACTIONS</h1></b><br/>
+            <div>
+              <form #actionForm="ngForm" class="form-horizontal" novalidate>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label for="meetingId">Meeting Title</label>
+                    </div>
+                    <div class="col-md-2">
+                      <div *ngFor="let title of moreDetailsList">
+                        <div class="dispMeetingTitle">{{title.meetingTitle}}</div>
+                      </div>
+                    </div>
+                    <div class=col-md-1>
+                    </div>
+                    <div class=col-md-8>
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="resetActionForm()">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Click here to Reset"></span>
+                  </button>
+                      <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myActionModal">
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Select Rows and Click Delete"></span>
+                  </button>
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="addNewRow()">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="tooltip" title="Add New Row"></span>
+                  </button>
+                    </div>
+                  </div>
+                </div>
+                <table>
+                  <tr *ngFor="let modelAction of modelValues">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label for="actionDesc">Action Description</label>
+                          <textarea type="text" class="form-control" id="actionDesc" required [(ngModel)]="modelAction.actionDesc" [ngModelOptions]="{standalone: true}" #actionDesc="ngModel" placeholder="Add Action Details"></textarea>
+                          <div [hidden]="actionDesc.valid || actionDesc.pristine" style="color:red;">
+                            Action Description is required
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="responsible">Responsible Person</label>
+                          <select class="form-control" id="responsible" required [(ngModel)]="modelAction.responsible" [ngModelOptions]="{standalone: true}" name="responsible" #responsible="ngModel">
+                        <option *ngFor="let dec of userName" [value]="dec.id">{{dec.firstlast}}</option>
+                      </select>
+                          <div [hidden]="responsible.valid || responsible.pristine" style="color:red;">
+                            Responsible Person is required
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="openSince">Open Since</label>
+                          <input type="date" class="form-control" id="openSince" required [(ngModel)]="modelAction.openSince" [ngModelOptions]="{standalone: true}" name="openSince" #openSince="ngModel">
+                          <div [hidden]="openSince.valid || openSince.pristine" style="color:red;">
+                            Open Since is required
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="expectedCompletion">Expected Completion</label>
+                          <input type="date" class="form-control" id="expectedCompletion" required [(ngModel)]="modelAction.expectedCompletion" [ngModelOptions]="{standalone: true}" name="expectedCompletion" #expectedCompletion="ngModel">
+                          <div [hidden]="expectedCompletion.valid || expectedCompletion.pristine" style="color:red;">
+                            Expected Completion is required
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-2">
+                        <label for="openSince">Open Since</label>
+                        <input type="text" class="form-control datepicker" id="openSince" required [(ngModel)]="modelAction.openSince" [ngModelOptions]="{standalone: true}" name="openSince" #openSince="ngModel">
+                        <div [hidden]="openSince.valid || openSince.pristine" style="color:red;">
+                          Open Since is required
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label for="expectedCompletion">Expected Completion</label>
+                        <input type="text" class="form-control datepicker" id="expectedCompletion" required [(ngModel)]="modelAction.expectedCompletion" [ngModelOptions]="{standalone: true}" name="expectedCompletion" #expectedCompletion="ngModel">
+                        <div [hidden]="expectedCompletion.valid || expectedCompletion.pristine" style="color:red;">
+                          Expected Completion is required
+                        </div>
+                      </div> -->
+                        <div class="col-md-2">
+                          <label for="status">Status</label>
+                          <select class="form-control" id="status" required [(ngModel)]="modelAction.status" [ngModelOptions]="{standalone: true}" name="status" #status="ngModel">
+                        <option *ngFor="let state of statusValue" [value]="state.id">{{state.status}}</option>
+                      </select>
+                          <div [hidden]="status.valid || status.pristine" style="color:red;">
+                            Status is required
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                          <label>Delete Row</label>
+                          <input type="checkbox" value="{{modelAction.id}}">
+                        </div>
+                      </div>
+                    </div>
+                  </tr>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<br/>
+<br/>

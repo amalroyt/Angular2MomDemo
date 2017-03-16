@@ -1,0 +1,179 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+.discmodal-container, .actionmodal-container {
+  padding: 30px;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: roboto;
+}
+
+.dispMeetingTitle {
+  text-align: center;
+  font-family: roboto;
+  font-size: 14px;
+  //color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  background-color: #eee;
+  padding: 8px 0px;
+  border-radius: 2px;
+  border: 1px solid black;
+  ;
+}
+
+.discmodal-container h1, .actionmodal-container h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-family: roboto;
+}
+
+.discmodal-container input[type=submit], .actionmodal-container input[type=submit] {
+  width: 100px;
+  //display: block;
+  //margin-bottom: 10px;
+  position: relative;
+}
+
+.addButton {
+  font-size: 20px;
+  margin-left: 2px;
+  margin-right: 2px;
+  float: right;
+}
+
+.discmodal-container input[type=text], .actionmodal-container input[type=text] {
+  font-size: 16px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.discmodal-container input[type=text]:hover, .actionmodal-container input[type=text]:hover {
+  border: 1px solid #b9b9b9;
+  border-top: 1px solid #a0a0a0;
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.discmodal, .actionmodal {
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+}
+
+.discmodal-submit, .actionmodal-submit {
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  background-color: #4d90fe;
+  //padding: 10px 0px;
+  font-family: roboto;
+  font-size: 14px;
+  margin-left: 2px;
+  margin-right: 2px;
+  float: right;
+}
+
+.discmodal-submit:hover, .actionmodal-submit:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  background-color: #357ae8;
+}
+
+
+/*#buttons ul {
+  list-style: none;
+  position: relative;
+  left: 35%;
+}
+
+#buttons li {
+  float: left;
+  position: relative;
+}*/
+
+.container {
+  width: 100%;
+}
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Add animation to "page content" */
+
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0
+  }
+  to {
+    bottom: 0px;
+    opacity: 1
+  }
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0
+  }
+  to {
+    bottom: 0;
+    opacity: 1
+  }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
