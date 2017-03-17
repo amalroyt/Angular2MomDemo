@@ -24,6 +24,7 @@ export class MoreDetailsComponent implements OnInit {
     var meetingId;
     this.activatedRoute.params.subscribe((params: Params) => {
       meetingId = params['id'];
+      console.log("meetingId  "+meetingId);
     });
     //To get the meeting details
     this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })

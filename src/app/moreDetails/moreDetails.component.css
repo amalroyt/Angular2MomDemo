@@ -1,0 +1,16 @@
+.moreDetails {
+  width: 100% !important;
+  margin-top: 55px;
+}
+.tableSection {
+  margin: 20px 10px;
+}
+.secondaryDetails {
+  margin-top: 10px;
+}
+.discussionPoints,.actionPoints {
+  width: 50%;
+  float: left;
+  overflow-y: scroll;
+  height: 510px;
+}

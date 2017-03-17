@@ -1,15 +1,13 @@
-
 footer {
-  width: 100% !important;
-  position: absolute;
+  //width: 100% !important;
+  //position: absolute;
   bottom: 0px;
   margin: 0px auto;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  border-top : 1px solid black
+  border-top: 1px solid black
 }
-
 
 header {
   height: 70px;
@@ -20,3 +18,27 @@ img {
   height: 68px;
 }
 
+.menu>img {
+  height: 30px;
+  width: 30px;
+}
+
+.menu {
+  float: right;
+}
+
+.logoutBtn {
+  float: right;
+  width: 40px;
+  margin: 0px 20px;
+}
+
+#displayDetails {
+  margin: 10px 20px;
+}
+
+#errorId {
+  font-size: 15px;
+  margin: 15px 20px;
+  color: red;
+}

@@ -1,105 +1,163 @@
-
-<div class="container">
-<div class="panel panel-primary tableForm">
-  <div class="panel-heading text-center"><label for="meetingId">Meeting : </label>
-  <span *ngFor="let meeting of moreDetailsList">{{meeting.meetingTitle}}</span>
+<div class="container moreDetails">
+  <div class="tableSection">
+    <section class="primaryDetails row">
+      <div class="table-responsive">
+        <table class="table table-hover table table-striped primaryDetailsTable">
+          <thead>
+            <tr>
+              <th class="col-md-1">
+                <span>MeetingId</span>
+              </th>
+              <th class="col-md-2">
+                <span>Meeting</span>
+              </th>
+              <th class="col-md-2">
+                <span>Purpose</span>
+              </th>
+              <th class="col-md-2">
+                <span>Agenda</span>
+              </th>
+              <th class="col-md-3">
+                <span>Attendees</span>
+              </th>
+              <th class="col-md-2">
+                <span>Date</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let meeting of moreDetailsList">
+              <td>
+                {{meeting.meetingId}}
+              </td>
+              <td>
+                {{meeting.meetingTitle}}
+              </td>
+              <td>
+                {{meeting.meetingPurpose}}
+              </td>
+              <td>
+                {{meeting.meetingAgenda}}
+              </td>
+              <td>
+                {{meeting.meetingAttendees}}
+              </td>
+              <td>
+                {{meeting.meetingDate}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="secondaryDetails row">
+      <article class="discussionPoints col-md-6">
+        <!--Table-->
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">Discussion Points</div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="col-md-2">
+                      <span>Discussion By</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Discussion Type</span>
+                    </th>
+                    <th class="col-md-4">
+                      <span>Discussion</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Decision By</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Decision</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let meeting of moreDetailsPointsList">
+                    <td>
+                      {{meeting.discussionBy}}
+                    </td>
+                    <td>
+                      {{meeting.discussionType}}
+                    </td>
+                    <td>
+                      {{meeting.discussion}}
+                    </td>
+                    <td>
+                      {{meeting.decisionBy}}
+                    </td>
+                    <td>
+                      {{meeting.decision}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="actionPoints col-md-6">
+        <!--Table-->
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">Action Points</div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="col-md-4">
+                      <span>Action Description</span>
+                    </th>
+                    <th class="col-md-1">
+                      <span>Responsible</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Open Since</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Expected Completion</span>
+                    </th>
+                    <th class="col-md-2">
+                      <span>Actual Completion</span>
+                    </th>
+                    <th class="col-md-1">
+                      <span>Status</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let meeting of moreDetailsActionList">
+                    <td>
+                      {{meeting.actionDesc}}
+                    </td>
+                    <td>
+                      {{meeting.responsible}}
+                    </td>
+                    <td>
+                      {{meeting.openSince}}
+                    </td>
+                    <td>
+                      {{meeting.expectedCompletion}}
+                    </td>
+                    <td>
+                      {{meeting.actualCompletion}}
+                    </td>
+                    <td>
+                      {{meeting.status}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
   </div>
-  <div class="panel-body">
-    <!--Table-->
-    <div class="panel-heading text-center">Discussion Points</div>
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>
-              <span>Discussion By</span>
-            </th>
-            <th>
-              <span>Discussion Type</span>
-            </th>
-            <th>
-              <span>Discussion</span>
-            </th>
-            <th>
-              <span>Decision By</span>
-            </th>
-            <th>
-              <span>Decision</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let meeting of moreDetailsPointsList">
-            <td>
-              {{meeting.discussionBy}}
-            </td>
-            <td>
-              {{meeting.discussionType}}
-            </td>
-            <td>
-              {{meeting.discussion}}
-            </td>
-            <td>
-              {{meeting.decisionBy}}
-            </td>
-            <td>
-              {{meeting.decision}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--Table-->
-    <div class="panel-heading text-center">Action Points</div>
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>
-              <span>Action Description</span>
-            </th>
-            <th>
-              <span>Responsible</span>
-            </th>
-            <th>
-              <span>Open Since</span>
-            </th>
-            <th>
-              <span>Expected Completion</span>
-            </th>
-            <th>
-              <span>Actual Completion</span>
-            </th>
-            <th>
-              <span>Status</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let meeting of moreDetailsActionList">
-            <td>
-              {{meeting.actionDesc}}
-            </td>
-            <td>
-              {{meeting.responsible}}
-            </td>
-            <td>
-              {{meeting.openSince}}
-            </td>
-            <td>
-              {{meeting.expectedCompletion}}
-            </td>
-            <td>
-              {{meeting.actualCompletion}}
-            </td>
-            <td>
-              {{meeting.status}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 </div>
 <router-outlet></router-outlet>

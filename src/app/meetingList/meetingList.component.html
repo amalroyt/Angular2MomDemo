@@ -1,7 +1,7 @@
 <div class="meetingListModal container">
   <div class="meetingList">
     <div class="newMeeting">
-      <button class="btn btn-success createButton">Create new meeting</button>
+      <button class="btn btn-success createButton" routerLink="/meeting" routerLinkActive="active">Create new meeting</button>
     </div>
     <div class="panel panel-primary tableForm">
       <div class="panel-heading text-center">Meeting List</div>
@@ -11,25 +11,55 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th>
-                  <span>Meeting Title</span>
+                <th class="col-md-2">
+                  <span>Meeting</span>
                 </th>
-                <th>
-                  <span></span>
+                <th class="col-md-3">
+                  <span>Agenda</span>
+                </th>
+                <th class="col-md-3">
+                  <span>Attendees</span>
+                </th>
+                <th class="col-md-1">
+                  <span>Date</span>
+                </th>
+                <th class="col-md-3">
+                  <span>
+                    <button type="button" class="btn btn-danger btn-lg toDelete" (click)="toDelete()">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" title="Click to Delete"></span>
+                  </button>
+                  </span>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let meeting of meetingList">
                 <td>
-                  {{meeting.meetingTitle}}
+                   <a href="" routerLink="/meeting" routerLinkActive="active" (click)="edit(meeting.meetingId)" >{{meeting.meetingTitle}}</a>
                 </td>
                 <td>
-                  <button class="btn btn-success">Edit</button>
-                  <button *ngIf="meeting.generatedExcel == 'NULL'" (click)="generateExcel(meeting.meetingId)" class="btn btn-primary">Generate</button>
-                  <button *ngIf="meeting.generatedExcel != 'NULL'" (click)="downloadExcel(meeting.meetingTitle)" class="btn btn-primary">Download</button>
-                  <button (click)="moreDetails(meeting.meetingId)" class="btn btn-info">Details</button>
-                  <button class="btn btn-danger">Delete</button>
+                  {{meeting.meetingAgenda}}
+                </td>
+                <td>
+                  {{meeting.meetingAttendees}}
+                </td>
+                <td>
+                  {{meeting.meetingDate}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-default btn-md addButton" (click)="openActionDiscussionForm(meeting.meetingId)">
+                      <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
+                  </button>
+                  <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg" (click)="generateExcel(meeting.meetingId)">
+                      <span class="glyphicon glyphicon-import" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
+                  </button>
+                  <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg" (click)="downloadExcel(meeting.meetingTitle)">
+                      <span class="glyphicon glyphicon-download-alt" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
+                  </button>
+                  <button type="button" class="btn btn-default btn-lg" (click)="moreDetails(meeting.meetingId)">
+                      <span class="glyphicon glyphicon-open-file" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
+                  </button>
+                  <input class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
                 </td>
               </tr>
             </tbody>
