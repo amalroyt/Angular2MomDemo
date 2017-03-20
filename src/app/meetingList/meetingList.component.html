@@ -1,4 +1,10 @@
 <div class="meetingListModal container">
+  <div class="links">
+     <ol class="breadcrumb breadLinks">
+       <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+       <li class="active">Meetinglist</li>
+     </ol>
+   </div>
   <div class="meetingList">
     <div class="newMeeting">
       <button class="btn btn-success createButton" routerLink="/meeting" routerLinkActive="active">Create new meeting</button>
@@ -14,13 +20,13 @@
                 <th class="col-md-2">
                   <span>Meeting</span>
                 </th>
-                <th class="col-md-3">
+                <th class="col-md-2">
                   <span>Agenda</span>
                 </th>
                 <th class="col-md-3">
                   <span>Attendees</span>
                 </th>
-                <th class="col-md-1">
+                <th class="col-md-2">
                   <span>Date</span>
                 </th>
                 <th class="col-md-3">
@@ -47,17 +53,17 @@
                   {{meeting.meetingDate}}
                 </td>
                 <td>
-                  <button type="button" class="btn btn-default btn-md addButton" (click)="openActionDiscussionForm(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
+                  <button type="button" class="btn btn-default btn-lg addButton" (click)="openActionDiscussionForm(meeting.meetingId)">
+                      <span class="glyphicon glyphicon-edit glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
                   </button>
                   <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg" (click)="generateExcel(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-import" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
+                      <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
                   </button>
                   <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg" (click)="downloadExcel(meeting.meetingTitle)">
-                      <span class="glyphicon glyphicon-download-alt" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
+                      <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
                   </button>
                   <button type="button" class="btn btn-default btn-lg" (click)="moreDetails(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-open-file" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
+                      <span class="glyphicon glyphicon-open-file glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
                   </button>
                   <input class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
                 </td>

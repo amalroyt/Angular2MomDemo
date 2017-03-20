@@ -21,6 +21,7 @@ export class MoreDetailsComponent implements OnInit {
 
   ngOnInit() { }
   constructor(private http: Http, private activatedRoute: ActivatedRoute) {
+    document.getElementById("errorId").innerHTML = "";
     var meetingId;
     this.activatedRoute.params.subscribe((params: Params) => {
       meetingId = params['id'];

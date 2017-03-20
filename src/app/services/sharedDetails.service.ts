@@ -7,13 +7,15 @@ export class SharedService {
     firstName: "",
     lastName: ""
   };
-  setDetails(details) {
-    console.log("inside set");
-    console.log(details);
+  
+  setDetails: (details) => any
+  = function(details): any {
     this.sharedDetails.firstName = details.firstName;
     this.sharedDetails.lastName = details.lastName;
   }
-  resetDetails() {
+
+  resetDetails: () => any
+  = function(): any {
     this.sharedDetails.firstName = "";
     this.sharedDetails.lastName = "";
   }

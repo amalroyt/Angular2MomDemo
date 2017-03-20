@@ -22,9 +22,16 @@ export class MeetingComponent implements OnInit {
   firstlast = [];
   checked: string[] = [];
   public meeting_id: any;
+
   public userId = this.authService.getUserdetails();
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
     console.log("User ID", this.userId.userId);
+
+
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute) {
+
+   
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meeting_id = params['id'];
       console.log(this.meeting_id);

@@ -1,6 +1,13 @@
 <br/>
 <br/>
   <div class="container">
+    <div class="links">
+       <ol class="breadcrumb breadLinks">
+         <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+         <li><a routerLink="/meetingList" routerLinkActive="active">List</a></li>
+         <li class="active">ActionDiscussion Form</li>
+       </ol>
+     </div>
     <div id="loader"></div>
     <div style="display:none;" id="loadDiv" class="animate-bottom">
     <div class="modal fade" id="myModal" role="dialog">
@@ -138,7 +145,7 @@
             <div class="row">
               <div class="col-md-10"></div>
               <div class="col-md-2">
-                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" (click)="onSubmit(); onSubmitAction()" [disabled]="!actionForm.form.valid">
+                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" (click)="onSubmit()" [disabled]="!actionForm.form.valid">
               </div>
             </div>
             <b><h1>ADD MEETING ACTIONS</h1></b><br/>
@@ -203,7 +210,7 @@
                             Expected Completion is required
                           </div>
                         </div>
-                        <!-- <div class="col-md-2">
+                      <!-- <div class="col-md-2">
                         <label for="openSince">Open Since</label>
                         <input type="text" class="form-control datepicker" id="openSince" required [(ngModel)]="modelAction.openSince" [ngModelOptions]="{standalone: true}" name="openSince" #openSince="ngModel">
                         <div [hidden]="openSince.valid || openSince.pristine" style="color:red;">
