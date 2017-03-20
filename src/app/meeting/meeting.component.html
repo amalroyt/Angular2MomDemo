@@ -34,11 +34,11 @@
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
           <div class="radio col-md-4">
             <label>
-					          <input #open name="radio" type="radio" value="1" (click)="meetings.meetingStatus = open.value" [checked]="edit_view"/>
+					          <input #open name="radio" type="radio" value="1"  (click)="meetings.meetingStatus = open.value" checked />
 					              Open
 				    </label>
             <label>
-			             <input #closed name="radio" type="radio" value="2" [disabled]="edit_view" (click)="meetings.meetingStatus = closed.value" />
+			             <input #closed name="radio" type="radio" value="2"  [disabled]="edit_view" (click)="meetings.meetingStatus = closed.value" />
 				               Closed
 			      </label>
           </div>
@@ -93,6 +93,7 @@
           <label for="example-email-input" class="col-md-2 col-form-label">Date* :</label>
               <div class="col-md-4">
                 <!--<input class="form-control" type="date" required [(ngModel)]="myDate" name="date" ng2-datetime-picker date-only="true" />-->
+                  <!--<div [hidden]="edit_view"><input class="form-control" type="text" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate"></div>-->
                   <input  id="datepicker" class="form-control" type="date" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate"><!--<span><input type="date"></span>-->
                     <div [hidden]="date.valid || date.pristine" class="alert alert-danger">Meeting Date is required</div>
               </div>
