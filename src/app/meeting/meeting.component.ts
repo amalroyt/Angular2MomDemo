@@ -29,7 +29,7 @@ export class MeetingComponent implements OnInit {
   public sampleDate: string;
 
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute) {
-
+document.getElementById("errorId").innerHTML = "";
     this.sampleDate = new Date().toISOString().slice(0, 10);
     console.log(typeof (this.sampleDate));
     this.activatedRoute.params.subscribe((params: Params) => {

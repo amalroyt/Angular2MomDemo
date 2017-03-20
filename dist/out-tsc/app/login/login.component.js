@@ -12,18 +12,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { contentHeaders } from '../common/headers';
+import { AuthenticationService } from '../services/auth.service';
+import { SharedService } from '../services/sharedDetails.service';
 var LoginComponent = (function () {
-    function LoginComponent(http, router) {
+    function LoginComponent(http, router, sharedService, authService) {
         this.http = http;
         this.router = router;
+        this.sharedService = sharedService;
+        this.authService = authService;
         this.onSubmit = function () {
             var _this = this;
-            console.log(this.user.value);
             this.http.post('http://localhost:8081/login', JSON.stringify(this.user.value), { headers: contentHeaders })
                 .subscribe(function (response) {
-                console.log(response.json().token);
+                console.log(response.json().userDetails);
                 if (response.json().token) {
-                    _this.router.navigate(['/meetingList']);
+                    if (_this.authService.login(response.json().userDetails)) {
+                        console.log(_this.authService.getUserdetails());
+                        _this.sharedService.setDetails(_this.authService.getUserdetails());
+                        _this.router.navigate(['/meetingList']);
+                    }
+                    else {
+                        _this.router.navigate(['/login']);
+                    }
                 }
             }, function (error) {
                 console.log(error.text());
@@ -44,7 +54,7 @@ LoginComponent = __decorate([
         templateUrl: './login.component.html',
         styleUrls: ['./login.component.css']
     }),
-    __metadata("design:paramtypes", [Http, Router])
+    __metadata("design:paramtypes", [Http, Router, SharedService, AuthenticationService])
 ], LoginComponent);
 export { LoginComponent };
 //# sourceMappingURL=../../../../src/app/login/login.component.js.map

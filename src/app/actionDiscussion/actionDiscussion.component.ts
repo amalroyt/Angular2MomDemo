@@ -32,6 +32,7 @@ export class ActionDiscussionComponent implements OnInit {
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
+      document.getElementById("errorId").innerHTML = "";
     });
 
     this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
@@ -137,7 +138,8 @@ export class ActionDiscussionComponent implements OnInit {
   /***********DISCUSSION***********/
   onSubmit: () => any
   = function() {
-    console.log(this.models);
+    console.log("this");
+    console.log(this);
     //To check if any discussion data is present for that particular meeting.
     if (this.discussionPublic.length != 0) {
       for (var val in this.models) {
@@ -189,6 +191,10 @@ export class ActionDiscussionComponent implements OnInit {
         }
       }
     }
+    console.log("this");
+    console.log(this);
+    alert("ready?");
+    this.router.navigate(['/meetingList']);
   }
 
   resetDiscussionForm: () => any
@@ -276,6 +282,8 @@ export class ActionDiscussionComponent implements OnInit {
   /***********ACTION***********/
   onSubmitAction: () => any
   = function() {
+    console.log("this");
+    console.log(this);
     //To check if any action data is present for that particular meeting.
     if (this.actionPublic.length != 0) {
       for (var val in this.modelValues) {
@@ -287,6 +295,8 @@ export class ActionDiscussionComponent implements OnInit {
             this.actionCounter++;
             if (this.actionCounter === this.actionPublic.length && this.discussionCounter === this.discussionPublic.length) {
               document.getElementById("errorId").innerHTML = "Discussion points & Action points are already up-to-date";
+              alert("ready?");
+              this.router.navigate(['/meetingList']);
             }
             else
               if (this.actionCounter === this.actionPublic.length && this.discussionCounter != this.discussionPublic.length) {
@@ -337,6 +347,8 @@ export class ActionDiscussionComponent implements OnInit {
         }
       }
     }
+    alert("ready?");
+    this.router.navigate(['/meetingList']);
   }
 
   resetActionForm: () => any

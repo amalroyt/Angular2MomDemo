@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
+import { AuthenticationService } from '../services/auth.service';
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -12,7 +13,10 @@ declare var jQuery: any;
 })
 export class MeetingListComponent {
   public meetingList: Meeting[];
-  constructor(private http: Http, private router: Router) {
+  public userId = this.authService.getUserdetails();
+  constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
+    console.log("this");
+    console.log(this);
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -21,6 +25,7 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
+      document.getElementById("errorId").innerHTML = "";
   }
   // To open create new meeting form
   edit: (id: number) => void
@@ -28,7 +33,7 @@ export class MeetingListComponent {
     console.log(id);
     this.router.navigate(['/meeting',id]);
   }
-  
+
   //To open actionDiscussion form
   openActionDiscussionForm: (id: any) => void
   = function(id: any): void {
@@ -81,12 +86,14 @@ export class MeetingListComponent {
   toDelete: () => void
   = function(): void {
     document.getElementById("errorId").innerHTML = "";
+    var userId = this.userId.userId;
     var meetingIds = jQuery('input:checkbox:checked').map(function() {
       return jQuery(this).val();
     }).get();
     if (meetingIds.length != 0) {
+      console.log(JSON.stringify({meetingIds:meetingIds}));
     //To delete the selected meetings
-    this.http.delete('http://localhost:8081/deleteMeeting/' +meetingIds, { headers: contentHeaders })
+    this.http.put('http://localhost:8081/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(
       response => {
         //To update the meetinglist after deletion operation.

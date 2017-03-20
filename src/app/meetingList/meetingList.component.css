@@ -28,7 +28,10 @@ footer {
   float: right;
   font-size: 20px;
 }
-.btn-default {
+.btn-lg {
+  font-size: 15px;
+}
+.glyphiconIcon {
   font-size: 15px;
 }
 input[type="checkbox"]{
