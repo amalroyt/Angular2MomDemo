@@ -17,6 +17,7 @@ export class AppComponent {
   onLogout: () => any
   = function(): any {
     this.authService.logout();
+    this.sharedService.resetDetails();
     this.router.navigate(['/login']);
   }
 }
