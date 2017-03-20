@@ -19,6 +19,11 @@ export class LoginComponent implements OnInit {
       userName: new FormControl('', Validators.required),
       userPassword: new FormControl('', Validators.required)
     });
+
+    // if (!this.authService.checkCredentials()) {
+    //   console.log("reset in login");
+    //   this.sharedService.resetDetails();
+    // }
   }
   //ON submit the username and password is verified
   onSubmit: () => void
@@ -31,10 +36,6 @@ export class LoginComponent implements OnInit {
             console.log(this.authService.getUserdetails());
             this.sharedService.setDetails(this.authService.getUserdetails());
             this.router.navigate(['/meetingList']);
-            //this.sharedService.setDetails(this.authService.getUserdetails());
-            //console.log("this.authService.getUserdetails()");
-            //console.log(this.authService.getUserdetails());
-
           }
           else {
             this.router.navigate(['/login']);
