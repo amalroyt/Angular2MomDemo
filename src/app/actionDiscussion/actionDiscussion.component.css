@@ -89,18 +89,6 @@
   background-color: #357ae8;
 }
 
-
-/*#buttons ul {
-  list-style: none;
-  position: relative;
-  left: 35%;
-}
-
-#buttons li {
-  float: left;
-  position: relative;
-}*/
-
 .container {
   width: 100%;
 }
@@ -173,7 +161,7 @@
   }
 }
 
-#myDiv {
+#loadDiv {
   display: none;
   text-align: center;
 }
