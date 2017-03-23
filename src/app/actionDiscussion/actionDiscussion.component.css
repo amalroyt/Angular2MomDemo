@@ -5,15 +5,15 @@
   margin: 0 auto;
   border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
   font-family: roboto;
+  height: 437px;
+  overflow: auto;
 }
 
 .dispMeetingTitle {
   text-align: center;
   font-family: roboto;
   font-size: 14px;
-  //color: #fff;
   text-shadow: 0 1px rgba(0, 0, 0, 0.1);
   background-color: #eee;
   padding: 8px 0px;
@@ -91,6 +91,7 @@
 
 .container {
   width: 100%;
+  background-color: #F7F7F7;
 }
 
 #loader {
@@ -162,6 +163,12 @@
 }
 
 #loadDiv {
+  float: left;
   display: none;
   text-align: center;
+  /*margin-top: 38px;*/
+}
+
+.links {
+  float: left;
 }

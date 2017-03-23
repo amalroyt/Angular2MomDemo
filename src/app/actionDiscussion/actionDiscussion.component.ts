@@ -29,7 +29,7 @@ export class ActionDiscussionComponent implements OnInit {
   public actionCounter = 0;
   public userId = this.authService.getUserdetails();
 
-  constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, private router: Router) {
     // to get id from parameter qyerry
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
@@ -107,6 +107,7 @@ export class ActionDiscussionComponent implements OnInit {
       }
       );
 
+      document.getElementById("errorId").innerHTML = "";
     //  jQuery(function() {
     //   jQuery(".datepicker").datepicker();
     //   jQuery(".datepicker").datepicker();
@@ -118,7 +119,7 @@ export class ActionDiscussionComponent implements OnInit {
   loadingFunction: () => any
   = function() {
     document.getElementById("footerDisp").style.display = "none";
-    this.myVar = setTimeout(this.showPage, 2000);
+    this.myVar = setTimeout(this.showPage, 3000);
   }
   // for displaying the page after data is fetched completely
   showPage: () => any
@@ -157,7 +158,10 @@ export class ActionDiscussionComponent implements OnInit {
             //To update that particular discussion points row.
             this.http.post('http://localhost:8081/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val])], { headers: contentHeaders })
               .subscribe(
-              response => { },
+              response => {
+                document.getElementById("errorId").innerHTML = "Update successfull";
+                this.router.navigate(['/meetingList']);
+              },
               error => {
                 console.log(error.text());
               });
@@ -165,13 +169,13 @@ export class ActionDiscussionComponent implements OnInit {
         }
         else {
           //To insert a new row for that discussion point.
-          for (var val in this.models) {
             //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
             if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
               this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
                 .subscribe(
                 response => {
-                  document.getElementById("errorId").innerHTML = "Insert successfull";
+                  document.getElementById("errorId").innerHTML = "Update successfull";
+                  this.router.navigate(['/meetingList']);
                 },
                 error => {
                   console.log(error.text());
@@ -180,18 +184,19 @@ export class ActionDiscussionComponent implements OnInit {
             else {
               document.getElementById("errorId").innerHTML = "Rows should be filled completely";
             }
-          }
         }
       }
     }
     else {
       for (var val in this.models) {
+        var self = this;
         //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
         if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
           this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
               document.getElementById("errorId").innerHTML = "Insert successfull";
+              self.router.navigate(['/meetingList']);
             },
             error => {
               console.log(error.text());
@@ -289,6 +294,25 @@ export class ActionDiscussionComponent implements OnInit {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
     }
   }
+  // to select/deselect all discussion points
+  checkAllDiscussion: () => any
+  = function() {
+    jQuery(document).on('click', '#checkAll', function(event) {
+      console.log("Discussion");
+      if (!event.isPropagationStopped()) {
+        event.stopPropagation();
+        if ((jQuery(this).val()) == 'Check All') {
+          console.log("Discussion if part");
+          jQuery('.button input').prop('checked', true);
+          jQuery(this).val('Uncheck All');
+        } else {
+          console.log("Discussion else");
+          jQuery('.button input').prop('checked', false);
+          jQuery(this).val('Check All');
+        }
+      }
+    });
+  };
 
   /***********ACTION***********/
   onSubmitAction: () => any
@@ -323,7 +347,9 @@ export class ActionDiscussionComponent implements OnInit {
             //To update that particular action points row.
             this.http.post('http://localhost:8081/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val])], { headers: contentHeaders })
               .subscribe(
-              response => { },
+              response => {
+                document.getElementById("errorId").innerHTML = "Update Successful";
+                this.router.navigate(['/meetingList']);},
               error => {
                 console.log(error.text());
               });
@@ -331,13 +357,13 @@ export class ActionDiscussionComponent implements OnInit {
         }
         else {
           //To insert a new row for that action point.
-          for (var val in this.modelValues) {
             //To check if any action data is present for that particular meeting if not then insert a new row for that action point.
             if ((this.modelValues[val]).actionDesc != "" && (this.modelValues[val]).responsible != "" && (this.modelValues[val]).openSince != "" && (this.modelValues[val]).expectedCompletion != "" && (this.modelValues[val]).status != "") {
               this.http.post('http://localhost:8081/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
                 .subscribe(
                 response => {
                   document.getElementById("errorId").innerHTML = "Insert successfull";
+                    this.router.navigate(['/meetingList']);
                 },
                 error => {
                   console.log(error.text());
@@ -345,7 +371,6 @@ export class ActionDiscussionComponent implements OnInit {
             } else {
               document.getElementById("errorId").innerHTML = "Rows should be filled completely";
             }
-          }
         }
       }
     } else {
@@ -356,6 +381,7 @@ export class ActionDiscussionComponent implements OnInit {
             .subscribe(
             response => {
               document.getElementById("errorId").innerHTML = "Insert successfull";
+                this.router.navigate(['/meetingList']);
             },
             error => {
               console.log(error.text());
@@ -406,7 +432,7 @@ export class ActionDiscussionComponent implements OnInit {
 
   }
 
-  
+
   removeNewRow: () => any
   = function() {
     var trackIndex = jQuery('input:checkbox:checked').map(function() {
@@ -448,4 +474,24 @@ export class ActionDiscussionComponent implements OnInit {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
     }
   }
+  // to select/deselect all action items
+  checkAllAction: () => any
+  = function() {
+    jQuery(document).on('click', '#check', function(event) {
+      console.log("Action");
+      if (!event.isPropagationStopped()) {
+        event.stopPropagation();
+        if ((jQuery(this).val()) == 'Check All Rows') {
+          console.log("Action if part");
+          jQuery('.buttonVal input').prop('checked', true);
+          jQuery(this).val('Uncheck All');
+        } else {
+          console.log("Action else");
+          jQuery('.buttonVal input').prop('checked', false);
+          jQuery(this).val('Check All Rows');
+        }
+      }
+    });
+  };
+
 }

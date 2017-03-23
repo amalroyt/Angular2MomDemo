@@ -15,8 +15,6 @@ export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
-    console.log("this");
-    console.log(this);
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -25,7 +23,6 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
-      document.getElementById("errorId").innerHTML = "";
   }
   // To open create new meeting form
   edit: (id: number) => void
@@ -48,7 +45,7 @@ export class MeetingListComponent {
   //To generate excel for the selected meeting
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
-    document.getElementById("errorId").innerHTML = "";
+    //document.getElementById("errorId").innerHTML = "";
     this.http.post('http://localhost:8081/generateExcel/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
@@ -70,7 +67,7 @@ export class MeetingListComponent {
   //To download excel for the selected meeting
   downloadExcel: (meetingTitle: string) => void
   = function(meetingTitle: string): void {
-    document.getElementById("errorId").innerHTML = "";
+    //document.getElementById("errorId").innerHTML = "";
     this.http.get('http://localhost:8081/download/' + meetingTitle, { headers: contentHeaders })
       .subscribe(
       response => {
@@ -82,10 +79,17 @@ export class MeetingListComponent {
       });
   }
 
+  //Select all toggle
+  toSelectAllToggle: () => void
+  = function(): void {
+var isChekedAll = (<HTMLInputElement>document.getElementById('toSelectAll')).checked;
+var deleteCheckbox = document.getElementsByClassName("deleteCheckbox");
+
+  }
+
   //To delete selected meetingList
   toDelete: () => void
   = function(): void {
-    document.getElementById("errorId").innerHTML = "";
     var userId = this.userId.userId;
     var meetingIds = jQuery('input:checkbox:checked').map(function() {
       return jQuery(this).val();
@@ -115,4 +119,21 @@ export class MeetingListComponent {
       document.getElementById("errorId").innerHTML = "Selected atleast a meeting to delete.";
     }
   }
+
+  // to select/deselect all meetinglist
+checkAll: () => any
+= function() {
+  jQuery(document).on('click', '#check', function(event) {
+    if (!event.isPropagationStopped()) {
+      event.stopPropagation();
+      if ((jQuery(this).val()) == 'Check All Rows') {
+        jQuery('.deleteCheckbox').prop('checked', true);
+        jQuery(this).val('Uncheck All Rows');
+      } else {
+        jQuery('.deleteCheckbox').prop('checked', false);
+        jQuery(this).val('Check All Rows');
+      }
+    }
+  });
+};
 }

@@ -1,20 +1,31 @@
-<header>
-  <img style="float:left;" src="./app/images/Cybage_Logo.png">
-  <div>
-    <h1>DOMO MEETING</h1>
-  </div>
-</header>
-<section>
-  <span id="errorId"></span>
+<section id="beforeHeader">
+  <nav class="navbar navbar-default navbar-static-top links">
+    <div class="navbar-default" *ngIf="userDetails.firstName">
+        <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item"><a class="nav-link" routerLink="meetingList">Meetinglist</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="meeting">Create new meeting</a></li>
+        </ul>
+    </div>
+  </nav>
   <div id="displayDetails" *ngIf="userDetails.firstName">
-    <button type="button" class="btn btn-danger btn-md logoutBtn" (click)="onLogout()">
-        <span class="glyphicon glyphicon-off" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
+    <button type="button" class="btn btn-danger btn-sm logoutBtn" (click)="onLogout()">
+        <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
     </button>
     <div class="menu">
-      <img src="./app/images/login.jpg">
       <span id="usernameDisplay"><b>Welcome {{userDetails.firstName}} {{userDetails.lastName}}</b></span>
     </div>
   </div>
 </section>
+
+<header>
+  <div id="logoDetails">
+  <img style="float:left;" src="./app/images/cybage.jpg">
+    <h1 id="meetingTitle">DOMO MEETING</h1>
+  </div>
+</header>
+<section id="errorIdSection">
+  <span id="errorId"></span>
+</section>
+
 <router-outlet></router-outlet>
 <footer class="col-lg-10 col-lg-offset-3 text-center" id="footerDisp"><span style="font-family:Tahoma;color:Gray;">&#169; Cybage Software Pvt.Ltd.</span></footer>
