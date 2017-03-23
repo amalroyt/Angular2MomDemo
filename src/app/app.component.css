@@ -1,44 +1,65 @@
 footer {
-  //width: 100% !important;
-  //position: absolute;
   bottom: 0px;
   margin: 0px auto;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  border-top: 1px solid black
+  border-top: 1px solid black;
+  background-color: #25323a;
 }
-
 header {
   height: 70px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
+  /*background-color: #F7F7F7;*/
 }
-
+#beforeHeader {
+  height: 50px;
+  background-color: rgba(36, 62, 77, 1);
+}
+#usernameDisplay {
+  color: white;
+  margin: 10px 10px;
+}
 img {
   height: 68px;
 }
-
 .menu>img {
   height: 30px;
   width: 30px;
 }
-
 .menu {
   float: right;
+  margin: 8px 10px;
 }
-
 .logoutBtn {
+  font-size: 15px;
   float: right;
-  width: 40px;
-  margin: 0px 20px;
+  width: 50px;
+  margin: 0px 10px;
 }
-
+.logoutBtnGly {
+  font-size: 20px;
+}
+#meetingTitle {
+  margin-left: 95px;
+  float: left;
+}
 #displayDetails {
-  margin: 10px 20px;
+  position: absolute;
+  top: 8px;
+  right: 10px;
 }
-
 #errorId {
   font-size: 15px;
   margin: 15px 20px;
   color: red;
+}
+.links {
+  background-color: rgba(36, 62, 77, 1);
+  margin: 0px;
+  //height: 49px;
+  width: 50%;
+}
+.navbar {
+  min-height: 50px;
 }

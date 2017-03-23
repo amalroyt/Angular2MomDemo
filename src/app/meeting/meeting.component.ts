@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Meeting } from './meeting';
 import {Http} from '@angular/http';
-//import { Router} from '@angular/router';
 import { contentHeaders } from '../common/headers';
 import { Router, ActivatedRoute, Params} from '@angular/router';
-
+import { AuthenticationService } from '../services/auth.service';
 //import {LoginComponent} from './login/login.component';
 declare var jQuery: any;
 @Component({
@@ -13,11 +12,16 @@ declare var jQuery: any;
   styleUrls: ['./meeting.component.css']
 })
 export class MeetingComponent implements OnInit {
-  a: string;
   meetingInfo = [];
-  //  meeting = new Meeting('','','','','','','','','','','','');
-  public meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: '', meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '' }];
-  //meetings = [];
+//  hours = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+  public time = {
+    hours :  ["01","02","03","04","05","06","07","08","09","10","11","12"],//[1,2,3,4,5,6,7,8,9,10,11,12]
+    minutes : ["00","15","30","45"],
+    form : ["AM","PM"]
+  };
+  public userId = this.authService.getUserdetails();
+  userName = this.userId.firstName + " " + this.userId.lastName ;
+  public meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: this.userName, meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '',startHours :'',startMinutes:'',startForm:'',endHours :'',endMinutes:'', endForm:''}];
   public attendees = [];
   types = [];
   facilitator = [];
@@ -26,12 +30,21 @@ export class MeetingComponent implements OnInit {
   firstlast = [];
   checked: string[] = [];
   public meeting_id: any;
-  public sampleDate: string;
+  timeArr = [];
+  endtimeArr = [];
+  unchecked = [];
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
 
-  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute) {
-
-    this.sampleDate = new Date().toISOString().slice(0, 10);
-    console.log(typeof (this.sampleDate));
+ //     jQuery(document).ready(function(){
+ //     if (jQuery("input[name='type']").val() == "") {
+ //       jQuery("select[name='type']").val(this.userId.firstName + " " + this.userId.lastName);
+ //     }
+ // });
+ document.getElementById("errorId").innerHTML = "";
+    jQuery("#editsuccess").css("display", "none");
+    jQuery("#createsuccess").css("display", "none");
+    console.log("User ID", this.userId.userId);
+    console.log("Recorder", this.userId.firstName + " " + this.userId.lastName );
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meeting_id = params['id'];
       console.log(this.meeting_id);
@@ -39,55 +52,64 @@ export class MeetingComponent implements OnInit {
     if ((this.meeting_id) != undefined) {
       this.edit_view = 0;
     }
-
-    //jQuery("#datepicker").datepicker();
-    //jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
-    //  jQuery("#datepicker").datepicker('setDate', '01/26/2014');
+    jQuery("#datepicker").datepicker();
+    jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
     //console.log("DatePicker", jQuery("#datepicker"));
     this.http.get('http://localhost:8081/getMeetingTypes', { headers: contentHeaders })
       .subscribe(
       response => {
-        console.log(response.json());
+        //console.log(response.json());
         this.types = response.json();
       },
       error => {
         console.log(error.text());
       }
       );
-
-
     this.http.get('http://localhost:8081/getAttendees', { headers: contentHeaders })
       .subscribe(
       response => {
-        console.log(response.json());
+        //console.log(response.json());
         this.options = response.json();
+        // for(let i = 0 ; i < this.options.length; i++)
+        // {
+        //   this.unchecked.push(this.options[i].id);
+        // }
+        // console.log(this.unchecked);
       },
       error => {
         console.log(error.text());
       }
       );
-
     this.http.get('http://localhost:8081/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
       .subscribe(
-
       response => {
-
-        //  console.log("DatePicker", jQuery( "#datepicker" ));
+        // console.log("DatePicker", jQuery( "#datepicker" ));
         // jQuery(function() {
-        //   jQuery("#datepicker").datepicker();
-        //
-        //   jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
-        // });
-        console.log(response.json());
+        // jQuery("#datepicker").datepicker();
+        //  jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
+        //  });
+        //console.log(response.json());
         this.meetingInfo = response.json();
         if ((this.meetingInfo).length != 0) {
-          //  console.log(this.meetingInfo[0].meetingDate.toISOString().slice(0,10));
+          //console.log(this.meetingInfo[0].meetingDate.toISOString().slice(0,10));
           console.log("checked");
           this.meetings = this.meetingInfo[0];
-
-
           this.meetings[0] = this.meetingInfo[0];
-          console.log(this.meetings[0]);
+
+          console.log(JSON.stringify(this.meetings[0].startTime));
+          this.timeArr = (this.meetings[0].startTime).split(":");
+          console.log(this.timeArr);
+          //this.timeArr = this.timeArr.map(Number);
+          console.log(this.timeArr);
+          this.meetings[0].startHours = this.timeArr[0];
+          this.meetings[0].startMinutes = this.timeArr[1];
+
+          this.endtimeArr = (this.meetings[0].endTime).split(":");
+          console.log(this.endtimeArr);
+          //this.endtimeArr = this.endtimeArr.map(Number);
+          console.log(this.endtimeArr);
+          this.meetings[0].endHours = this.endtimeArr[0];
+          this.meetings[0].endMinutes = this.endtimeArr[1];
           //console.log(this.meetings[0].meetingDate.toISOString().slice(0,10));
         } else {
           console.log("New Meeting Value");
@@ -102,35 +124,23 @@ export class MeetingComponent implements OnInit {
         }
         //console.log(this.attendees.length);
         console.log(this.attendees);
-
-
+        this.attendees = this.attendees.map(Number);
+        console.log(this.attendees);
         for (let i = 0; i < this.options.length; i++) {
           console.log(this.options[i].id);
           for (let j = 0; j < this.attendees.length; j++) {
-
-
-
             if (this.options[i].id == this.attendees[j]) {
-
               console.log("True");
               jQuery("#" + this.attendees[j]).prop("checked", true);
             }
           }
         }
-
-
-
       },
       error => {
         console.log(error.text());
       }
       );
-
     console.log(this.firstlast);
-
-
-
-
     this.http.get('http://localhost:8081/getFaci', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -141,7 +151,6 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
-
     this.http.get('http://localhost:8081/getRec', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -152,52 +161,139 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
-    this.a = "Hello";
 
   }
-  updateChecked(option, event) {
+
+
+
+  updateChecked: (option, event) => any
+  = function(option, event) {
+
+
     console.log('event.target.value ' + event.target.value);
     var index = this.checked.indexOf(option);
     if (event.target.checked) {
       console.log('add');
       if (index === -1) {
         this.checked.push(option);
+        //this.unchecked.splice(index, 1);
       }
     } else {
       console.log('remove');
       if (index !== -1) {
         this.checked.splice(index, 1);
+      //  this.unchecked.push(option)
       }
     }
-    //this.checked[option]=event.target.value; // or `event.target.value` not sure what this event looks like
-    console.log(this.checked);
-
+    var indexValue = jQuery('input:checkbox:not(:checked)').map(function() {
+      return jQuery(this)[0].id;
+    }).get();
+    var abc =indexValue.map(Number);
+for ( var i in abc ) {
+  for(var j in this.attendees)
+  {
+      if (this.attendees[j] == abc[i])  {
+        console.log(abc[i]);
+        this.attendees.splice(this.attendees.indexOf(abc[i]), 1);
+      }
   }
+}
+console.log(this.attendees);
 
 
-
-
-  //  meeting = new Meeting('','','','','','','','','','','');
+    //this.checked[option]=event.target.value; // or `event.target.value` not sure what this event looks like
+    // console.log(this.checked);
+    // console.log(this.unchecked);
+    // for(let i = 0 ; i < this.options.length ; i++){
+    //       for(let j = 0 ; j < this.checked.length ; j++){
+    //         if(this.options[i].id == this.checked[j])
+    //         {
+    //             this.unchecked.splice(j, 1);
+    //           //console.log(this.checked[j] + "True");
+    //         }
+    //       }
+    // }
+    // console.log(this.unchecked);
+  }
+  sample = [];
   submitted = false;
   edit_view = 1;
+  dateArr = [];
+  Date1 = new Date();
+  Date2 = new Date();
+  onSubmit: (meeting) => any
+  = function(meeting) {
+    console.log(meeting.meetingDate);
+    this.dateArr =meeting.meetingDate.split("-");
+    console.log(this.dateArr[0],this.dateArr[1],this.dateArr[2]);
 
-  onSubmit(meeting) {
+    console.log(this.dateArr[0],this.dateArr[1],this.dateArr[2],meeting.startHours,meeting.startMinutes);
+    this.Date1 = new Date(this.dateArr[0],this.dateArr[1],this.dateArr[2],meeting.startHours,meeting.startMinutes);
+    console.log(this.Date1);
+
+    this.Date2 = new Date(this.dateArr[0],this.dateArr[1],this.dateArr[2],meeting.endHours,meeting.endMinutes);
+    console.log(this.Date2);
+
+    if(this.Date1 > this.Date2)
+    {
+      //alert("Please Enter valid Timings.");
+      jQuery("#startTimeError").css("display", "block");
+      jQuery("#endTimeError").css("display", "block");
+      // meetings.startHours = "";
+      // meetings.startMinutes = "";
+      // meetings.startForm = "";
+      // meetings.endHours = "";
+      // meetings.endMinutes = "";
+      // meetings.endForm = "";
+      return;
+    }
+    else
+    {
+      jQuery("#startTimeError").css("display", "none");
+      jQuery("#endTimeError").css("display", "none");
+    }
+    meeting.startTime = meeting.startHours + ":" + meeting.startMinutes;
+    console.log(meeting.startTime);
+
+    meeting.endTime = meeting.endHours + ":" + meeting.endMinutes;
+    console.log(meeting.endTime);
+    console.log("User ID", this.userId.userId);
     //var arrObj =[];
-    // jQuery(function() {
-    //   jQuery("#datepicker").datepicker();
-    //   jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
-    //   //jQuery("#datepicker").datepicker('setDate', meetings.meetingDate);
-    // });
-    // console.log(jQuery("#datepicker").val());
+  /*  jQuery( function() {
+      jQuery( "#datepicker" ).destroy();
+      jQuery( "#datepicker" ).datepicker();
+      jQuery("#datepicker").datepicker('setDate', meeting.meetingDate);
+      jQuery("#datepicker").datepicker( "option", "dateFormat", 'yy-mm-dd');
+    });*/
+  //  jQuery("#datepicker").datepicker('setDate', meetings.meetingDate);
 
-    //meeting.meetingDate = jQuery("#datepicker").datepicker( "option", "dateFormat", 'yy-mm-dd' ).val();
-  		this.submitted = true;
+    //console.log(jQuery("#datepicker").val());
+    meeting.meetingDate = jQuery("#datepicker").datepicker( "option", "dateFormat", 'yy-mm-dd' ).val();
+    this.submitted = true;
+    meeting.meeting_attendees = "";
+    for(let i = 0 ; i < this.checked.length ; i++){
+      if(i ==0 ){
+      meeting.meeting_attendees = meeting.meeting_attendees + this.checked[i];
+    }
+    else
+    {
+      meeting.meeting_attendees = meeting.meeting_attendees + "," +this.checked[i];
+    }
+    }
+    console.log(meeting.meeting_attendees);
 
-    meeting.meeting_attendees = JSON.stringify(this.checked);
-    console.log(JSON.stringify(meeting.meeting_attendees));
+
+    // meeting.meeting_attendees = JSON.stringify(this.checked);
+    // console.log(meeting.meeting_attendees);
+    // //meeting.meeting_attendees.pop();
+    // //meeting.meeting_attendees.shift();
+    // console.log(meeting.meeting_attendees);
+    // console.log(JSON.stringify(meeting.meeting_attendees));
+    // this.sample = meeting.meeting_attendees.split("");
+    // console.log(this.sample);
+
     console.log(meeting.meetingStatus);
     console.log(meeting);
-
     var meetingObj = {
       //id: req.body.meeting_id,
       status: meeting.meetingStatus,
@@ -211,63 +307,119 @@ export class MeetingComponent implements OnInit {
       startTime: meeting.startTime,
       endTime: meeting.endTime,
       agenda: meeting.meetingAgenda,
-      attendees: meeting.meeting_attendees
+      attendees: meeting.meeting_attendees,
+      startForm : meeting.startForm,
+      endForm : meeting.endForm
     }
-
-
-
-    this.http.post('http://localhost:8081/postMeeting', JSON.stringify(meetingObj), { headers: contentHeaders })
+    this.http.post('http://localhost:8081/postMeeting',[this.userId.userId , JSON.stringify(meetingObj)], { headers: contentHeaders })
       .subscribe(
       response => {
         console.log(response.json());
-        window.alert("Meeting Added!!");
+        document.getElementById("errorId").innerHTML = "Insert successfull";
+        //window.alert("Meeting Added!!");
       },
       error => {
         console.log(error.text());
-        window.alert("Please Enter Valid details");
+        //window.alert("Please Enter Valid details");
       }
       );
-
     jQuery("#createsuccess").css("display", "block");
-    // this.reset();
+this.router.navigate(['/meetingList']);
   }
-  reset() {
-
+  reset: () => any
+  = function() {
     this.meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: '', meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '' }];
-    this.meetings[0].meetingDate = '';
-    //jQuery("#datepicker").datepicker('setDate', '');
+
   }
   numarr = [];
+  tempattendees : string;
+  edit: (meetings) => any
+  = function(meetings) {
+    // meetings.meeting_attendees = "";
+    // for(let i = 0 ; i < this.checked.length ; i++){
+    //   if(i ==0 ){
+    //   meetings.meeting_attendees = meetings.meeting_attendees + this.checked[i];
+    // }
+    // else
+    // {
+    //   meetings.meeting_attendees = meetings.meeting_attendees + "," +this.checked[i];
+    // }
+    // }
+    // console.log(meetings.meeting_attendees);
 
+    //this.checked[option]=event.target.value; // or `event.target.value` not sure what this event looks like
+    console.log(this.checked);
+    var trackIndex = jQuery('input:checkbox:checked').map(function() {
+      return jQuery(this).val();
+      }).get();
+    console.log(this.trackindex);
+    console.log(meetings.meetingDate);
+    this.dateArr =meetings.meetingDate.split("-");
+    console.log(this.dateArr[0],this.dateArr[1],this.dateArr[2]);
 
-  edit(meetings) {
+    console.log(this.dateArr[0],this.dateArr[1],this.dateArr[2],meetings.startHours,meetings.startMinutes);
+    this.Date1 = new Date(this.dateArr[0],this.dateArr[1],this.dateArr[2],meetings.startHours,meetings.startMinutes);
+    console.log(this.Date1);
 
+    this.Date2 = new Date(this.dateArr[0],this.dateArr[1],this.dateArr[2],meetings.endHours,meetings.endMinutes);
+    console.log(this.Date2);
 
-    /*  jQuery( function() {
+    if(this.Date1 > this.Date2)
+    {
+      //alert("Please Enter valid Timings.");
+      jQuery("#startTimeError").css("display", "block");
+      jQuery("#endTimeError").css("display", "block");
+      // meetings.startHours = "";
+      // meetings.startMinutes = "";
+      // meetings.startForm = "";
+      // meetings.endHours = "";
+      // meetings.endMinutes = "";
+      // meetings.endForm = "";
+      return;
+    }
+    else
+    {
+      jQuery("#startTimeError").css("display", "none");
+      jQuery("#endTimeError").css("display", "none");
+    }
+    meetings.startTime = meetings.startHours + ":" + meetings.startMinutes;
+    meetings.endTime = meetings.endHours + ":" + meetings.endMinutes;
+    /* jQuery( function() {
+       jQuery( "#datepicker" ).destroy();
        jQuery( "#datepicker" ).datepicker();
        jQuery("#datepicker").datepicker('setDate', meetings.meetingDate);
-        jQuery("#datepicker").datepicker( "option", "dateFormat", 'yy-mm-dd');
-      } );
-  */
+       jQuery("#datepicker").datepicker( "option", "dateFormat", 'yy-mm-dd');
+        });
+*/
 
-
-
+    // this.attendees.pop();
+    // this.attendees.shift();
     console.log(this.attendees);
-    this.attendees.pop();
-    this.attendees.shift();
-    console.log(this.attendees);
-    this.numarr = this.attendees.map(Number);
-    console.log(this.numarr);
+    // this.numarr = this.attendees.map(Number);
+    // console.log(this.numarr);
     console.log(this.checked);
-
-    for (let i = 0; i < this.numarr.length; i++) {
-      this.checked.push(this.numarr[i]);
+    for (let i = 0; i < this.attendees.length; i++) {
+      this.checked.push(this.attendees[i]);
     }
+
     //  this.edit_view = 0;
     //  meetings.meeting_attendees = JSON.stringify(this.attendees);
     console.log(this.checked);
-    meetings.meetingAttendees = JSON.stringify(this.checked);
-    console.log(JSON.stringify(meetings.meetingAttendees));
+    this.tempattendees = "";
+    for(let i = 0 ; i < this.checked.length ; i++){
+      if(i ==0 ){
+      this.tempattendees = this.tempattendees + this.checked[i];
+    }
+    else
+    {
+      this.tempattendees = this.tempattendees + "," +this.checked[i];
+    }
+    }
+    console.log(this.tempattendees);
+
+
+    meetings.meetingAttendees = this.tempattendees
+    console.log(meetings.meetingAttendees);
     console.log(meetings);
     console.log(this.meeting_id);
     //meetings.meetingDate = jQuery("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd').val();
@@ -284,28 +436,26 @@ export class MeetingComponent implements OnInit {
       startTime: meetings.startTime,
       endTime: meetings.endTime,
       agenda: meetings.meetingAgenda,
-      attendees: meetings.meetingAttendees
+      attendees: meetings.meetingAttendees,
+      startForm : meetings.startForm,
+      endForm : meetings.endForm
     }
-
-    this.http.put('http://localhost:8081/updateMeeting', JSON.stringify(meetingObj), { headers: contentHeaders })
+    this.http.put('http://localhost:8081/updateMeeting',[this.userId.userId , JSON.stringify(meetingObj)], { headers: contentHeaders })
       .subscribe(
       response => {
         console.log(response.json());
-        window.alert("Meeting Updated!!");
+        document.getElementById("errorId").innerHTML = "Update successfull";
+      //  window.alert("Meeting Updated!!");
       },
       error => {
         console.log(error.text());
-        window.alert("Please Enter Valid details");
+      //  window.alert("Please Enter Valid details");
       }
       );
-    //  alert("Updated");
     jQuery("#editsuccess").css("display", "block");
-
-
+      this.router.navigate(['/meetingList']);
   }
   ngOnInit() {
-
-
+    this.meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: this.userName, meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '',startHours :'',startMinutes:'',startForm:'',endHours :'',endMinutes:'', endForm:''}];
   }
-
 }

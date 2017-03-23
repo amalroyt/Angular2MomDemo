@@ -1,4 +1,4 @@
-<head>
+<!-- <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -7,33 +7,33 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="checkbox.js"></script>
-</head>
+</head> -->
 <router-outlet>
-<body class="wrapper">
+<div class="wrapper">
 
 
- <div class="links">
+ <!-- <div class="links">
     <ol style="float:left;height:30px;" class="breadcrumb">
       <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
       <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
       <li><a routerLink="/meetingList" routerLinkActive="active">List</a></li>
       <li class="active">Add New Meeting</li>
     </ol>
-    <!--<div class="menu"><span>Welcome User</span>
+    <div class="menu"><span>Welcome User</span>
       <img src="./app/images/login.jpg">
-    </div>-->
-  </div>
+    </div>
+  </div> -->
 
   <div class="Wrapper1">
     <form (ngSubmit)="onSubmit(meetings)" name="userForm" #meetingForm="ngForm">
       <h3>CREATE A NEW MEETING</h3>
-      <span id="createsuccess" class="success">Meeting Created Successfully!!</span>
+      <!-- <span id="createsuccess" class="success">Meeting Created Successfully!!</span>
       <span id="editsuccess" class="success">Meeting Modified Successfully!!</span>
-      <span id="error" class="error">Please Enter Valid Details to continue.</span>
+      <span id="error" class="error">Please Enter Valid Details to continue.</span> -->
     <div [hidden]="edit_view" class="form-group row">
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Id* :</label>
           <div class="col-md-4">
-            <input disabled="disabled" class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meetings.meetingId" #id="ngModel">
+            <input readonly="readonly" class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meetings.meetingId" #id="ngModel">
             <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Meeting ID is required</div>
           </div>
       </div>
@@ -41,28 +41,41 @@
         <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
           <div class="radio col-md-4">
             <label>
-					          <input #open name="radio" type="radio" value="1" (click)="meetings.meetingStatus = open.value" [checked]="edit_view"/>
+					          <input #open name="radio" type="radio" value="1"  (click)="meetings.meetingStatus = open.value" checked />
 					              Open
 				    </label>
             <label>
-			             <input #closed name="radio" type="radio" value="2" [disabled]="edit_view" (click)="meetings.meetingStatus = closed.value" />
+			             <input #closed name="radio" type="radio" value="2"  [disabled]="edit_view" (click)="meetings.meetingStatus = closed.value" />
 				               Closed
 			      </label>
           </div>
 
-        <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
+
+        <!-- <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
+          <div id="checkboxSelectCombo" class="col-md-4">
+            <select (change)="onChange($event.target.value)" [(ngModel)]="meetings.meetingType"   class="form-control" required name="type" >
+              <option value="" disabled >Please select a Meeting Type</option>-->
+              <!--<option value="" disabled="disabled" selected="selected">Please select a Meeting Type</option>-->
+              <!-- <option *ngFor="let type of types" [attr.value]="type.id"   >{{type.meetingType}}</option>
+						</select>
+            </div> -->
+
+            <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
           <div id="checkboxSelectCombo" class="col-md-4">
             <select class="form-control" required [(ngModel)]="meetings.meetingType" name="type">
               <option value="" disabled="disabled" selected="selected">Please select a Meeting Type</option>
               <option *ngFor="let type of types" [value]="type.id">{{type.meetingType}}</option>
 						</select>
             </div>
+
+
+
       </div>
       <div class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
             <div class="col-md-4">
-                <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input"  required [(ngModel)]="meetings.meetingTitle" #title="ngModel">
-                  <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required</div>
+                <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input"  required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="^[a-zA-Z0-9_]*$">
+                  <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required & must be valid.</div>
 
             </div>
 
@@ -74,7 +87,15 @@
               </div>
       </div>
       <div class="form-group row">
-          <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
+          <!-- <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
+              <div class="col-md-4">
+                  <select (change)="onChange($event.target.value)"  [(ngModel)]="meetings.meetingFacilitator" class="form-control" required name="facilitator" >
+                      <option value="" disabled="disabled" selected="selected">Please select a Facilitator</option>-->
+                      <!-- <option *ngFor="let fac of facilitator" [attr.value]="fac.id">{{fac.firstlast}}</option>
+						      </select>
+              </div>  -->
+
+              <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
               <div class="col-md-4">
                   <select class="form-control" name="facilitator" [(ngModel)]="meetings.meetingFacilitator" required>
                       <option value="" disabled="disabled" selected="selected">Please select a Facilitator</option>
@@ -82,14 +103,27 @@
 						      </select>
               </div>
 
+               <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
+                 <div class="col-md-4">
+                     <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
+                         <option [attr.value]="userName"  selected="selected">{{userName}}</option>
+                         <option *ngFor="let rec of recorder" [value]="rec.id">{{rec.firstlast}}</option>
+                     </select>
+                 </div>
 
-              <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
-                  <div class="col-md-4">
-                      <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
-                           <option value="" disabled="disabled" selected="selected">Please select a Recorder</option>
-                          <option *ngFor="let rec of recorder" [value]="rec.id">{{rec.firstlast}}</option>
-    						      </select>
-                  </div>
+                 <!-- <select [(ngModel)]="meetings.meetingRecorder" name="recorder">
+                   <option *ngFor="let rec of recorder" value= {{rec.id}}>
+                     {{rec.firstlast}}
+                   </option>
+                 </select> -->
+              <!-- <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
+              <div class="col-md-4">
+                  <select (change)="onChange($event.target.value)" [(ngModel)]="meetings.meetingRecorder" class="form-control"  name="recorder"  required>
+                       <option [attr.value]="userName"  selected="selected">{{userName}}</option>
+                      <option *ngFor="let rec of recorder" [attr.value]="rec.id">{{rec.firstlast}}</option>
+                  </select>
+              </div> -->
+
             <!--<label for="example-text-input" class="col-md-2 col-form-label">Recorder* : </label>
                 <div class="col-md-4">
                     <input class="form-control" name="recorder" type="text" placeholder="Recorder" id="example-text-input" required [(ngModel)]="meeting.meeting_recorder" #recorder="ngModel">
@@ -107,6 +141,7 @@
               <div class="col-md-4">
 
                 <!--<input class="form-control" type="date" required [(ngModel)]="myDate" name="date" ng2-datetime-picker date-only="true" />-->
+                  <!--<div [hidden]="edit_view"><input class="form-control" type="text" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate"></div>-->
                   <input  id="datepicker" class="form-control" type="date" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate"><!--<span><input type="date"></span>-->
 
                     <div [hidden]="date.valid || date.pristine" class="alert alert-danger">Meeting Date is required</div>
@@ -115,15 +150,49 @@
       <div class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label">Start Time* :</label>
               <div class="col-md-4">
-                  <input class="form-control" type="text" name="st" placeholder="Enter Start Time" required [(ngModel)]="meetings.startTime" #st="ngModel" pattern="^(1?[0-9]|2[0-3]):[0-5][0-9]$">
-                    <div [hidden]="st.valid || st.pristine" class="alert alert-danger">Meeting Start Time is required & must be valid.</div>
 
+                <div class="col-md-4">
+                <select class="form-control" name="shour" [(ngModel)]="meetings.startHours" required>
+                     <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control" name="smin" [(ngModel)]="meetings.startMinutes" required>
+                     <option *ngFor="let min of time.minutes" [attr.value]="min">{{min}}</option>
+                </select>
+                </div>
+                <div class="col-md-4">
+                <select  [(ngModel)]="meetings.startForm" class="form-control" name="sform"  required>
+                     <option *ngFor="let form of time.form" [attr.value]="form">{{form}}</option>
+                </select>
+              </div>
+                <!--  <input class="form-control" type="text" name="st" placeholder="Enter Start Time" required [(ngModel)]="meetings.startTime" #st="ngModel" pattern="^(1?[0-9]|2[0-3]):[0-5][0-9]$">
+                    <div [hidden]="st.valid || st.pristine" class="alert alert-danger">Meeting Start Time is required & must be valid.</div>
+                    -->
+                    <span id="startTimeError" class="error">Please Enter Valid Start Time.</span>
               </div>
 
               <label for="example-url-input" class="col-md-2 col-form-label">End Time* : </label>
-                  <div class="col-md-4">
-                      <input class="form-control" name="et" type="text" placeholder="Enter End Time" required [(ngModel)]="meetings.endTime" #et="ngModel" pattern="^(1?[0-9]|2[0-3]):[0-5][0-9]$">
+                  <div class="col-md-4 ">
+                    <div class="col-md-4 ">
+                    <select  class="form-control" name="ehour" [(ngModel)]="meetings.endHours" required>
+                         <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
+                    </select>
+                      </div>
+                    <div class="col-md-4">
+                    <select  class="form-control" name="emin" [(ngModel)]="meetings.endMinutes" required>
+                         <option *ngFor="let min of time.minutes" [attr.value]="min">{{min}}</option>
+                    </select>
+                      </div>
+                    <div class="col-md-4">
+                    <select  class="form-control" name="eform" [(ngModel)]="meetings.endForm" required>
+                         <option *ngFor="let form of time.form" [attr.value]="form">{{form}}</option>
+                    </select>
+                      </div>
+                      <!--<input class="form-control" name="et" type="text" placeholder="Enter End Time" required [(ngModel)]="meetings.endTime" #et="ngModel" pattern="^(1?[0-9]|2[0-3]):[0-5][0-9]$">
                         <div [hidden]="et.valid || et.pristine" class="alert alert-danger">Meeting End Time is required & must be valid.</div>
+                      -->
+                      <span id="endTimeError" class="error">Please Enter Valid End Time.</span>
                   </div>
       </div>
       <div class="form-group row">
@@ -137,7 +206,7 @@
 
                 <div *ngFor="let option of options">
 
-                  <input  [attr.id]="option.id"   type="checkbox" name="option" [attr.name]="options"  [value]="option.id" (change)="updateChecked(option.id, $event)" >{{option.firstlast}}
+                  <input  [attr.id]="option.id" type="checkbox" name="option" [attr.name]="options"  [value]="option.id" (change)="updateChecked(option.id, $event)" >{{option.firstlast}}
 
                 </div>
 
@@ -145,6 +214,13 @@
 
 
     </div>
+
+    <!-- <select  class="form-control"  (change)="onChange($event.target.value)">
+              <option value="" disabled>Select a Content</option>
+              <option *ngFor="let rec of recorder  " [value]="rec.firstlast">
+                {{rec.firstlast}}
+              </option>
+            </select> -->
   </div>
 
 
@@ -169,5 +245,5 @@
     </form>
   </div>
 
-</body>
+</div>
 </router-outlet>
