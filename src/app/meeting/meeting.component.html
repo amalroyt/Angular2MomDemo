@@ -1,4 +1,5 @@
 <router-outlet>
+
   <div class="wrapper">
     <div class="Wrapper1">
       <form (ngSubmit)="onSubmit(meetings)" name="userForm" id="myForm" #meetingForm="ngForm">
@@ -6,6 +7,7 @@
 
         <div [hidden]="edit_view" class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Id* :</label>
+
           <div class="col-md-4">
             <input readonly="readonly" class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meetings.meetingId" #id="ngModel">
             <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Meeting ID is required</div>
@@ -37,11 +39,11 @@
         <div class="form-group row">
 
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
+
           <div class="col-md-4">
             <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="^[a-zA-Z0-9_]*$">
             <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required & must be valid.</div>
           </div>
-
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Purpose* :</label>
           <div class="col-md-4">
             <input class="form-control" name="purpose" type="text" placeholder="Enter the Meeting Purpose" id="example-text-input" required [(ngModel)]="meetings.meetingPurpose" #purpose="ngModel">
@@ -56,6 +58,7 @@
                       <option value="" disabled="disabled" selected="selected">Please select a Facilitator</option>
                       <option *ngFor="let fac of facilitator" [value]="fac.id">{{fac.firstlast}}</option>
 						      </select>
+
           </div>
 
           <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
@@ -87,7 +90,7 @@
           <div class="col-md-4">
             <div class="col-md-4">
               <select class="form-control" name="shour" [(ngModel)]="meetings.startHours" required>
-                     <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
+                <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -99,6 +102,7 @@
               <select [(ngModel)]="meetings.startForm" class="form-control" name="sform" required>
                      <option *ngFor="let form of time.form" [attr.value]="form">{{form}}</option>
                 </select>
+
             </div>
             <span id="startTimeError" class="error">Please Enter Valid Start Time.</span>
           </div>
@@ -161,6 +165,7 @@
                           Edit  <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Update"></span>
                   </button>
           </div>
+
         </div>
       </form>
     </div>

@@ -1,5 +1,5 @@
 // Import our dependencies
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login';
 import { MeetingComponent } from './meeting';
 import { MeetingListComponent } from './meetingList';

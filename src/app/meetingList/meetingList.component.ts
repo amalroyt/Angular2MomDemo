@@ -83,7 +83,6 @@ export class MeetingListComponent {
   //To delete selected meetingList
   toDelete: () => void
   = function(): void {
-    //document.getElementById("errorId").innerHTML = "";
     var userId = this.userId.userId;
     var meetingIds = jQuery('input:checkbox:checked').map(function() {
       return jQuery(this).val();

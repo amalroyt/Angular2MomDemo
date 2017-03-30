@@ -38,10 +38,12 @@ export class MeetingComponent implements OnInit {
   checkValue = [];
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
 
-
-    this.accounts = [{ 'id': 1, 'name': 'Pardeep' }, { 'id': 2, 'name': 'Jain' }, { 'id': 3, 'name': 'Angular2' }];
+    document.getElementById("errorId").innerHTML = "";
     jQuery("#editsuccess").css("display", "none");
     jQuery("#createsuccess").css("display", "none");
+    console.log("User ID", this.userId.userId);
+    console.log("Recorder", this.userId.firstName + " " + this.userId.lastName);
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meeting_id = params['id'];
       console.log(this.meeting_id);
@@ -69,45 +71,43 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
-  if ((this.meeting_id) != undefined) {
-    this.http.get('http://localhost:8081/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.meetingInfo = response.json();
-        if ((this.meetingInfo).length != 0) {
-          this.meetings = this.meetingInfo[0];
-          this.meetings[0] = this.meetingInfo[0];
+    if ((this.meeting_id) != undefined) {
+      this.http.get('http://localhost:8081/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
+        .subscribe(
+        response => {
+          this.meetingInfo = response.json();
+          if ((this.meetingInfo).length != 0) {
+            this.meetings = this.meetingInfo[0];
+            this.meetings[0] = this.meetingInfo[0];
 
-          this.timeArr = (this.meetings[0].startTime).split(":");
-          this.meetings[0].startHours = this.timeArr[0];
-          this.meetings[0].startMinutes = this.timeArr[1];
+            this.timeArr = (this.meetings[0].startTime).split(":");
+            this.meetings[0].startHours = this.timeArr[0];
+            this.meetings[0].startMinutes = this.timeArr[1];
 
-          this.endtimeArr = (this.meetings[0].endTime).split(":");
-          this.meetings[0].endHours = this.endtimeArr[0];
-          this.meetings[0].endMinutes = this.endtimeArr[1];
+            this.endtimeArr = (this.meetings[0].endTime).split(":");
+            this.meetings[0].endHours = this.endtimeArr[0];
+            this.meetings[0].endMinutes = this.endtimeArr[1];
 
-        } else {
-          console.log("New Meeting Value");
-        }
-        console.log(this.meetings[0].meetingAttendees);
-        this.result = this.meetings[0].meetingAttendees.split(",");
-        console.log(this.result);
-        this.attendees = this.result;
-        console.log(this.attendees);
-        for (let i = 0; i < this.options.length; i++) {
-          console.log(this.options[i].id);
-          for (let j = 0; j < this.attendees.length; j++) {
-            if (this.options[i].id == this.attendees[j]) {
-              jQuery("#" + this.attendees[j]).prop("checked", true);
+          } else {
+            console.log("New Meeting Value");
+          }
+
+          console.log(this.attendees);
+
+          for (let i = 0; i < this.options.length; i++) {
+            console.log(this.options[i].id);
+            for (let j = 0; j < this.attendees.length; j++) {
+              if (this.options[i].id == this.attendees[j]) {
+                jQuery("#" + this.attendees[j]).prop("checked", true);
+              }
             }
           }
+        },
+        error => {
+          console.log(error.text());
         }
-      },
-      error => {
-        console.log(error.text());
-      }
-      );
-}
+        );
+    }
     this.http.get('http://localhost:8081/getFaci', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -127,28 +127,30 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
-  if ((this.meeting_id) != undefined) {
-    this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.checkValue = response.json();
-        for (var i = 0; i < this.checkValue.length; i++) {
-          if (this.checkValue[i].status == 1 || this.checkValue[i].status == 3 || this.checkValue[i].status == 4) {
-            jQuery("#closed").prop("disabled", true);
-            document.getElementById("errorId").innerHTML = "As all Action Items are not marked as closed, you can not close the meeting Status";
+
+    if ((this.meeting_id) != undefined) {
+      this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
+        .subscribe(
+        response => {
+          this.checkValue = response.json();
+          for (var i = 0; i < this.checkValue.length; i++) {
+            if (this.checkValue[i].status == 1 || this.checkValue[i].status == 3 || this.checkValue[i].status == 4) {
+              jQuery("#closed").prop("disabled", true);
+              document.getElementById("errorId").innerHTML = "As all Action Items are not marked as closed, you can not close the meeting Status";
+            }
           }
+        },
+        error => {
+          console.log(error.text());
         }
-      },
-      error => {
-        console.log(error.text());
-      }
-      );
-}
-document.getElementById("errorId").innerHTML = "";
-}
+        );
+    }
+    document.getElementById("errorId").innerHTML = "";
+  }
 
   updateChecked: (option, event) => any
   = function(option, event) {
+
     var index = this.checked.indexOf(option);
     if (event.target.checked) {
       console.log('add');
@@ -161,6 +163,7 @@ document.getElementById("errorId").innerHTML = "";
         this.checked.splice(index, 1);
       }
     }
+
     var indexValue = jQuery('input:checkbox:not(:checked)').map(function() {
       return jQuery(this)[0].id;
     }).get();
@@ -226,7 +229,6 @@ document.getElementById("errorId").innerHTML = "";
     console.log(meeting.startTime);
     meeting.endTime = meeting.endHours + ":" + meeting.endMinutes;
     console.log(meeting.endTime);
-    this.submitted = true;
     meeting.meeting_attendees = "";
     for (let i = 0; i < this.checked.length; i++) {
       if (i == 0) {
@@ -244,6 +246,7 @@ document.getElementById("errorId").innerHTML = "";
       meeting.meeting_attendees = attendeesId;
     }
     console.log(meeting.meeting_attendees);
+
     console.log(meeting);
     var meetingObj = {
       //id: req.body.meeting_id,
@@ -273,11 +276,13 @@ document.getElementById("errorId").innerHTML = "";
       }
       );
     jQuery("#createsuccess").css("display", "block");
+
   }
   reset: () => any
   = function() {
     this.meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: '', meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '' }];
   }
+
   numarr = [];
   tempattendees: string;
   edit: (meetings) => any
@@ -308,10 +313,13 @@ document.getElementById("errorId").innerHTML = "";
     }
     meetings.startTime = meetings.startHours + ":" + meetings.startMinutes;
     meetings.endTime = meetings.endHours + ":" + meetings.endMinutes;
-    console.log(this.attendees);
+
     console.log(this.checked);
+
     for (let i = 0; i < this.attendees.length; i++) {
       this.checked.push(this.attendees[i]);
+
+
     }
     console.log(this.checked);
     this.tempattendees = "";
@@ -360,11 +368,14 @@ document.getElementById("errorId").innerHTML = "";
       }
       );
     jQuery("#editsuccess").css("display", "block");
+
     document.getElementById("errorId").innerHTML = "Update successfull";
     this.router.navigate(['/meetingList']);
   }
   ngOnInit() {
     // jQuery("#myForm").get(0).reset();
     // jQuery("#myForm").trigger("reset");
+
   }
+
 }
