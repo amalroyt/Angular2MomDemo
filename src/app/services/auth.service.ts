@@ -8,7 +8,6 @@ export class AuthenticationService {
 
   login: (user) => boolean
   = function(user): boolean {
-    console.log("login");
     user = JSON.stringify(user);
     var authenticatedUser = user;
     if (user) {
@@ -30,9 +29,8 @@ export class AuthenticationService {
     }
   }
   getUserdetails: () => any
-  = function(): any {console.log("getuserdetails");
+  = function(): any {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
-    console.log(this.storageVal);
     return this.storageVal[0];
   }
   logout: () => void

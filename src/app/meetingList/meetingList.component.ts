@@ -14,6 +14,7 @@ declare var jQuery: any;
 export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
+
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
@@ -23,7 +24,6 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
-      //document.getElementById("errorId").innerHTML = "";
   }
   // To open create new meeting form
   edit: (id: number) => void
@@ -31,16 +31,7 @@ export class MeetingListComponent {
     console.log(id);
     this.router.navigate(['/meeting',id]);
   }
-  // To check if meeting is open
-  // isOpen: (isOpen: string) => boolean
-  // = function(isOpen: string): boolean {
-  //   if (isOpen === 'Open') {
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
+
   //To open actionDiscussion form
   openActionDiscussionForm: (id: any) => void
   = function(id: any): void {
@@ -87,23 +78,6 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
-  }
-
-  //Select all toggle
-  toSelectAllToggle: () => void
-  = function(): void {
-var isChekedAll = (<HTMLInputElement>document.getElementById('toSelectAll')).checked;
-var deleteCheckbox = document.getElementsByClassName("deleteCheckbox");
-
-  // if (jQuery(this).hasClass('Checked')) {
-  //     jQuery('input[type="checkbox"]', 'deleteCheckbox').prop('checked', false);
-  // } else {
-  //     jQuery('input[type="checkbox"]', 'deleteCheckbox').prop('checked', true);
-  // }
-  // jQuery(this).toggleClass('Checked');
-  //
-
-
   }
 
   //To delete selected meetingList
