@@ -1,13 +1,13 @@
 <section id="beforeHeader">
   <nav class="navbar navbar-default navbar-static-top links">
-    <div class="navbar-default" *ngIf="userDetails.firstName">
-        <ul class="nav navbar-nav" routerLinkActive="active">
-            <li class="nav-item"><a class="nav-link" routerLink="meetingList">Meetinglist</a></li>
-            <li class="nav-item"><a class="nav-link" routerLink="meeting">Create new meeting</a></li>
-        </ul>
+    <div class="navbar-default" *ngIf="isLog.logValue">
+      <ul class="nav navbar-nav" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" routerLink="meetingList">Meetinglist</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="meeting">Create new meeting</a></li>
+      </ul>
     </div>
   </nav>
-  <div id="displayDetails" *ngIf="userDetails.firstName">
+  <div id="displayDetails" *ngIf="isLog.logValue">
     <button type="button" class="btn btn-danger btn-sm logoutBtn" (click)="onLogout()">
         <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
     </button>
@@ -19,7 +19,7 @@
 
 <header>
   <div id="logoDetails">
-  <img style="float:left;" src="./app/images/cybage.jpg">
+    <img style="float:left;" src="./app/images/cybage.jpg">
     <h1 id="meetingTitle">DOMO MEETING</h1>
   </div>
 </header>

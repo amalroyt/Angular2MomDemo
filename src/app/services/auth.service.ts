@@ -29,7 +29,7 @@ export class AuthenticationService {
     }
   }
   getUserdetails: () => any
-  = function(): any {console.log("getuserdetails");
+  = function(): any {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
     return this.storageVal[0];
   }

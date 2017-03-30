@@ -43,6 +43,12 @@
       <div id="discussion" class="tab-pane fade in active">
         <div id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="discmodal-container">
+            <div class="row">
+              <div class="col-md-10"></div>
+              <div class="col-md-2">
+                <input type="Submit" value="Submit" class="btn btn-success discmodal-submit" [class.disabled]="isClickedOnceTrue" (click)="onSubmit(); isClickedOnceTrue = true" [disabled]="!discForm.form.valid">
+              </div>
+            </div>
             <b><h1>ADD DISCUSSION POINTS</h1></b><br>
             <div>
               <form #discForm="ngForm" class="form-horizontal" novalidate>
@@ -156,7 +162,7 @@
             <div class="row">
               <div class="col-md-10"></div>
               <div class="col-md-2">
-                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" (click)="onSubmit()" [disabled]="!actionForm.form.valid">
+                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" [class.disabled]="isClickedOnce" (click)="onSubmitAction(); isClickedOnce = true" [disabled]="!actionForm.form.valid">
               </div>
             </div>
             <b><h1>ADD MEETING ACTIONS</h1></b><br/>
@@ -242,20 +248,6 @@
                             Expected Completion is required
                           </div>
                         </div>
-                        <!-- <div class="col-md-2">
-                        <label for="openSince">Open Since</label>
-                        <input type="text" class="form-control datepicker" id="openSince" required [(ngModel)]="modelAction.openSince" [ngModelOptions]="{standalone: true}" name="openSince" #openSince="ngModel">
-                        <div [hidden]="openSince.valid || openSince.pristine" style="color:red;">
-                          Open Since is required
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <label for="expectedCompletion">Expected Completion</label>
-                        <input type="text" class="form-control datepicker" id="expectedCompletion" required [(ngModel)]="modelAction.expectedCompletion" [ngModelOptions]="{standalone: true}" name="expectedCompletion" #expectedCompletion="ngModel">
-                        <div [hidden]="expectedCompletion.valid || expectedCompletion.pristine" style="color:red;">
-                          Expected Completion is required
-                        </div>
-                      </div> -->
                         <div class="col-md-2">
                           <select class="form-control" id="status" required [(ngModel)]="modelAction.status" [ngModelOptions]="{standalone: true}" name="status" #status="ngModel">
                         <option *ngFor="let state of statusValue" [value]="state.id">{{state.status}}</option>

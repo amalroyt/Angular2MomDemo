@@ -14,6 +14,7 @@ declare var jQuery: any;
 export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
+
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
@@ -77,14 +78,6 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
-  }
-
-  //Select all toggle
-  toSelectAllToggle: () => void
-  = function(): void {
-var isChekedAll = (<HTMLInputElement>document.getElementById('toSelectAll')).checked;
-var deleteCheckbox = document.getElementsByClassName("deleteCheckbox");
-
   }
 
   //To delete selected meetingList
