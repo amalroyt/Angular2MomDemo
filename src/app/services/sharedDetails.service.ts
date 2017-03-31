@@ -10,18 +10,15 @@ export class SharedService {
     isLoggedIn: false,
     isLoginPage: false
   };
-
   public loginDetails: LoginDetails = {
     logValue: false
   };
-
   setDetails: (details) => any
   = function(details): any {
     this.sharedDetails.firstName = details.firstName;
     this.sharedDetails.lastName = details.lastName;
     this.sharedDetails.isLoggedIn = true;
   }
-  
   setLog: (val: boolean) => any
   = function(val: boolean): any {
     this.loginDetails.logValue = val;
@@ -29,6 +26,7 @@ export class SharedService {
 
   resetDetails: () => any
   = function(): any {
+    console.log('resetDetails');
     this.sharedDetails.firstName = "";
     this.sharedDetails.lastName = "";
     this.sharedDetails.isLoginPage = true;

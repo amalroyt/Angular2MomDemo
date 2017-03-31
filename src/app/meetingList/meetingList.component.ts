@@ -20,6 +20,8 @@ export class MeetingListComponent {
       .subscribe(
       response => {
         this.meetingList = response.json();
+        //this.meetingList.meetingAttendees = meetingAttendees.split(',');
+
       },
       error => {
         console.log(error.text());
@@ -83,6 +85,7 @@ export class MeetingListComponent {
   //To delete selected meetingList
   toDelete: () => void
   = function(): void {
+    //document.getElementById("errorId").innerHTML = "";
     var userId = this.userId.userId;
     var meetingIds = jQuery('input:checkbox:checked').map(function() {
       return jQuery(this).val();

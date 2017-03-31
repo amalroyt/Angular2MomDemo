@@ -54,11 +54,12 @@ img {
   margin: 15px 20px;
   color: red;
 }
-
 .links {
   background-color: rgba(36, 62, 77, 1);
   margin: 0px;
   //height: 49px;
   width: 50%;
 }
-
+.navbar {
+  min-height: 50px;
+}

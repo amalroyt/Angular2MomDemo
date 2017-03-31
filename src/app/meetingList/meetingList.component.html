@@ -1,10 +1,4 @@
 <div class="meetingListModal container">
-  <div class="links">
-    <ol class="breadcrumb breadLinks">
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li class="active">Meetinglist</li>
-    </ol>
-  </div>
   <div class="meetingList">
     <div class="newMeeting">
       <button class="btn btn-success createButton" routerLink="/meeting" routerLinkActive="active">Create new meeting</button>
@@ -36,8 +30,8 @@
                   <span>
                     <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-lg" (click)="checkAll()">
                       <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select/Deselect All Rows"></span>
-                  </button>
-                  <button type="button" class="btn btn-danger btn-lg toDelete" (click)="toDelete()">
+                    </button>
+                    <button type="button" class="btn btn-danger btn-lg toDelete" (click)="toDelete()">
                       <span class="glyphicon glyphicon-trash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Delete"></span>
                   </button>
                   </span>
@@ -48,7 +42,7 @@
               <tr *ngFor="let meeting of meetingList">
                 <td class="col-md-2 td">
                   <span *ngIf="meeting.status != 'Open'">{{meeting.meetingTitle}}</span>
-                  <a *ngIf="meeting.status == 'Open'" href="" routerLink="/meeting" routerLinkActive="active" (click)="edit(meeting.meetingId)">{{meeting.meetingTitle}}</a>
+                   <a *ngIf="meeting.status == 'Open'" href="" routerLink="/meeting" routerLinkActive="active" (click)="edit(meeting.meetingId)" >{{meeting.meetingTitle}}</a>
                 </td>
                 <td class="col-md-2 td">
                   {{meeting.meetingAgenda}}
@@ -63,18 +57,19 @@
                   {{meeting.meetingDate}}
                 </td>
                 <td class="col-md-3">
-                  <input class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
+                  <input  class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
                   <button type="button" class="btn btn-default btn-lg floatPosition" (click)="moreDetails(meeting.meetingId)">
-                    <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
+                      <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
                   </button>
                   <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingTitle)">
-                    <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
+                      <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
                   </button>
                   <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="generateExcel(meeting.meetingId)">
-                    <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
+                      <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
                   </button>
+
                   <button *ngIf="meeting.status == 'Open'" type="button" class="btn btn-default btn-lg addButton floatPosition" (click)="openActionDiscussionForm(meeting.meetingId)">
-                    <span class="glyphicon glyphicon-edit glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
+                      <span class="glyphicon glyphicon-edit glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
                   </button>
                 </td>
               </tr>

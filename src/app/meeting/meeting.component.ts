@@ -33,17 +33,10 @@ export class MeetingComponent implements OnInit {
   endtimeArr = [];
   unchecked = [];
   result = [];
-  accounts = [];
-  SelectedValue: any = null;
-  checkValue = [];
+  checkAllValues = [];
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
-
-    document.getElementById("errorId").innerHTML = "";
     jQuery("#editsuccess").css("display", "none");
     jQuery("#createsuccess").css("display", "none");
-    console.log("User ID", this.userId.userId);
-    console.log("Recorder", this.userId.firstName + " " + this.userId.lastName);
-
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meeting_id = params['id'];
       console.log(this.meeting_id);
@@ -71,43 +64,45 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
-    if ((this.meeting_id) != undefined) {
-      this.http.get('http://localhost:8081/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
-        .subscribe(
-        response => {
-          this.meetingInfo = response.json();
-          if ((this.meetingInfo).length != 0) {
-            this.meetings = this.meetingInfo[0];
-            this.meetings[0] = this.meetingInfo[0];
+        if ((this.meeting_id) != undefined) {
+    this.http.get('http://localhost:8081/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
+      .subscribe(
+      response => {
+        this.meetingInfo = response.json();
+        if ((this.meetingInfo).length != 0) {
+          this.meetings = this.meetingInfo[0];
+          this.meetings[0] = this.meetingInfo[0];
 
-            this.timeArr = (this.meetings[0].startTime).split(":");
-            this.meetings[0].startHours = this.timeArr[0];
-            this.meetings[0].startMinutes = this.timeArr[1];
+          this.timeArr = (this.meetings[0].startTime).split(":");
+          this.meetings[0].startHours = this.timeArr[0];
+          this.meetings[0].startMinutes = this.timeArr[1];
 
-            this.endtimeArr = (this.meetings[0].endTime).split(":");
-            this.meetings[0].endHours = this.endtimeArr[0];
-            this.meetings[0].endMinutes = this.endtimeArr[1];
+          this.endtimeArr = (this.meetings[0].endTime).split(":");
+          this.meetings[0].endHours = this.endtimeArr[0];
+          this.meetings[0].endMinutes = this.endtimeArr[1];
 
-          } else {
-            console.log("New Meeting Value");
-          }
-
-          console.log(this.attendees);
-
-          for (let i = 0; i < this.options.length; i++) {
-            console.log(this.options[i].id);
-            for (let j = 0; j < this.attendees.length; j++) {
-              if (this.options[i].id == this.attendees[j]) {
-                jQuery("#" + this.attendees[j]).prop("checked", true);
-              }
+        } else {
+          console.log("New Meeting Value");
+        }
+        console.log(this.meetings[0].meetingAttendees);
+        this.result = this.meetings[0].meetingAttendees.split(",");
+        console.log(this.result);
+        this.attendees = this.result;
+        console.log(this.attendees);
+        for (let i = 0; i < this.options.length; i++) {
+          console.log(this.options[i].id);
+          for (let j = 0; j < this.attendees.length; j++) {
+            if (this.options[i].id == this.attendees[j]) {
+              jQuery("#" + this.attendees[j]).prop("checked", true);
             }
           }
-        },
-        error => {
-          console.log(error.text());
         }
-        );
-    }
+      },
+      error => {
+        console.log(error.text());
+      }
+      );
+}
     this.http.get('http://localhost:8081/getFaci', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -128,29 +123,26 @@ export class MeetingComponent implements OnInit {
       }
       );
 
-    if ((this.meeting_id) != undefined) {
-      this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
-        .subscribe(
-        response => {
-          this.checkValue = response.json();
-          for (var i = 0; i < this.checkValue.length; i++) {
-            if (this.checkValue[i].status == 1 || this.checkValue[i].status == 3 || this.checkValue[i].status == 4) {
-              jQuery("#closed").prop("disabled", true);
-              document.getElementById("errorId").innerHTML = "As all Action Items are not marked as closed, you can not close the meeting Status";
+      if ((this.meeting_id) != undefined) {
+        this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
+          .subscribe(
+          response => {
+            this.checkAllValues = response.json();
+            for (var i=0; i < this.checkAllValues.length; i++) {
+              if (this.checkAllValues[i].status !=2) {
+                jQuery('#closed').prop('disabled', true);
+                document.getElementById('errorId').innerHTML = "Can not close the meeting status as action items are not marked closed";
+              }
             }
-          }
-        },
-        error => {
-          console.log(error.text());
-        }
-        );
-    }
-    document.getElementById("errorId").innerHTML = "";
+          },
+          error => {
+            console.log(error.text());
+          });
+      }
   }
 
   updateChecked: (option, event) => any
   = function(option, event) {
-
     var index = this.checked.indexOf(option);
     if (event.target.checked) {
       console.log('add');
@@ -163,7 +155,6 @@ export class MeetingComponent implements OnInit {
         this.checked.splice(index, 1);
       }
     }
-
     var indexValue = jQuery('input:checkbox:not(:checked)').map(function() {
       return jQuery(this)[0].id;
     }).get();
@@ -200,21 +191,37 @@ export class MeetingComponent implements OnInit {
   dateArr = [];
   Date1 = new Date();
   Date2 = new Date();
+  date1 : string;
+  date2 : string;
+  stringArray : string;
+  cleanedString : string;
   onSubmit: (meeting) => any
   = function(meeting) {
+
     if (!meeting.meetingStatus) {
       meeting.meetingStatus = 1;
     }
     console.log(meeting.meetingDate);
-    this.dateArr = meeting.meetingDate.split("-");
-    console.log(this.dateArr[0], this.dateArr[1], this.dateArr[2]);
+    this.date1 = meeting.meetingDate + " " + meeting.startHours + ":" + meeting.startMinutes + "  " + meeting.startForm;
+    console.log(this.date1);
+    this.date2 = meeting.meetingDate + " " + meeting.endHours + ":" + meeting.endMinutes + "  " + meeting.endForm;
+    console.log(this.date2);
 
-    this.Date1 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meeting.startHours, meeting.startMinutes);
-    console.log(this.Date1);
+    this.Date1 = new Date(Date.parse(this.date1));
+    this.Date2 = new Date(Date.parse(this.date2));
 
-    this.Date2 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meeting.endHours, meeting.endMinutes);
-    console.log(this.Date2);
 
+
+
+    // this.dateArr = meeting.meetingDate.split("-");
+    // console.log(this.dateArr[0], this.dateArr[1], this.dateArr[2]);
+    //
+    // this.Date1 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meeting.startHours, meeting.startMinutes);
+    // console.log(this.Date1);
+    //
+    // this.Date2 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meeting.endHours, meeting.endMinutes);
+    // console.log(this.Date2);
+    //
     if (this.Date1 > this.Date2) {
 
       jQuery("#startTimeError").css("display", "block");
@@ -229,6 +236,7 @@ export class MeetingComponent implements OnInit {
     console.log(meeting.startTime);
     meeting.endTime = meeting.endHours + ":" + meeting.endMinutes;
     console.log(meeting.endTime);
+    this.submitted = true;
     meeting.meeting_attendees = "";
     for (let i = 0; i < this.checked.length; i++) {
       if (i == 0) {
@@ -246,6 +254,19 @@ export class MeetingComponent implements OnInit {
       meeting.meeting_attendees = attendeesId;
     }
     console.log(meeting.meeting_attendees);
+
+    //   var cleanedString = '';
+    //   this.stringArray = jQuery("#agenda").val();
+    //   console.log(this.stringArray);
+    //   this.stringArray = this.stringArray.value.trim().split('/n');
+    //   for(var i = 0; i < this.stringArray.length; i++){
+    //   var line = this.stringArray[i];
+    //   if(line.match('/^\s/') !== -1){
+    //     this.cleanedString += line.trim();
+    //   }
+    // }
+    // console.log(this.cleanedString);
+    // meeting.meetingAgenda = this.cleanedString;
 
     console.log(meeting);
     var meetingObj = {
@@ -268,21 +289,18 @@ export class MeetingComponent implements OnInit {
     this.http.post('http://localhost:8081/postMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
       .subscribe(
       response => {
-        document.getElementById("errorId").innerHTML = "Insert successfull";
-        this.router.navigate(['/meetingList']);
+     this.router.navigate(['/meetingList']);
       },
       error => {
         console.log(error.text());
       }
       );
     jQuery("#createsuccess").css("display", "block");
-
   }
   reset: () => any
   = function() {
     this.meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingPurpose: '', meetingFacilitator: '', meetingRecorder: '', meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '' }];
   }
-
   numarr = [];
   tempattendees: string;
   edit: (meetings) => any
@@ -293,15 +311,21 @@ export class MeetingComponent implements OnInit {
     console.log(this.trackindex);
 
     console.log(meetings.meetingDate);
-    this.dateArr = meetings.meetingDate.split("-");
-    console.log(this.dateArr[0], this.dateArr[1], this.dateArr[2]);
+    // this.dateArr = meetings.meetingDate.split("-");
+    // console.log(this.dateArr[0], this.dateArr[1], this.dateArr[2]);
+    //
+    // this.Date1 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meetings.startHours, meetings.startMinutes);
+    // console.log(this.Date1);
+    //
+    // this.Date2 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meetings.endHours, meetings.endMinutes);
+    // console.log(this.Date2);
+    this.date1 = meetings.meetingDate + " " + meetings.startHours + ":" + meetings.startMinutes + "  " + meetings.startForm;
+    console.log(this.date1);
+    this.date2 = meetings.meetingDate + " " + meetings.endHours + ":" + meetings.endMinutes + "  " + meetings.endForm;
+    console.log(this.date2);
 
-    this.Date1 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meetings.startHours, meetings.startMinutes);
-    console.log(this.Date1);
-
-    this.Date2 = new Date(this.dateArr[0], this.dateArr[1], this.dateArr[2], meetings.endHours, meetings.endMinutes);
-    console.log(this.Date2);
-
+    this.Date1 = new Date(Date.parse(this.date1));
+    this.Date2 = new Date(Date.parse(this.date2));
     if (this.Date1 > this.Date2) {
       jQuery("#startTimeError").css("display", "block");
       jQuery("#endTimeError").css("display", "block");
@@ -313,13 +337,10 @@ export class MeetingComponent implements OnInit {
     }
     meetings.startTime = meetings.startHours + ":" + meetings.startMinutes;
     meetings.endTime = meetings.endHours + ":" + meetings.endMinutes;
-
+    console.log(this.attendees);
     console.log(this.checked);
-
     for (let i = 0; i < this.attendees.length; i++) {
       this.checked.push(this.attendees[i]);
-
-
     }
     console.log(this.checked);
     this.tempattendees = "";
@@ -339,7 +360,7 @@ export class MeetingComponent implements OnInit {
       meetings.meeting_attendees = attendeesId;
     }
     console.log(this.tempattendees);
-    meetings.meetingAttendees = this.tempattendees
+    meetings.meetingAttendees = attendeesId;
 
     var meetingObj = {
       id: this.meeting_id,
@@ -368,14 +389,10 @@ export class MeetingComponent implements OnInit {
       }
       );
     jQuery("#editsuccess").css("display", "block");
-
-    document.getElementById("errorId").innerHTML = "Update successfull";
     this.router.navigate(['/meetingList']);
   }
   ngOnInit() {
     // jQuery("#myForm").get(0).reset();
     // jQuery("#myForm").trigger("reset");
-
   }
-
 }
