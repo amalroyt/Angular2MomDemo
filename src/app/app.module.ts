@@ -15,7 +15,6 @@ import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
-import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 

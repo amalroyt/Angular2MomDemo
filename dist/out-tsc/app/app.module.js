@@ -15,12 +15,13 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
 import { LoginModule } from './login/login.module';
-import { MeetingModule } from './meeting/meeting.module';
-import { DiscussionModule } from './discussion/discussion.module';
-import { ActionModule } from './action/action.module';
 import { MeetingListModule } from './meetingList/meetingList.module';
 import { MoreDetailsModule } from './moreDetails/moreDetails.module';
+import { MeetingModule } from './meeting/meeting.module';
 import { routes } from './app.routes';
+import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
+import { AuthenticationService } from './services/auth.service';
+import { SharedService } from './services/sharedDetails.service';
 var AppModule = (function () {
     function AppModule() {
     }
@@ -40,14 +41,18 @@ AppModule = __decorate([
             MeetingListModule,
             MoreDetailsModule,
             MeetingModule,
-            DiscussionModule,
-            ActionModule,
+            ActionDiscussionModule,
             RouterModule.forRoot(routes)
         ],
-        providers: [],
+        providers: [AuthenticationService, SharedService],
         bootstrap: [AppComponent]
     }),
     __metadata("design:paramtypes", [])
 ], AppModule);
 export { AppModule };
+var MyModule = (function () {
+    function MyModule() {
+    }
+    return MyModule;
+}());
 //# sourceMappingURL=../../../src/app/app.module.js.map

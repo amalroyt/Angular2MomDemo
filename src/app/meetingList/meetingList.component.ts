@@ -68,13 +68,13 @@ export class MeetingListComponent {
       });
   }
   //To download excel for the selected meeting
-  downloadExcel: (meetingTitle: string) => void
-  = function(meetingTitle: string): void {
+  downloadExcel: (meetingId: number) => void
+  = function(meetingId: number): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.get('http://localhost:8081/download/' + meetingTitle, { headers: contentHeaders })
+    this.http.get('http://localhost:8081/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
-        window.location.href = "http://localhost:8081/download/" + meetingTitle;
+        window.location.href = "http://localhost:8081/download/" + meetingId;
         document.getElementById("errorId").innerHTML = "Download successfull.";
       },
       error => {
