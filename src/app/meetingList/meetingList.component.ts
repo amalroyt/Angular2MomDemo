@@ -20,13 +20,12 @@ export class MeetingListComponent {
       .subscribe(
       response => {
         this.meetingList = response.json();
-        //this.meetingList.meetingAttendees = meetingAttendees.split(',');
-
       },
       error => {
         console.log(error.text());
       });
   }
+
   // To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
@@ -45,6 +44,7 @@ export class MeetingListComponent {
   = function(id: number): void {
     this.router.navigate(['/moreDetails', id]);
   }
+
   //To generate excel for the selected meeting
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
@@ -67,6 +67,7 @@ export class MeetingListComponent {
         console.log(error.text());
       });
   }
+
   //To download excel for the selected meeting
   downloadExcel: (meetingId: number) => void
   = function(meetingId: number): void {

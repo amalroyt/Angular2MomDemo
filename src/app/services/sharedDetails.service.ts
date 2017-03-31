@@ -26,7 +26,6 @@ export class SharedService {
 
   resetDetails: () => any
   = function(): any {
-    console.log('resetDetails');
     this.sharedDetails.firstName = "";
     this.sharedDetails.lastName = "";
     this.sharedDetails.isLoginPage = true;
