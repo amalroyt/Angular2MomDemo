@@ -17,8 +17,7 @@ import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.modu
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
-
-
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import { SharedService } from './services/sharedDetails.service';
     ActionDiscussionModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService,SharedService],
+  providers: [AuthenticationService, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

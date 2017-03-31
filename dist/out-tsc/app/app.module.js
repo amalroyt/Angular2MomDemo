@@ -22,6 +22,7 @@ import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
+import { AuthGuard } from './guards/auth.guard';
 var AppModule = (function () {
     function AppModule() {
     }
@@ -44,7 +45,7 @@ AppModule = __decorate([
             ActionDiscussionModule,
             RouterModule.forRoot(routes)
         ],
-        providers: [AuthenticationService, SharedService],
+        providers: [AuthenticationService, SharedService, AuthGuard],
         bootstrap: [AppComponent]
     }),
     __metadata("design:paramtypes", [])
