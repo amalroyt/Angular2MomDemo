@@ -15,10 +15,10 @@ import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
-// import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
+import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
-import { AuthGuard } from './guards/auth.guard';
+
 
 
 @NgModule({
@@ -37,7 +37,7 @@ import { AuthGuard } from './guards/auth.guard';
     ActionDiscussionModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService,SharedService,AuthGuard],
+  providers: [AuthenticationService,SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

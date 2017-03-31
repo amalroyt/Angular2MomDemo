@@ -16,11 +16,9 @@ var MoreDetailsComponent = (function () {
         var _this = this;
         this.http = http;
         this.activatedRoute = activatedRoute;
-        document.getElementById("errorId").innerHTML = "";
         var meetingId;
         this.activatedRoute.params.subscribe(function (params) {
             meetingId = params['id'];
-            console.log("meetingId  " + meetingId);
         });
         this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })
             .subscribe(function (response) {
