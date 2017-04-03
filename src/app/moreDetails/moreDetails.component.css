@@ -25,6 +25,32 @@ table td {
   cursor: pointer;
 }
 
+.discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
+  width: 20%;
+}
+
+.agenda,.attendees {
+  width: 30%;
+}
+
+.actionDesc {
+  width: 20%;
+}
+.responsible {
+  width: 20%;
+}
+.open {
+  width: 10%;
+}
+.expected {
+  width: 20%;
+}
+.actual {
+  width: 20%;
+}
+.statusAction {
+  width: 10%;
+
 table td:hover {
   overflow: visible;
   white-space: normal;
@@ -33,4 +59,5 @@ table td:hover {
 
 .centreTh {
   text-align: center;
+
 }

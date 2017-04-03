@@ -12,15 +12,17 @@
         <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
     </button>
     <div class="menu">
-      <span id="usernameDisplay"><b>Welcome {{userDetails.firstName}} {{userDetails.lastName}}</b></span>
+      <span id="usernameDisplay">
+        <b>{{dateString}},&nbsp;&nbsp;{{timeString}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome, {{userDetails.firstName}} {{userDetails.lastName}}</b>
+      </span>
     </div>
   </div>
 </section>
 
 <header>
   <div id="logoDetails">
-    <img style="float:left;" src="./app/images/cybage.jpg">
-    <h1 id="meetingTitle">DOMO MEETING</h1>
+    <!-- <img style="float:left;" src="./app/images/cybage.jpg"> -->
+    <h1 id="meetingTitle">Minutes Of Meeting</h1>
   </div>
 </header>
 <section id="errorIdSection">
