@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       response => {
         if (response.json().token) {
           document.getElementById("errorId").innerHTML = "";
-          if (this.authService.login(response.json().userDetails)) {
+          if (this.authService.login(response.json())) {
             this.sharedService.setDetails(this.authService.getUserdetails());
             this.sharedService.setLog(true);
             this.router.navigate(['/meetingList']);

@@ -20,7 +20,6 @@ var MeetingListComponent = (function () {
         this.authService = authService;
         this.userId = this.authService.getUserdetails();
         this.edit = function (id) {
-            console.log(id);
             this.router.navigate(['/meeting', id]);
         };
         this.openActionDiscussionForm = function (id) {
@@ -60,7 +59,6 @@ var MeetingListComponent = (function () {
                 return jQuery(this).val();
             }).get();
             if (meetingIds.length != 0) {
-                console.log(JSON.stringify({ meetingIds: meetingIds }));
                 this.http.put('http://localhost:8081/deleteMeeting/' + userId, JSON.stringify({ meetingIds: meetingIds }), { headers: contentHeaders })
                     .subscribe(function (response) {
                     _this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })

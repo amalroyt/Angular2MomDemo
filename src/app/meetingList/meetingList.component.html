@@ -1,7 +1,19 @@
 <div class="meetingListModal container">
   <div class="meetingList">
-    <div class="newMeeting">
-      <button class="btn btn-success createButton" routerLink="/meeting" routerLinkActive="active">Create new meeting</button>
+    <!-- Dialog box for deletion confirmation -->
+    <div class="modal fade" id="deleteModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Discussion Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Are you sure you want to delete?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="toDelete()">Yes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="panel panel-primary tableForm">
       <div class="panel-heading text-center">Meeting List</div>
@@ -28,11 +40,14 @@
                 </th>
                 <th class="col-md-3 icons">
                   <span>
+                      <button type="button" class="btn btn-lg btn-success createButton" routerLink="/meeting" routerLinkActive="active">
+                      <span class="glyphicon glyphicon-flash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="New meeting"></span>
+                      </button>
                     <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-lg" (click)="checkAll()">
-                      <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select/Deselect All Rows"></span>
+                      <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select All Rows"></span>
                     </button>
-                    <button type="button" class="btn btn-danger btn-lg toDelete" (click)="toDelete()">
-                      <span class="glyphicon glyphicon-trash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Delete"></span>
+                    <button type="button" class="btn btn-danger btn-lg toDelete" data-toggle="modal" data-target="#deleteModal" >
+                      <span class="glyphicon glyphicon-trash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Delete"></span>
                   </button>
                   </span>
                 </th>
@@ -59,17 +74,16 @@
                 <td class="col-md-3">
                   <input  class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
                   <button type="button" class="btn btn-default btn-lg floatPosition" (click)="moreDetails(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
+                      <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Minutes of Meeting"></span>
                   </button>
                   <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
+                      <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Download"></span>
                   </button>
                   <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="generateExcel(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to generate Excelsheet"></span>
+                      <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Generate MOM"></span>
                   </button>
-
                   <button *ngIf="meeting.status == 'Open'" type="button" class="btn btn-default btn-lg addButton floatPosition" (click)="openActionDiscussionForm(meeting.meetingId)">
-                      <span class="glyphicon glyphicon-edit glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Open ActionDiscussion Form"></span>
+                      <span class="glyphicon glyphicon-edit glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Open/Delete ActionDiscussion Form"></span>
                   </button>
                 </td>
               </tr>

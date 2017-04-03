@@ -29,7 +29,6 @@ export class MeetingListComponent {
   // To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
-    console.log(id);
     this.router.navigate(['/meeting',id]);
   }
 
@@ -92,7 +91,6 @@ export class MeetingListComponent {
       return jQuery(this).val();
     }).get();
     if (meetingIds.length != 0) {
-      console.log(JSON.stringify({meetingIds:meetingIds}));
     //To delete the selected meetings
     this.http.put('http://localhost:8081/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(

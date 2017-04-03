@@ -5,45 +5,33 @@
         <table class="table table-hover table table-striped primaryDetailsTable">
           <thead>
             <tr>
-              <th class="col-md-1 meetingId">
-                <span>MeetingId</span>
+              <th class="col-md-2 date">
+                <span>Date</span>
               </th>
-              <th class="col-md-2 meeting">
+              <th class="col-md-3 meeting">
                 <span>Meeting</span>
               </th>
-              <th class="col-md-2 purpose">
-                <span>Purpose</span>
-              </th>
-              <th class="col-md-2 agenda">
+              <th class="col-md-4 agenda">
                 <span>Agenda</span>
               </th>
               <th class="col-md-3 attendees">
                 <span>Attendees</span>
-              </th>
-              <th class="col-md-2 date">
-                <span>Date</span>
               </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let meeting of moreDetailsList">
               <td>
-                {{meeting.meetingId}}
+                {{meeting.meetingDate}}
               </td>
               <td>
                 {{meeting.meetingTitle}}
-              </td>
-              <td>
-                {{meeting.meetingPurpose}}
               </td>
               <td>
                 {{meeting.meetingAgenda}}
               </td>
               <td>
                 {{meeting.meetingAttendees}}
-              </td>
-              <td>
-                {{meeting.meetingDate}}
               </td>
             </tr>
           </tbody>

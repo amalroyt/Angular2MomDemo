@@ -40,11 +40,11 @@ table td {
   width: 10%;
 }
 
-.purpose, .agenda, .discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
+.discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
   width: 20%;
 }
 
-.attendees {
+.agenda,.attendees {
   width: 30%;
 }
 

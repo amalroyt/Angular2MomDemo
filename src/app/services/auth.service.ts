@@ -8,10 +8,11 @@ export class AuthenticationService {
 
   login: (user) => boolean
   = function(user): boolean {
-    user = JSON.stringify(user);
-    var authenticatedUser = user;
-    if (user) {
+    var authenticatedUser = JSON.stringify(user.userDetails);
+    var authenticatedToken = JSON.stringify(user.token);
+    if (authenticatedUser) {
       localStorage.setItem("user", authenticatedUser);
+      localStorage.setItem("token", authenticatedToken);
       return true;
     }
     else {
@@ -33,8 +34,14 @@ export class AuthenticationService {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
     return this.storageVal[0];
   }
+  getToken: () => any
+  = function(): any {
+    this.storageVal = JSON.parse(localStorage.getItem("token"));
+    return this.storageVal;
+  }
   logout: () => void
   = function(): void {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
   }
 }
