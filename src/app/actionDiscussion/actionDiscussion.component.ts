@@ -151,7 +151,7 @@ export class ActionDiscussionComponent implements OnInit {
               .subscribe(
               response => {
                 document.getElementById("errorId").innerHTML = "Update successfull";
-                //this.router.navigate(['/meetingList']);
+                this.router.navigate(['/meetingList']);
               },
               error => {
                 console.log(error.text());
@@ -166,7 +166,7 @@ export class ActionDiscussionComponent implements OnInit {
               .subscribe(
               response => {
                 document.getElementById("errorId").innerHTML = "Update successfull";
-                //this.router.navigate(['/meetingList']);
+                this.router.navigate(['/meetingList']);
               },
               error => {
                 console.log(error.text());
@@ -186,7 +186,7 @@ export class ActionDiscussionComponent implements OnInit {
             .subscribe(
             response => {
               document.getElementById("errorId").innerHTML = "Insert successfull";
-              //this.router.navigate(['/meetingList']);
+              this.router.navigate(['/meetingList']);
             },
             error => {
               console.log(error.text());
@@ -197,6 +197,7 @@ export class ActionDiscussionComponent implements OnInit {
         }
       }
     }
+    this.router.navigate(['/meetingList']);
   }
 
   resetDiscussionForm: () => any
@@ -367,6 +368,7 @@ export class ActionDiscussionComponent implements OnInit {
         }
       }
     }
+    this.router.navigate(['/meetingList']);
   }
 
   resetActionForm: () => any

@@ -3,80 +3,85 @@
     <section class="primaryDetails row">
       <div class="table-responsive">
         <table class="table table-hover table table-striped primaryDetailsTable">
-          <thead>
-            <tr>
-              <th class="col-md-2 date">
-                <span>Date</span>
-              </th>
-              <th class="col-md-3 meeting">
-                <span>Meeting</span>
-              </th>
-              <th class="col-md-4 agenda">
-                <span>Agenda</span>
-              </th>
-              <th class="col-md-3 attendees">
-                <span>Attendees</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let meeting of moreDetailsList">
-              <td>
-                {{meeting.meetingDate}}
-              </td>
-              <td>
-                {{meeting.meetingTitle}}
-              </td>
-              <td>
-                {{meeting.meetingAgenda}}
-              </td>
-              <td>
-                {{meeting.meetingAttendees}}
-              </td>
-            </tr>
-          </tbody>
+          <tr *ngFor="let meeting of moreDetailsList">
+            <th>
+              <span>Date:</span>
+            </th>
+            <td>
+              {{meeting.meetingDate}}
+            </td>
+          </tr>
+          <tr *ngFor="let meeting of moreDetailsList">
+            <th>
+              <span>Meeting Title:</span>
+            </th>
+            <td>
+              {{meeting.meetingTitle}}
+            </td>
+          </tr>
+          <tr *ngFor="let meeting of moreDetailsList">
+            <th>
+              <span>Agenda:</span>
+            </th>
+            <td>
+              {{meeting.meetingAgenda}}
+            </td>
+          </tr>
+          <tr *ngFor="let meeting of moreDetailsList">
+            <th>
+              <span>Attendees:</span>
+            </th>
+            <td>
+              {{meeting.meetingAttendees}}
+            </td>
+          </tr>
         </table>
       </div>
     </section>
-    <section class="secondaryDetails row">
-      <article class="discussionPoints col-md-6">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#discussion">Dicussion Points</a></li>
+      <li style="text-align:centre;"><a data-toggle="pill" href="#action">Action Items</a></li>
+      <li style="text-align:centre;"><a data-toggle="pill" href="#downloadLinks">History</a></li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+      <div id="discussion" class="tab-pane fade in active">
         <!--Table-->
         <div class="panel panel-primary">
-          <div class="panel-heading text-center">Discussion Points</div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th class="col-md-2 discussionBy">
+                    <th class="col-md-2 centreTh">
                       <span>Discussion By</span>
                     </th>
-                    <th class="col-md-2 discussionType">
+                    <th class="col-md-2 centreTh">
                       <span>Discussion Type</span>
                     </th>
-                    <th class="col-md-4 discussion">
+                    <th class="col-md-4 centreTh">
                       <span>Discussion</span>
                     </th>
-                    <th class="col-md-2 decisionBy">
+                    <th class="col-md-2 centreTh">
                       <span>Decision By</span>
                     </th>
-                    <th class="col-md-2 decision">
+                    <th class="col-md-2 centreTh">
                       <span>Decision</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let meeting of moreDetailsPointsList">
-                    <td>
+                    <td class="centreTh">
                       {{meeting.discussionBy}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.discussionType}}
                     </td>
                     <td>
                       {{meeting.discussion}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.decisionBy}}
                     </td>
                     <td>
@@ -88,32 +93,31 @@
             </div>
           </div>
         </div>
-      </article>
-      <article class="actionPoints col-md-6">
+      </div>
+      <div id="action" class="tab-pane fade">
         <!--Table-->
         <div class="panel panel-primary">
-          <div class="panel-heading text-center">Action Points</div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th class="col-md-4 actionDesc">
+                    <th class="col-md-4 centreTh">
                       <span>Action Description</span>
                     </th>
-                    <th class="col-md-1 responsible">
+                    <th class="col-md-1 centreTh">
                       <span>Responsible</span>
                     </th>
-                    <th class="col-md-2 open">
+                    <th class="col-md-2 centreTh">
                       <span>Open Since</span>
                     </th>
-                    <th class="col-md-2 expected">
+                    <th class="col-md-2 centreTh">
                       <span>Expected Completion</span>
                     </th>
-                    <th class="col-md-2 actual">
+                    <th class="col-md-2 centreTh">
                       <span>Actual Completion</span>
                     </th>
-                    <th class="col-md-1 statusAction">
+                    <th class="col-md-1 centreTh">
                       <span>Status</span>
                     </th>
                   </tr>
@@ -123,19 +127,19 @@
                     <td>
                       {{meeting.actionDesc}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.responsible}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.openSince}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.expectedCompletion}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.actualCompletion}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.status}}
                     </td>
                   </tr>
@@ -144,8 +148,44 @@
             </div>
           </div>
         </div>
-      </article>
-    </section>
+      </div>
+      <div id="downloadLinks" class="tab-pane fade">
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="col-md-4 centreTh">
+                      <span>Date</span>
+                    </th>
+                    <th class="col-md-1 centreTh">
+                      <span>File Name</span>
+                    </th>
+                    <th class="col-md-2 centreTh">
+                      <span>Download</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let meeting of moreDetailsActionList">
+                    <td>
+
+                    </td>
+                    <td class="centreTh">
+
+                    </td>
+                    <td class="centreTh">
+                      
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>
