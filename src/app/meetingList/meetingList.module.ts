@@ -2,6 +2,7 @@
   MeetingList feature Module
 */
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MeetingListComponent } from '.';
 
@@ -14,6 +15,7 @@ const loginRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(loginRoutes)
   ],
   declarations: [

@@ -1,9 +1,6 @@
 .moreDetails {
   width: 100% ;
 }
-.tableSection {
-  margin-top: 40px;
-}
 .primaryDetails {
   float: left;
   margin: 0px 10px;
@@ -11,58 +8,29 @@
 .secondaryDetails {
   margin-top: 10px;
 }
-.discussionPoints,.actionPoints {
-  width: 50%;
-  float: left;
-  overflow-y: scroll;
-  height: 540px;
-}
-.links {
-  float: left;
-}
 
 table {
   table-layout: fixed;
   width: 100%;
-  text-align: center;
+  //text-align: center;
 }
-
-table th {
-  text-align: center;
+table th{
+  width: 15%;
 }
 
 table td {
-  overflow: auto;
+  overflow: hidden;
   white-space: nowrap;
-  //text-overflow: ellipsis;
-}
-.meetingId, .date, .meeting {
-  width: 10%;
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-.purpose, .agenda, .discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
-  width: 20%;
+table td:hover {
+  overflow: visible;
+  white-space: normal;
+  word-break: keep-all;
 }
 
-.attendees {
-  width: 30%;
-}
-
-.actionDesc {
-  width: 20%;
-}
-.responsible {
-  width: 20%;
-}
-.open {
-  width: 10%;
-}
-.expected {
-  width: 20%;
-}
-.actual {
-  width: 20%;
-}
-.statusAction {
-  width: 10%;
+.centreTh {
+  text-align: center;
 }

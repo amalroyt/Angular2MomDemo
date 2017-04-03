@@ -4,6 +4,7 @@ import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
+
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -14,6 +15,7 @@ declare var jQuery: any;
 export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
+  public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
@@ -45,6 +47,18 @@ export class MeetingListComponent {
     this.router.navigate(['/moreDetails', id]);
   }
 
+
+  search: () => void
+  = function() {
+    var self = this;
+    if (self.searchText) {
+      this.meetingList1 = this.meetingList.filter(function(meeting: Meeting) {
+        return meeting.meetingTitle.indexOf(self.searchText) != -1 ;
+      });
+    } else {
+      this.meetingList1 = this.meetingList;
+    }
+  }
   //To generate excel for the selected meeting
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
