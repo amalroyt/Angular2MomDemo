@@ -15,11 +15,9 @@ import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
-import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
-
-
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -37,7 +35,7 @@ import { SharedService } from './services/sharedDetails.service';
     ActionDiscussionModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService,SharedService],
+  providers: [AuthenticationService, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

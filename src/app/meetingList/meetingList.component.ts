@@ -22,14 +22,12 @@ export class MeetingListComponent {
       .subscribe(
       response => {
         this.meetingList = response.json();
-        this.search();
-        //this.meetingList.meetingAttendees = meetingAttendees.split(',');
-
       },
       error => {
         console.log(error.text());
       });
   }
+
   // To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
@@ -49,6 +47,7 @@ export class MeetingListComponent {
     this.router.navigate(['/moreDetails', id]);
   }
 
+
   search: () => void
   = function() {
     var self = this;
@@ -60,7 +59,6 @@ export class MeetingListComponent {
       this.meetingList1 = this.meetingList;
     }
   }
-
   //To generate excel for the selected meeting
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
@@ -83,14 +81,15 @@ export class MeetingListComponent {
         console.log(error.text());
       });
   }
+
   //To download excel for the selected meeting
-  downloadExcel: (meetingTitle: string) => void
-  = function(meetingTitle: string): void {
+  downloadExcel: (meetingId: number) => void
+  = function(meetingId: number): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.get('http://localhost:8081/download/' + meetingTitle, { headers: contentHeaders })
+    this.http.get('http://localhost:8081/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
-        window.location.href = "http://localhost:8081/download/" + meetingTitle;
+        window.location.href = "http://localhost:8081/download/" + meetingId;
         document.getElementById("errorId").innerHTML = "Download successfull.";
       },
       error => {

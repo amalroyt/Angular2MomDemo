@@ -15,12 +15,13 @@ export class AppComponent {
     this.userDetails = this.sharedService.sharedDetails;
     this.isLog = this.sharedService.loginDetails;
     if (location.path() != "" && location.path() != "/login" && !this.userDetails.isLoggedIn && !this.userDetails.isLoginPage) {
+      //To checkCredentials
+      if ( this.authService.checkCredentials() ) {
       this.userDetails = this.authService.getUserdetails();
       this.userDetails.isLoggedIn = true;
       this.isLog.logValue = this.authService.checkCredentials();
-      //console.log(this.isLog.logValue);
     }
-    //console.log(this.isLog.logValue);
+    }
   }
   onLogout: () => any
   = function(): any {

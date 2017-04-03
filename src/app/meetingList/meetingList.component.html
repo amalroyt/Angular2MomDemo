@@ -62,7 +62,7 @@
                   <button type="button" class="btn btn-default btn-lg floatPosition" (click)="moreDetails(meeting.meetingId)">
                       <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click for Details"></span>
                   </button>
-                  <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingTitle)">
+                  <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingId)">
                       <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Click to Download"></span>
                   </button>
                   <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="generateExcel(meeting.meetingId)">
