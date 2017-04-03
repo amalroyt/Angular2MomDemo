@@ -35,22 +35,47 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="myConfirmationModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirm Before Submiting</h4>
+          </div>
+          <div class="modal-body">
+            <p>Click Continue if you have filled both the Discussion Points and Action Items else Cancle</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" [class.disabled]="isClickedOnceTrue" (click)="onSubmit(); onSubmitAction(); isClickedOnceTrue = true" [disabled]="!discForm.form.valid">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myConfirmationModalAction" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirm Before Submiting</h4>
+          </div>
+          <div class="modal-body">
+            <p>Click Continue if you have filled both the Discussion Points and Action Items else Cancle</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" [class.disabled]="isClickedOnce" (click)="onSubmit(); onSubmitAction(); isClickedOnce = true" [disabled]="!actionForm.form.valid">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <ul class="nav nav-tabs nav-justified">
-      <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#discussion">Dicussion Points Form</a></li>
-      <li style="text-align:centre;"><a data-toggle="pill" href="#action">Action Items Form</a></li>
+      <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#discussion">Dicussion Points</a></li>
+      <li style="text-align:centre;"><a data-toggle="pill" href="#action">Action Items</a></li>
     </ul>
     <br/>
     <div class="tab-content">
       <div id="discussion" class="tab-pane fade in active">
         <div id="disc-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="discmodal-container">
-            <div class="row">
-              <div class="col-md-10"></div>
-              <div class="col-md-2">
-                <input type="Submit" value="Submit" class="btn btn-success discmodal-submit" [class.disabled]="isClickedOnceTrue" (click)="onSubmit(); isClickedOnceTrue = true" [disabled]="!discForm.form.valid">
-              </div>
-            </div>
-            <b><h1>ADD DISCUSSION POINTS</h1></b><br>
             <div>
               <form #discForm="ngForm" class="form-horizontal" novalidate>
                 <div class="form-group">
@@ -65,14 +90,15 @@
                     </div>
                     <div class=col-md-1></div>
                     <div class=col-md-8>
+                      <input type="Submit" value="Submit" class="btn btn-success discmodal-submit" data-toggle="modal" data-target="#myConfirmationModal">
                       <button type="button" id="checkAll" value="Check All" class="btn btn-default btn-md addButton" (click)="checkAllDiscussion()">
-                        <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" title="Select/Deselect All Rows"></span>
+                        <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" title="Select All"></span>
                       </button>
                       <button type="button" class="btn btn-default btn-md addButton" (click)="resetDiscussionForm()">
-                        <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Click here to Reset"></span>
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Reset Form"></span>
                       </button>
                       <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myModal">
-                        <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Select Rows and Click Delete"></span>
+                        <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Delete Selected"></span>
                       </button>
                       <button type="button" class="btn btn-default btn-md addButton" (click)="addNewChoice()">
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="tooltip" title="Add New Row"></span>
@@ -160,13 +186,6 @@
       <div id="action" class="tab-pane fade">
         <div id="action-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="actionmodal-container">
-            <div class="row">
-              <div class="col-md-10"></div>
-              <div class="col-md-2">
-                <input type="submit" value="Submit" class="btn btn-success actionmodal-submit" [class.disabled]="isClickedOnce" (click)="onSubmitAction(); isClickedOnce = true" [disabled]="!actionForm.form.valid">
-              </div>
-            </div>
-            <b><h1>ADD MEETING ACTIONS</h1></b><br/>
             <div>
               <form #actionForm="ngForm" class="form-horizontal" novalidate>
                 <div class="form-group">
@@ -182,14 +201,15 @@
                     <div class=col-md-1>
                     </div>
                     <div class=col-md-8>
+                        <input type="Submit" value="Submit" class="btn btn-success actionmodal-submit" data-toggle="modal" data-target="#myConfirmationModalAction">
                       <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-md addButton" (click)="checkAllAction()">
-                        <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" title="Select/Deselect All Rows"></span>
+                        <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" title="Select All"></span>
                       </button>
                       <button type="button" class="btn btn-default btn-md addButton" (click)="resetActionForm()">
-                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Click here to Reset"></span>
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Reset Form"></span>
                   </button>
                       <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myActionModal">
-                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Select Rows and Click Delete"></span>
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Delete Selected"></span>
                   </button>
                       <button type="button" class="btn btn-default btn-md addButton" (click)="addNewRow()">
                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="tooltip" title="Add New Row"></span>

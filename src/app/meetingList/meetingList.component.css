@@ -59,6 +59,7 @@ table {
   table-layout: fixed;
   width: 100%;
   text-align: center;
+  white-space: nowrap;
 }
 
 table th {
@@ -66,9 +67,22 @@ table th {
 }
 
 table td {
-  overflow: auto;
+  overflow: hidden;
   white-space: nowrap;
-  //text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.meeting:hover, table td a:hover {
+  overflow: visible;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.td:hover{
+  overflow: visible;
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .meeting {
@@ -94,7 +108,8 @@ table td {
 .icons {
   width: 30%;
 }
-.floatPosition{
+
+.floatPosition {
   float: right;
   margin-right: 5px;
 }
