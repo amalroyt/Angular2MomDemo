@@ -16,12 +16,12 @@ export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
   public searchText: "";
-
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
         this.meetingList = response.json();
+        this.search();
       },
       error => {
         console.log(error.text());
@@ -46,7 +46,6 @@ export class MeetingListComponent {
     this.router.navigate(['/moreDetails', id]);
   }
 
-
   search: () => void
   = function() {
     var self = this;
@@ -69,7 +68,7 @@ export class MeetingListComponent {
         this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
-            this.meetingList = response.json();
+            this.meetingList1 = response.json();
             document.getElementById("errorId").innerHTML = "Excel generated successfully.";
           },
           error => {
@@ -113,7 +112,7 @@ export class MeetingListComponent {
         this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
-            this.meetingList = response.json();
+            this.meetingList1 = response.json();
             document.getElementById("errorId").innerHTML = "Selected meetings deleted successfully.";
           },
           error => {

@@ -16,25 +16,41 @@ var MoreDetailsComponent = (function () {
         var _this = this;
         this.http = http;
         this.activatedRoute = activatedRoute;
-        var meetingId;
+        this.downloadPrevExcel = function (fileName) {
+            var download = JSON.stringify({ fileName: fileName, meetingId: this.meetingId });
+            this.http.get('http://localhost:8081/downloadPrev/' + download, { headers: contentHeaders })
+                .subscribe(function (response) {
+                window.location.href = "http://localhost:8081/downloadPrev/" + download;
+                document.getElementById("errorId").innerHTML = "Download successfull.";
+            }, function (error) {
+                console.log(error.text());
+            });
+        };
+        document.getElementById("errorId").innerHTML = "";
         this.activatedRoute.params.subscribe(function (params) {
-            meetingId = params['id'];
+            _this.meetingId = params['id'];
         });
-        this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })
+        this.http.get('http://localhost:8081/moreDetails/' + this.meetingId, { headers: contentHeaders })
             .subscribe(function (response) {
             _this.moreDetailsList = response.json();
         }, function (error) {
             console.log(error.text());
         });
-        this.http.get('http://localhost:8081/moreDetailsPoints/' + meetingId, { headers: contentHeaders })
+        this.http.get('http://localhost:8081/moreDetailsPoints/' + this.meetingId, { headers: contentHeaders })
             .subscribe(function (response) {
             _this.moreDetailsPointsList = response.json();
         }, function (error) {
             console.log(error.text());
         });
-        this.http.get('http://localhost:8081/moreDetailsAction/' + meetingId, { headers: contentHeaders })
+        this.http.get('http://localhost:8081/moreDetailsAction/' + this.meetingId, { headers: contentHeaders })
             .subscribe(function (response) {
             _this.moreDetailsActionList = response.json();
+        }, function (error) {
+            console.log(error.text());
+        });
+        this.http.get('http://localhost:8081/moreDetailsHistory/' + this.meetingId, { headers: contentHeaders })
+            .subscribe(function (response) {
+            _this.moreDetailsHistoryList = response.json();
         }, function (error) {
             console.log(error.text());
         });

@@ -84,7 +84,7 @@
                     <td class="centreTh">
                       {{meeting.decisionBy}}
                     </td>
-                    <td>
+                    <td class="centreTh">
                       {{meeting.decision}}
                     </td>
                   </tr>
@@ -168,15 +168,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let meeting of moreDetailsActionList">
+                  <tr *ngFor="let meeting of moreDetailsHistoryList">
                     <td>
-
+                      <span>{{meeting.dateStamp}}&nbsp;&nbsp;&nbsp;&nbsp;{{meeting.timeStamp}}</span>
                     </td>
                     <td class="centreTh">
-
+                      <span>{{meeting.fileName}}</span>
                     </td>
                     <td class="centreTh">
-                      
+                      <button type="button"  class="btn btn-default btn-sm" (click)="downloadPrevExcel(meeting.fileName)">
+                          <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Download"></span>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
