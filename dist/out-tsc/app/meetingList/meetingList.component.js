@@ -28,13 +28,24 @@ var MeetingListComponent = (function () {
         this.moreDetails = function (id) {
             this.router.navigate(['/moreDetails', id]);
         };
+        this.search = function () {
+            var self = this;
+            if (self.searchText) {
+                this.meetingList1 = this.meetingList.filter(function (meeting) {
+                    return meeting.meetingTitle.indexOf(self.searchText) != -1;
+                });
+            }
+            else {
+                this.meetingList1 = this.meetingList;
+            }
+        };
         this.generateExcel = function (meetingId) {
             var _this = this;
             this.http.post('http://localhost:8081/generateExcel/' + meetingId, { headers: contentHeaders })
                 .subscribe(function (response) {
                 _this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
                     .subscribe(function (response) {
-                    _this.meetingList = response.json();
+                    _this.meetingList1 = response.json();
                     document.getElementById("errorId").innerHTML = "Excel generated successfully.";
                 }, function (error) {
                     console.log(error.text());
@@ -63,7 +74,7 @@ var MeetingListComponent = (function () {
                     .subscribe(function (response) {
                     _this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
                         .subscribe(function (response) {
-                        _this.meetingList = response.json();
+                        _this.meetingList1 = response.json();
                         document.getElementById("errorId").innerHTML = "Selected meetings deleted successfully.";
                     }, function (error) {
                         console.log(error.text());
@@ -94,6 +105,7 @@ var MeetingListComponent = (function () {
         this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
             .subscribe(function (response) {
             _this.meetingList = response.json();
+            _this.search();
         }, function (error) {
             console.log(error.text());
         });

@@ -18,17 +18,16 @@ export class MoreDetailsComponent implements OnInit {
   public moreDetailsList: MoreDetails[];
   public moreDetailsPointsList: MoreDetailsPoints[];
   public moreDetailsActionList: MoreDetailsAction[];
-
+  public moreDetailsHistoryList: any;
+  public meetingId: number;
   ngOnInit() { }
   constructor(private http: Http, private activatedRoute: ActivatedRoute) {
     document.getElementById("errorId").innerHTML = "";
-    var meetingId;
     this.activatedRoute.params.subscribe((params: Params) => {
-      meetingId = params['id'];
-      console.log("meetingId  "+meetingId);
+      this.meetingId = params['id'];
     });
     //To get the meeting details
-    this.http.get('http://localhost:8081/moreDetails/' + meetingId, { headers: contentHeaders })
+    this.http.get('http://localhost:8081/moreDetails/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsList = response.json();
@@ -37,7 +36,7 @@ export class MoreDetailsComponent implements OnInit {
         console.log(error.text());
       });
     //To get the meeting discussion points details
-    this.http.get('http://localhost:8081/moreDetailsPoints/' + meetingId, { headers: contentHeaders })
+    this.http.get('http://localhost:8081/moreDetailsPoints/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsPointsList = response.json();
@@ -46,10 +45,34 @@ export class MoreDetailsComponent implements OnInit {
         console.log(error.text());
       });
     //To get the meeting action details
-    this.http.get('http://localhost:8081/moreDetailsAction/' + meetingId, { headers: contentHeaders })
+    this.http.get('http://localhost:8081/moreDetailsAction/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsActionList = response.json();
+      },
+      error => {
+        console.log(error.text());
+      });
+    //To get the history of MOM's generated
+    this.http.get('http://localhost:8081/moreDetailsHistory/' + this.meetingId, { headers: contentHeaders })
+      .subscribe(
+      response => {
+        this.moreDetailsHistoryList = response.json();
+      },
+      error => {
+        console.log(error.text());
+      });
+  }
+
+  //To download previous MOM's
+  downloadPrevExcel: (fileName: string) => void
+  = function(fileName: string): void {
+    var download = JSON.stringify({fileName:fileName,meetingId:this.meetingId});
+    this.http.get('http://localhost:8081/downloadPrev/'+download, { headers: contentHeaders })
+      .subscribe(
+      response => {
+         window.location.href = "http://localhost:8081/downloadPrev/"+download;
+        document.getElementById("errorId").innerHTML = "Download successfull.";
       },
       error => {
         console.log(error.text());

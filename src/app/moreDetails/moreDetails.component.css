@@ -8,31 +8,26 @@
 .secondaryDetails {
   margin-top: 10px;
 }
-
 table {
   table-layout: fixed;
   width: 100%;
-  //text-align: center;
+  /*text-align: center;*/
 }
 table th{
   width: 15%;
 }
-
 table td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
 }
-
 .discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
   width: 20%;
 }
-
 .agenda,.attendees {
   width: 30%;
 }
-
 .actionDesc {
   width: 20%;
 }
@@ -50,14 +45,12 @@ table td {
 }
 .statusAction {
   width: 10%;
-
+}
 table td:hover {
   overflow: visible;
   white-space: normal;
   word-break: keep-all;
 }
-
 .centreTh {
   text-align: center;
-
 }
