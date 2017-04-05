@@ -3,26 +3,63 @@
     <div class="Wrapper1">
       <form (ngSubmit)="onSubmit(meetings)" name="userForm" id="myForm" #meetingForm="ngForm">
         <h3>CREATE A NEW MEETING</h3>
-
-        <div [hidden]="edit_view" class="form-group row">
+        <div class="form-group row">
+        <div [hidden]="edit_view">
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Id* :</label>
           <div class="col-md-4">
             <input readonly="readonly" class="form-control" name="meeting_id" type="text" placeholder="Enter the Meeting Id" id="example-text-input" required [(ngModel)]="meetings.meetingId" #id="ngModel">
             <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Meeting ID is required</div>
           </div>
         </div>
-
+      </div>
         <div class="form-group row">
+
+          <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
+          <div class="col-md-4">
+            <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="^[a-zA-Z0-9_]*$">
+            <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required & must be valid.</div>
+          </div>
+
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
           <div class="radio col-md-4">
             <label>
-					          <input #open name="radio" type="radio" value="1"  (change)="meetings.meetingStatus = open.value" checked />
+					          <input #open name="radio" type="radio" value="1"  (change)="meetings.meetingStatus = open.value" (click)="reasonclose()" checked />
 					              Open
             </label>
             <label>
-			             <input #closed name="radio" type="radio" value="2" id="closed" [disabled]="edit_view" (change)="meetings.meetingStatus = closed.value" />
+			             <input #closed name="radio" type="radio" value="2"  [disabled]="edit_view" (change)="meetings.meetingStatus = closed.value" (click)="reasonclose()" />
 				               Closed
 			      </label>
+            <label [hidden]="edit_view">
+			             <input #cancel name="radio" type="radio" value="5"   (change)="meetings.meetingStatus = cancel.value" (click)="reason()" />
+				               Cancel
+			      </label>
+            <br>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="cancelMeet">
+
+        <div style="visibility:hidden;">
+            <label id="reasonlabel" for="example-url-input" class="col-md-2 col-form-label">Reason :</label>
+            <div class="col-md-4">
+              <textarea id="reasonarea" class="form-control" name="reason" rows="3" [(ngModel)]="meetings.meetingReason" #name="ngModel"></textarea>
+            </div>
+        </div>
+        <div>
+            <label id="reasonlabel" for="example-url-input" class="col-md-2 col-form-label">Reason :</label>
+            <div class="col-md-4">
+              <textarea id="reasonarea" class="form-control" name="reason" rows="3" [(ngModel)]="meetings.meetingReason" #name="ngModel"></textarea>
+            </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+
+          <label for="example-email-input" class="col-md-2 col-form-label">Date* :</label>
+          <div class="col-md-4">
+            <input id="datepicker" class="form-control" type="date" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate">
+            <div [hidden]="date.valid || date.pristine" class="alert alert-danger">Meeting Date is required</div>
           </div>
 
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Type* :</label>
@@ -32,24 +69,16 @@
               <option *ngFor="let type of types" [value]="type.id">{{type.meetingType}}</option>
 						</select>
           </div>
+
         </div>
 
         <div class="form-group row">
-
-          <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
+          <label for="example-number-input" class="col-md-2 col-form-label">Venue* :</label>
           <div class="col-md-4">
-            <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="^[a-zA-Z0-9_]*$">
-            <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required & must be valid.</div>
+            <input class="form-control" type="text" placeholder="Enter Venue" id="example-number-input" name="venue" required [(ngModel)]="meetings.meetingVenue" #venue="ngModel">
+            <div [hidden]="venue.valid || venue.pristine" class="alert alert-danger">Meeting Venue is required</div>
           </div>
 
-          <label for="example-text-input" class="col-md-2 col-form-label">Meeting Purpose* :</label>
-          <div class="col-md-4">
-            <input class="form-control" name="purpose" type="text" placeholder="Enter the Meeting Purpose" id="example-text-input" required [(ngModel)]="meetings.meetingPurpose" #purpose="ngModel">
-            <div [hidden]="purpose.valid || purpose.pristine" class="alert alert-danger">Meeting purpose is required</div>
-          </div>
-        </div>
-
-        <div class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label">Facilitator* :</label>
           <div class="col-md-4">
             <select class="form-control" name="facilitator" [(ngModel)]="meetings.meetingFacilitator" required>
@@ -57,85 +86,64 @@
                       <option *ngFor="let fac of facilitator" [value]="fac.id">{{fac.firstlast}}</option>
 						      </select>
           </div>
-
-          <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
-          <div class="col-md-4">
-            <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
-                         <option [ngValue]="userName"  selected="selected">{{userName}}</option>
-                         <option *ngFor="let rec of recorder" [ngValue]="rec.id">{{rec.firstlast}}</option>
-                  </select>
-          </div>
-        </div>
-
-        <div class="form-group row">
-
-          <label for="example-number-input" class="col-md-2 col-form-label">Venue* :</label>
-          <div class="col-md-4">
-            <input class="form-control" type="text" placeholder="Enter Venue" id="example-number-input" name="venue" required [(ngModel)]="meetings.meetingVenue" #venue="ngModel">
-            <div [hidden]="venue.valid || venue.pristine" class="alert alert-danger">Meeting Venue is required</div>
-          </div>
-
-          <label for="example-email-input" class="col-md-2 col-form-label">Date* :</label>
-          <div class="col-md-4">
-            <input id="datepicker" class="form-control" type="date" required [(ngModel)]="meetings.meetingDate" name="date" #date="ngModel" value="meetings.meetingDate">
-            <div [hidden]="date.valid || date.pristine" class="alert alert-danger">Meeting Date is required</div>
-          </div>
         </div>
 
         <div class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label">Start Time* :</label>
           <div class="col-md-4">
             <div class="col-md-4">
-              <select class="form-control" name="shour" [(ngModel)]="meetings.startHours" required>
+              <select class="form-control" name="shour" [(ngModel)]="meetings.startHours" (ngModelChange)="onChangeSHours($event)" required>
                      <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
                 </select>
             </div>
             <div class="col-md-4">
-              <select class="form-control" name="smin" [(ngModel)]="meetings.startMinutes" required>
+              <select class="form-control" name="smin" [(ngModel)]="meetings.startMinutes" (ngModelChange)="onChangeSMins($event)" required>
                      <option *ngFor="let min of time.minutes" [attr.value]="min">{{min}}</option>
                 </select>
             </div>
             <div class="col-md-4">
-              <select [(ngModel)]="meetings.startForm" class="form-control" name="sform" required>
+              <select [(ngModel)]="meetings.startForm" class="form-control" name="sform" (ngModelChange)="onChangeSForm($event)" required>
                      <option *ngFor="let form of time.form" [attr.value]="form">{{form}}</option>
                 </select>
             </div>
-            <span id="startTimeError" class="error">Please Enter Valid Start Time.</span>
-          </div>
 
+          </div>
+          <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
+          <div class="col-md-4">
+            <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
+                    <option [ngValue]="userName"  selected="selected">{{userName}}</option>
+                    <option *ngFor="let rec of recorder" [ngValue]="rec.id">{{rec.firstlast}}</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
           <label for="example-url-input" class="col-md-2 col-form-label">End Time* : </label>
           <div class="col-md-4 ">
+            <input readonly="readonly" class="form-control" name="endTime" type="text" placeholder="End Time" id="example-text-input" required [(ngModel)]="meetings.endTime" #id="ngModel">
+          </div>
+
+          <label for="example-url-input" class="col-md-2 col-form-label">Duration* : </label>
             <div class="col-md-4 ">
-              <select class="form-control" name="ehour" [(ngModel)]="meetings.endHours" required>
-                      <option *ngFor="let hour of time.hours" [attr.value]="hour">{{hour}}</option>
+              <select class="form-control" name="duration" [(ngModel)]="meetings.duration" (ngModelChange)="onChangeDuration($event)" required>
+                    <option [attr.value]="duration[0]">{{duration[0]}} mins</option>
+                    <option *ngFor="let hour of duration | slice:1" [attr.value]="hour">{{hour}} hrs</option>
                 </select>
             </div>
-            <div class="col-md-4">
-              <select class="form-control" name="emin" [(ngModel)]="meetings.endMinutes" required>
-                      <option *ngFor="let min of time.minutes" [attr.value]="min">{{min}}</option>
-                  </select>
-            </div>
-            <div class="col-md-4">
-              <select class="form-control" name="eform" [(ngModel)]="meetings.endForm" required>
-                      <option *ngFor="let form of time.form" [attr.value]="form">{{form}}</option>
-                  </select>
-            </div>
-            <span id="endTimeError" class="error">Please Enter Valid End Time.</span>
-          </div>
         </div>
 
         <div class="form-group row">
 
           <label for="example-url-input" class="col-md-2 col-form-label">Agenda :</label>
           <div class="col-md-4">
-            <textarea class="form-control" name="agenda" rows="5" [(ngModel)]="meetings.meetingAgenda" #name="ngModel"></textarea>
+            <textarea id="agenda" class="form-control" name="agenda" rows="5" [(ngModel)]="meetings.meetingAgenda" #name="ngModel"></textarea>
           </div>
 
           <label for="example-url-input" class="col-md-2 col-form-label">Attendees* :
                   <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-sm" (click)="checkAll()">
                     <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select/Deselect All Attendees"></span>
                   </button>
-              </label>
+          </label>
           <div class="col-md-4">
             <div *ngFor="let option of options">
               <input [attr.id]="option.id" class="checkAllCheckbox" type="checkbox" name="option" [attr.name]="options" [value]="option.id" (change)="updateChecked(option.id, $event)">{{option.firstlast}}
@@ -145,21 +153,17 @@
 
         <div class="form-group row">
           <div class="col-lg-10 col-lg-offset-3 text-center">
-            <button type="submit" class="btn btn-primary" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true" [disabled]="!edit_view">Submit
+            <button type="submit" class="btn btn-primary" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true" >Submit
                     <span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" title="Submit"></span>
-                  </button>
+            </button>
 
             <button type="reset" class="btn btn-warning btn-md addButton" (click)="reset()">
                           Reset  <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Reset"></span>
-                  </button>
+            </button>
 
             <button type="button" class="btn btn-danger btn-md addButton" routerLink="/meetingList" routerLinkActive="active">
                           Cancel        <span class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" title="Go Back to List"></span>
-                  </button>
-
-            <button type="button" class="btn btn-warning btn-md addButton" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true" [disabled]="edit_view" (click)="edit(meetings)">
-                          Edit  <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Update"></span>
-                  </button>
+            </button>
           </div>
         </div>
       </form>
