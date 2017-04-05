@@ -1,1 +1,0 @@
-//# sourceMappingURL=../../../../../src/app/moreDetails/moreDetailsPoints/moreDetailsPointsList.js.map
