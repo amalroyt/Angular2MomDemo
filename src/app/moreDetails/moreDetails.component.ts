@@ -21,7 +21,7 @@ export class MoreDetailsComponent implements OnInit {
   public moreDetailsHistoryList: any;
   public meetingId: number;
   ngOnInit() { }
-  constructor(private http: Http, private activatedRoute: ActivatedRoute) {
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router) {
     document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];

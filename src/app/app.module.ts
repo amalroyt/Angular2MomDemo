@@ -18,6 +18,7 @@ import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.c
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ErrorPageModule } from './errorPage/errorPage.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AuthGuard } from './guards/auth.guard';
     MoreDetailsModule,
     MeetingModule,
     ActionDiscussionModule,
+    ErrorPageModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, SharedService, AuthGuard],

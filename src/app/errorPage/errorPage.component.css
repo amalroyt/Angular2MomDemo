@@ -1,0 +1,25 @@
+.errormodal-container {
+  padding: 30px;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  font-family: roboto;
+  height: 437px;
+  overflow: auto;
+}
+
+.errormodal-container {
+  text-align: center;
+  font-size: 1.8em;
+  font-family: roboto;
+}
+
+.actionmodal {
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+}
