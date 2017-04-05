@@ -48,6 +48,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       });
     // to fetch data of action items for existing meeting
     this.http.get('http://localhost:8081/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
@@ -63,6 +64,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       });
     // for displaying meeting title using meetingid
     this.http.get('http://localhost:8081/actionDiscussion/' + this.meetingId, { headers: contentHeaders })
@@ -72,6 +74,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       });
     // for fetching types(dynamic dropdown)
     this.http.get('http://localhost:8081/getTypes', { headers: contentHeaders })
@@ -81,6 +84,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       }
       );
     // for fetching user names(dynamic dropdown)
@@ -91,6 +95,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       }
       );
     // for fetching status values(dynamic dropdown)
@@ -101,6 +106,7 @@ export class ActionDiscussionComponent implements OnInit {
       },
       error => {
         console.log(error.text());
+        this.router.navigate(['/errorPage']);
       }
       );
 
@@ -155,6 +161,7 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           }
         }
@@ -170,6 +177,7 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           }
           else {
@@ -190,6 +198,7 @@ export class ActionDiscussionComponent implements OnInit {
             },
             error => {
               console.log(error.text());
+              this.router.navigate(['/errorPage']);
             });
         }
         else {
@@ -214,6 +223,7 @@ export class ActionDiscussionComponent implements OnInit {
           },
           error => {
             console.log(error.text());
+            this.router.navigate(['/errorPage']);
           });
       } else {
         currentModel.discussionBy =
@@ -257,10 +267,12 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           },
           error => {
             console.log(error.text());
+            this.router.navigate(['/errorPage']);
           }
           );
       } else {
@@ -329,6 +341,7 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           }
         }
@@ -344,6 +357,7 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           } else {
             document.getElementById("errorId").innerHTML = "Rows should be filled completely";
@@ -362,6 +376,7 @@ export class ActionDiscussionComponent implements OnInit {
             },
             error => {
               console.log(error.text());
+              this.router.navigate(['/errorPage']);
             });
         } else {
           document.getElementById("errorId").innerHTML = "Rows should be filled completely";
@@ -383,6 +398,7 @@ export class ActionDiscussionComponent implements OnInit {
           },
           error => {
             console.log(error.text());
+            this.router.navigate(['/errorPage']);
           });
       } else {
         (this.modelValues[i]).actionDesc = "";
@@ -424,10 +440,12 @@ export class ActionDiscussionComponent implements OnInit {
               },
               error => {
                 console.log(error.text());
+                this.router.navigate(['/errorPage']);
               });
           },
           error => {
             console.log(error.text());
+            this.router.navigate(['/errorPage']);
           }
           );
       } else {

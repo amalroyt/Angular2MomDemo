@@ -1,6 +1,7 @@
 // Import our dependencies
 import { Routes, ROUTER_CONFIGURATION } from '@angular/router';
 import { LoginComponent } from './login';
+import { ErrorPageComponent } from './errorPage';
 import { MeetingComponent } from './meeting';
 import { MeetingListComponent } from './meetingList';
 import { MoreDetailsComponent } from './moreDetails';
@@ -12,6 +13,7 @@ import { CanActivate } from '@angular/router';
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'errorPage', component: ErrorPageComponent },
   { path: 'meeting', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meeting/:id', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meetingList', component: MeetingListComponent, canActivate: [AuthGuard] },
