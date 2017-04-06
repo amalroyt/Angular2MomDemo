@@ -4,9 +4,10 @@
     <div class="loginmodal-container">
       <h1>Login to Your Account</h1><br>
       <form novalidate (ngSubmit)="onSubmit(user)" [formGroup]="user">
+        <span id="loginError"></span>
         <input type="text" placeholder="Username" formControlName="userName">
         <div class="error" style="color:red" *ngIf="user.get('userName').touched && user.get('userName').hasError('required')">
-          UserName is required
+          Username is required
         </div>
         <input type="password" placeholder="Password" formControlName="userPassword">
         <div class="error" style="color:red" *ngIf="user.get('userPassword').touched && user.get('userPassword').hasError('required')">
