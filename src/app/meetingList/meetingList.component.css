@@ -115,24 +115,3 @@ table td {
   margin-top: 10px;
   margin-left: 10px;
 }
-
-.notificationArea {
-  display: none;
-  padding: 20px;
-  background-color: #4CAF50;
-  color: white;
-  opacity: 1;
-  transition: opacity 0.6s;
-  margin-bottom: 15px;
-}
-
-#notificationText {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
