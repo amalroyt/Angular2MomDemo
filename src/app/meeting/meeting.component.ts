@@ -131,7 +131,7 @@ export class MeetingComponent implements OnInit {
             for (var i=0; i < this.checkAllValues.length; i++) {
               if (this.checkAllValues[i].status !=2) {
                 jQuery('#closed').prop('disabled', true);
-                document.getElementById('errorId').innerHTML = "Can not close the meeting status as action items are not marked closed";
+                document.getElementById('errorId').innerHTML = "Can not close the meeting status as all action items are not marked closed";
               }
             }
           },
