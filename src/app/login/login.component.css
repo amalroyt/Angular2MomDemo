@@ -99,3 +99,9 @@
 .login-help{
   font-size: 12px;
 }
+
+#loginError {
+  font-size: 15px;
+  margin: 5px;
+  color: red;
+}

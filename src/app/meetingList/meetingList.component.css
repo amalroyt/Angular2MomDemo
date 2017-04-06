@@ -1,5 +1,5 @@
 .createButton {
-  /*float: left;*/
+  float: right;
 }
 
 footer {
@@ -35,6 +35,7 @@ footer {
 
 .btn-lg {
   font-size: 10px;
+  margin: 0px 5px;
 }
 
 .glyphiconIcon {
@@ -47,7 +48,7 @@ footer {
 
 input[type="checkbox"] {
   transform: scale(2);
-  margin: 15px 15px;
+  margin: 15px 23px;
   float: right;
 }
 
