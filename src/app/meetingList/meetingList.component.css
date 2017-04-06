@@ -7,27 +7,23 @@ footer {
   bottom: 0px;
 }
 
-.tableForm {
-  margin-top: 35px;
-}
-
 .meetingList {
   padding: 10px;
   width: 100% !important;
   margin: 0 auto;
   border-radius: 2px;
-  height: 850px;
-
+  height: 450px;
 }
 
 .meetingListModal {
   width: 100% !important;
-  height: 850px;
+  /*background-color: #F7F7F7;*/
+  height: 499px;
 }
 
 .tableForm {
   width: 100% !important;
-  height: 800px;
+  height: 476px;
   overflow: auto;
 }
 
@@ -91,11 +87,11 @@ table td {
 }
 
 .agenda {
-  width: 25%;
+  width: 22%;
 }
 
 .attendees {
-  width: 25%;
+  width: 22%;
 }
 
 .status {
@@ -107,7 +103,7 @@ table td {
 }
 
 .icons {
-  width: 20%;
+  width: 26%;
 }
 
 .floatPosition {
@@ -115,10 +111,9 @@ table td {
   margin-right: 5px;
 }
 
-#searchTextArea {
-  color: black;
-  float: left;
-  margin-left: 20px;
+.search {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .notificationArea {

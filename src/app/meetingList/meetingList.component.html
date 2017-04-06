@@ -16,11 +16,10 @@
       </div>
     </div>
     <div class="panel panel-primary tableForm">
-      <div class="panel-heading text-center">
-        <span>
-          <input id="searchTextArea" placeholder="Meeting" type="text" [(ngModel)]="searchText" (ngModelChange)="search()" />
-        </span> Meeting List
-      </div>
+      <div class="panel-heading text-center">Meeting List</div>
+      <div class="search">
+      <span>Search Here: </span><input type="text" [(ngModel)]="searchText" (keyup)="search()"/>
+    </div>
       <div class="panel-body">
         <!--Table-->
         <div class="table-responsive">
@@ -44,10 +43,13 @@
                 </th>
                 <th class="col-md-3 icons">
                   <span>
+                      <button type="button" class="btn btn-lg btn-success createButton" routerLink="/meeting" routerLinkActive="active">
+                      <span class="glyphicon glyphicon-flash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="New meeting"></span>
+                      </button>
                     <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-lg" (click)="checkAll()">
                       <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select All Rows"></span>
                     </button>
-                    <button type="button" class="btn btn-danger btn-lg toDelete" data-toggle="modal" data-target="#deleteModal">
+                    <button type="button" class="btn btn-danger btn-lg toDelete" data-toggle="modal" data-target="#deleteModal" >
                       <span class="glyphicon glyphicon-trash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Delete"></span>
                     </button>
                     <button type="button" class="btn btn-lg btn-success createButton" routerLink="/meeting" routerLinkActive="active">
