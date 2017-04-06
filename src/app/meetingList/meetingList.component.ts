@@ -4,7 +4,6 @@ import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
-
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -124,7 +123,7 @@ export class MeetingListComponent {
       });
     }
     else {
-      document.getElementById("errorId").innerHTML = "Selected atleast a meeting to delete.";
+      document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";
     }
   }
 
