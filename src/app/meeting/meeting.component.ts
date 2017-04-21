@@ -133,8 +133,8 @@ export class MeetingComponent implements OnInit {
       error => {
         console.log(error.text());
       }
-
       );
+
     if ((this.meeting_id) != undefined) {
       this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
         .subscribe(

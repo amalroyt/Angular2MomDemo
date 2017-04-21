@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error => {
-        document.getElementById("errorId").innerHTML = "Enter Valid Credentials.";
+        document.getElementById("loginError").innerHTML = "Enter Valid Credentials.";
         console.log(error.text());
       });
   }
