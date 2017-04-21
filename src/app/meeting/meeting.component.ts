@@ -139,9 +139,9 @@ export class MeetingComponent implements OnInit {
           this.checkAllValues = response.json();
           for (var i = 0; i < this.checkAllValues.length; i++) {
             if (this.checkAllValues[i].status != 2) {
-              jQuery('#closed').prop('disabled', true);
-              jQuery('#cancel').prop('disabled', true);
-              document.getElementById('errorId').innerHTML = "Can not close or cancel the meeting status as all action items are not marked closed";
+              jQuery("input[type=radio][value=" + 2 + "]").prop("disabled",true);
+              jQuery("input[type=radio][value=" + 5 + "]").prop("disabled",true);
+              document.getElementById('openStatus').innerHTML = "Can't close or cancel the meeting status as all action items are closed";
             }
           }
         },

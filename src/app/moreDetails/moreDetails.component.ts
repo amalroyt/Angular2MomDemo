@@ -72,7 +72,9 @@ export class MoreDetailsComponent implements OnInit {
       .subscribe(
       response => {
          window.location.href = "http://localhost:8081/downloadPrev/"+download;
-        document.getElementById("errorId").innerHTML = "Download successfull.";
+        document.getElementById("successId").innerHTML = "Download successfull.";
+        setTimeout(function() {
+          document.getElementById("errorId").innerHTML = ""; }, 5000);
       },
       error => {
         console.log(error.text());

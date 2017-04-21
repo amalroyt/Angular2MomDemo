@@ -19,6 +19,7 @@ import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
+import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ErrorPageModule } from './errorPage/errorPage.module';
     MeetingModule,
     ActionDiscussionModule,
     ErrorPageModule,
+    D3GroupBarChartModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, SharedService, AuthGuard],

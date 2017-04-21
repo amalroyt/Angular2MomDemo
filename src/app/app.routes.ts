@@ -8,12 +8,14 @@ import { MoreDetailsComponent } from './moreDetails';
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CanActivate } from '@angular/router';
+import { D3GroupBarChartComponent } from './d3GroupBarChart';
 
 // Define which component should be loaded based on the current URL
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'errorPage', component: ErrorPageComponent },
+  { path: 'd3GroupBarChart', component: D3GroupBarChartComponent },
   { path: 'meeting', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meeting/:id', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meetingList', component: MeetingListComponent, canActivate: [AuthGuard] },
