@@ -135,6 +135,7 @@ export class MeetingComponent implements OnInit {
       }
       );
 
+
     if ((this.meeting_id) != undefined) {
       this.http.get('http://localhost:8081/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
         .subscribe(
@@ -145,8 +146,7 @@ export class MeetingComponent implements OnInit {
 
               jQuery("input[type=radio][value=" + 2 + "]").prop("disabled",true);
               jQuery("input[type=radio][value=" + 5 + "]").prop("disabled",true);
-
-            document.getElementById("openStatus").innerHTML = "Can't close or cancel the meeting status as all action items are closed";
+              document.getElementById('openStatus').innerHTML = "Can't close or cancel the meeting status as all action items are closed";
 
             }
           }

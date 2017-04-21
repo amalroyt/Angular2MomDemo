@@ -75,7 +75,9 @@ export class MoreDetailsComponent implements OnInit {
          window.location.href = "http://localhost:8081/downloadPrev/"+download;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
+
           document.getElementById("successId").innerHTML = ""; }, 5000);
+
       },
       error => {
         console.log(error.text());

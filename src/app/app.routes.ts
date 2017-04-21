@@ -10,7 +10,6 @@ import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.c
 import { AuthGuard } from './guards/auth.guard';
 import { CanActivate } from '@angular/router';
 import { QuarterMeetingsComponent } from './quarterMeetings';
-import { AdminGuard } from './guards/admin.guard';
 import { D3GroupBarChartComponent } from './d3GroupBarChart';
 
 // Define which component should be loaded based on the current URL

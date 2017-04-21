@@ -7,7 +7,7 @@ import { ActionDiscussion, Action } from './actionDiscussion';
 declare var jQuery: any;
 declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
-
+declare var _ : any;
 @Component({
   selector: 'app-discussion',
   templateUrl: './actionDiscussion.component.html',
@@ -29,6 +29,9 @@ export class ActionDiscussionComponent implements OnInit {
   public discussionCounter = 0;
   public actionCounter = 0;
   public userId = this.authService.getUserdetails();
+  public graphValue = [];
+  public displayGraph = [];
+  public dataset = [];
 
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, private router: Router) {
     // to get id from parameter qyerry

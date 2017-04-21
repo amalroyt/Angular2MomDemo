@@ -23,6 +23,7 @@ import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
 import { AdminGuard } from './guards/admin.guard';
 import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module';
+
 @NgModule({
   declarations: [
     AppComponent
