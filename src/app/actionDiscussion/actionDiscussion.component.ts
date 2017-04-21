@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import { contentHeaders } from '../common/headers';
 import { ActionDiscussion, Action } from './actionDiscussion';
 declare var jQuery: any;
+declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
 declare var _ : any;
 @Component({

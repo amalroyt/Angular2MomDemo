@@ -7,6 +7,7 @@ import { AuthenticationService } from '../services/auth.service';
 //import {LoginComponent} from './login/login.component';
 //import * as moment from 'moment';
 declare var jQuery: any;
+declare var d3: any;
 //declare var moment: any;
 @Component({
   selector: 'app-meeting',
@@ -41,8 +42,11 @@ export class MeetingComponent implements OnInit {
   public startForm: any;
   public cancelMeet: boolean;
   checkAllValues = [];
+  public counts = [];
+  public csv : any;
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
-    jQuery("#editsuccess").css("display", "none");
+	d3.select("svg").remove();
+   jQuery("#editsuccess").css("display", "none");
     jQuery("#createsuccess").css("display", "none");
     this.cancelMeet = false;
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -139,9 +143,11 @@ export class MeetingComponent implements OnInit {
           this.checkAllValues = response.json();
           for (var i = 0; i < this.checkAllValues.length; i++) {
             if (this.checkAllValues[i].status != 2) {
+
               jQuery("input[type=radio][value=" + 2 + "]").prop("disabled",true);
               jQuery("input[type=radio][value=" + 5 + "]").prop("disabled",true);
               document.getElementById('openStatus').innerHTML = "Can't close or cancel the meeting status as all action items are closed";
+
             }
           }
         },
@@ -149,7 +155,20 @@ export class MeetingComponent implements OnInit {
           console.log(error.text());
         });
     }
-  }
+
+    this.http.get('http://localhost:8081/generateheatmap', { headers: contentHeaders })
+      .subscribe(
+      response => {
+        //console.log(response.json());
+        this.counts = response.json();
+
+      },
+      error => {
+        console.log(error.text());
+      }
+      );
+
+}
 
   updateChecked: (option, event) => any
   = function(option, event) {
@@ -235,7 +254,6 @@ export class MeetingComponent implements OnInit {
       if (h > 12) { h = h - 12; }
       if (h == 0) { h = 12; }
       var m = mins % 60;
-      alert(z(h) + ':' + z(m));
       return z(h) + ':' + z(m) + " " + endForm;
     }
     function addTimes(t0, t1) {
@@ -243,10 +261,12 @@ export class MeetingComponent implements OnInit {
     }
     if (this.meeting_id != undefined) {
       this.startHours = this.meetings[0].startHours;
-      alert(this.meetings[0].startHours);
     }
     if (this.meeting_id != undefined) {
       this.startMinutes = this.meetings[0].startMinutes;
+    }
+    if (this.meeting_id != undefined) {
+      this.startForm = this.meetings[0].startForm;
     }
     if (this.startForm == 'PM') {
       this.startHours = parseInt(this.startHours) + 12;
@@ -325,7 +345,9 @@ export class MeetingComponent implements OnInit {
           console.log(error.text());
         }
         );
-      jQuery("#createsuccess").css("display", "block");
+        document.getElementById('successId').innerHTML = "Meeting Created Successfully!!";
+        setTimeout(function() {
+         document.getElementById("successId").innerHTML = ""; }, 5000);
     }
     else {
       this.http.put('http://localhost:8081/updateMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
@@ -337,7 +359,9 @@ export class MeetingComponent implements OnInit {
           console.log(error.text());
         }
         );
-      jQuery("#editsuccess").css("display", "block");
+        document.getElementById('successId').innerHTML = "Meeting Updated Successfully!!";
+        setTimeout(function() {
+         document.getElementById("successId").innerHTML = ""; }, 5000);
       this.router.navigate(['/meetingList']);
     }
   }

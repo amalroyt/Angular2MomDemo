@@ -19,14 +19,25 @@ export class AuthenticationService {
       return false;
     }
   }
-  checkCredentials: () => any
-  = function(): any {
+  checkCredentials: () => boolean
+  = function(): boolean {
     if (localStorage.getItem("user") === null) {
       this.router.navigate(['/login']);
       return false;
     }
     else {
       return true;
+    }
+  }
+  checkIfAdmin: () => boolean
+  = function(): boolean {
+    this.storageVal = JSON.parse(localStorage.getItem("user"));
+    if (this.storageVal[0].isAdmin == true) {
+      return true;
+    }
+    else {
+      this.router.navigate(['/login']);
+      return false;
     }
   }
   getUserdetails: () => any
