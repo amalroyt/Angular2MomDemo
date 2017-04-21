@@ -1,9 +1,13 @@
 .Wrapper1 {
   border-left: 1px solid black;
   border-right: 1px solid black;
+  border-top: 1px solid black;
   margin: 0 auto;
   background-color: #D7E9F4;
   padding: 10px;
+  height : 500px;
+  overflow-y: auto;
+  /*width : 1100px;*/
 }
 
 footer {
@@ -53,4 +57,7 @@ img {
   color : red;
   font-size: 17px;
   display: none;
+}
+#openStatus {
+  color: red;
 }

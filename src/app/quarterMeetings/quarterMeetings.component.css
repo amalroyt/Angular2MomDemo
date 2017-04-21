@@ -1,0 +1,40 @@
+/*#quarterInfoError {
+  color: red;
+}*/
+
+#getQuarter {
+  width: 40%;
+}
+
+text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: white;
+}
+#tooltip {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    padding: 30px;
+    border-radius: 10px;
+    background: #CD5C5C;
+    visibility: hidden;
+}
+#tooltip.hidden {
+    opacity: 0;
+}
+#tooltip p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+#quarterInfo {
+  position: absolute;
+  top: 300px;
+}
+#aheadOfTime {
+  position: absolute;
+  top: 260px;
+  color: red;
+}
