@@ -6,7 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MoreDetails} from './moreDetails/moreDetailsList';
 import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
-
+declare var d3: any;
 
 @Component({
   selector: 'app-moreDetails',
@@ -22,6 +22,7 @@ export class MoreDetailsComponent implements OnInit {
   public meetingId: number;
   ngOnInit() { }
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router) {
+    d3.select("svg").remove();
     document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
@@ -72,7 +73,9 @@ export class MoreDetailsComponent implements OnInit {
       .subscribe(
       response => {
          window.location.href = "http://localhost:8081/downloadPrev/"+download;
-        document.getElementById("errorId").innerHTML = "Download successfull.";
+        document.getElementById("successId").innerHTML = "Download successfull.";
+        setTimeout(function() {
+          document.getElementById("errorId").innerHTML = ""; }, 5000);
       },
       error => {
         console.log(error.text());

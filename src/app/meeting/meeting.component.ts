@@ -234,7 +234,7 @@ export class MeetingComponent implements OnInit {
       if (h > 12) { h = h - 12; }
       if (h == 0) { h = 12; }
       var m = mins % 60;
-      alert(z(h) + ':' + z(m));
+      //alert(z(h) + ':' + z(m));
       return z(h) + ':' + z(m) + " " + endForm;
     }
     function addTimes(t0, t1) {
@@ -242,7 +242,7 @@ export class MeetingComponent implements OnInit {
     }
     if (this.meeting_id != undefined) {
       this.startHours = this.meetings[0].startHours;
-      alert(this.meetings[0].startHours);
+      //alert(this.meetings[0].startHours);
     }
     if (this.meeting_id != undefined) {
       this.startMinutes = this.meetings[0].startMinutes;

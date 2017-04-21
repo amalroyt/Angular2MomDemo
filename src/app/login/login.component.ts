@@ -15,7 +15,6 @@ import { SharedService } from '../services/sharedDetails.service';
 export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private router: Router, private sharedService: SharedService, private authService: AuthenticationService) {
-    document.getElementById("errorId").innerHTML = "";
   }
   ngOnInit() {
     this.user = new FormGroup({

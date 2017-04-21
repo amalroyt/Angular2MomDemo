@@ -1,0 +1,77 @@
+<div class="container">
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#meetingsYearly">Meetings Conducted Yearly</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#actionTimespan">Action Items average Timespan</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#quarterMeetings">Meetings per quarter</a></li>
+  </ul>
+  <br/>
+  <div class="tab-content">
+    <div id="meetingsYearly" class="tab-pane fade in active">
+
+    </div>
+    <div id="actionTimespan" class="tab-pane fade">
+
+    </div>
+    <div id="quarterMeetings" class="tab-pane fade">
+      <div class="modal fade" id="infoModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Discussion Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span>{{selectedMeetingType}}&nbsp;meetings information</span>
+              </div>
+            </div>
+            <div class="modal-body">
+              <!--Table-->
+              <div class="panel panel-primary tableBody">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th class="col-md-2 centreTh">
+                            <span>Date</span>
+                          </th>
+                          <th class="col-md-2 centreTh">
+                            <span>Meeting</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let meeting of displayMeetingData">
+                          <td class="col-md-2 centreTh">
+                            {{meeting.meetingDate}}
+                          </td>
+                          <td class="col-md-2 centreTh">
+                            <a [routerLink]="['/moreDetails',meeting.meetingId]" routerLinkActive="active" (click)="edit()">{{meeting.meetingTitle}}</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input id="getQuarter" class="form-control" placeholder="Quarter Start Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="quarterDatesStart" (change)="getQuarterMeetings(quarterDatesStart)" name="date" #date />
+      <h2>
+          <span id="aheadOfTime">
+          </span>
+        </h2>
+      <h2>
+          <span id="quarterInfo" *ngIf="quarterDatesStart != undefined">
+          </span>
+      </h2>
+      <div id="tooltip">
+        <p>
+          <span id="value"></span> &nbsp;&nbsp;Meetings
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

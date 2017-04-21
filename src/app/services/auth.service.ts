@@ -8,6 +8,7 @@ export class AuthenticationService {
 
   login: (user) => boolean
   = function(user): boolean {
+    console.log(user);
     var authenticatedUser = JSON.stringify(user.userDetails);
     var authenticatedToken = JSON.stringify(user.token);
     if (authenticatedUser) {
@@ -19,8 +20,8 @@ export class AuthenticationService {
       return false;
     }
   }
-  checkCredentials: () => any
-  = function(): any {
+  checkCredentials: () => boolean
+  = function(): boolean {
     if (localStorage.getItem("user") === null) {
       this.router.navigate(['/login']);
       return false;

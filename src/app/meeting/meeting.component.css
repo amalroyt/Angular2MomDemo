@@ -1,20 +1,13 @@
 .Wrapper1 {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  /*border-left: 1px solid black;
+  border-right: 1px solid black;*/
+  /*border: 1px solid black;*/
   margin: 0 auto;
   background-color: #D7E9F4;
   padding: 10px;
-}
-
-footer {
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-}
-
-header {
-  height: 70px;
-  border: 1px solid black;
+  width: 1100px;
+  height: 560px;
+  overflow-y: auto;
 }
 
 img {

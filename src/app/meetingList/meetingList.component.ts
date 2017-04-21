@@ -15,12 +15,14 @@ export class MeetingListComponent {
   public meetingList: Meeting[];
   public userId = this.authService.getUserdetails();
   public searchText: "";
+  public meetingList1;
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
     this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
         this.meetingList = response.json();
+        this.meetingList1 = response.json();
         this.search();
       },
       error => {
@@ -69,7 +71,9 @@ export class MeetingListComponent {
           .subscribe(
           response => {
             this.meetingList1 = response.json();
-            document.getElementById("errorId").innerHTML = "Excel generated successfully.";
+            document.getElementById("successId").innerHTML = "Excel generated successfully.";
+            setTimeout(function() {
+              document.getElementById("successId").innerHTML = ""; }, 5000);
           },
           error => {
             console.log(error.text());
@@ -88,7 +92,9 @@ export class MeetingListComponent {
       .subscribe(
       response => {
         window.location.href = "http://localhost:8081/download/" + meetingId;
-        document.getElementById("errorId").innerHTML = "Download successfull.";
+        document.getElementById("successId").innerHTML = "Download successfull.";
+        setTimeout(function() {
+          document.getElementById("successId").innerHTML = ""; }, 5000);
       },
       error => {
         console.log(error.text());
@@ -113,7 +119,9 @@ export class MeetingListComponent {
           .subscribe(
           response => {
             this.meetingList1 = response.json();
-            document.getElementById("errorId").innerHTML = "Selected meetings deleted successfully.";
+            document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
+            setTimeout(function() {
+              document.getElementById("successId").innerHTML = ""; }, 5000);
           },
           error => {
             console.log(error.text());
@@ -125,6 +133,8 @@ export class MeetingListComponent {
     }
     else {
       document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";
+      setTimeout(function() {
+        document.getElementById("errorId").innerHTML = ""; }, 5000);
     }
   }
 

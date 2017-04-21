@@ -2,7 +2,7 @@ footer {
   position: absolute;
   bottom: 0px;
   margin: 0px auto;
-  width:100%;
+  width: 100%;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -52,10 +52,15 @@ header {
   margin: 15px 20px;
   color: red;
 }
+#successId {
+  font-size: 15px;
+  margin: 15px 20px;
+  color: green;
+}
 .links {
   background-color: rgba(36, 62, 77, 1);
   margin: 0px;
-  width: 40%;
+  width: 45%;
   height: 51px;
 }
 .navbar-default .navbar-nav>li>a {

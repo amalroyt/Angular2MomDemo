@@ -2,14 +2,15 @@
   <nav class="navbar navbar-default navbar-static-top links">
     <div class="navbar-default" *ngIf="isLog.logValue">
       <ul class="nav navbar-nav" routerLinkActive="active">
-        <li class="nav-item"><a class="nav-link" routerLink="meetingList">Meetinglist</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="meeting">Create new meeting</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="meetingList" (click)="svgCleanUp()">Meetinglist</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="meeting" (click)="svgCleanUp()">Create new meeting</a></li>
+        <li *ngIf="userDetails.isAdmin" class="nav-item"><a class="nav-link" routerLink="quarterMeetings" (click)="svgCleanUp()">Graphical Design</a></li>
       </ul>
     </div>
   </nav>
   <div id="displayDetails" *ngIf="isLog.logValue">
     <button type="button" class="btn btn-danger btn-sm logoutBtn" (click)="onLogout()">
-        <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
+      <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
     </button>
     <div class="menu">
       <span id="usernameDisplay">
@@ -26,6 +27,7 @@
 </header>
 <section id="errorIdSection">
   <span id="errorId"></span>
+  <span id="successId"></span>
 </section>
 
 <router-outlet></router-outlet>
