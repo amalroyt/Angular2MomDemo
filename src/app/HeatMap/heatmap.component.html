@@ -1,0 +1,34 @@
+<router-outlet>
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Details : {{d}}</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Meeting Title</th>
+                <th>Meeting Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of details">
+                <td><a [routerLink]="['/meeting',detail.meetingId]" routerLinkActive="active" (click)="edit()">{{detail.meetingTitle}}</a></td>
+                <td>{{detail.meetingType}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <strong> MEETINGS- 2017 </strong> <br><br>
+
+</router-outlet>

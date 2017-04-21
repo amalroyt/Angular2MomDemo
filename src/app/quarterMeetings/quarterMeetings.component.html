@@ -1,0 +1,31 @@
+<div class="container">
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#meetingsYearly">Meetings Conducted Yearly</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#actionTimespan">Action Items average Timespan</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#quarterMeetings">Meetings per quarter</a></li>
+  </ul>
+  <br/>
+  <div class="tab-content">
+    <div id="meetingsYearly" class="tab-pane fade in active">
+
+    </div>
+    <div id="actionTimespan" class="tab-pane fade">
+
+    </div>
+    <div id="quarterMeetings" class="tab-pane fade">
+      <input id="getQuarter" class="form-control" placeholder="Quarter Start Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="quarterDatesStart" (change)="getQuarterMeetings(quarterDatesStart)" name="date" #date />
+      <h2>
+          <span id="aheadOfTime">
+          </span>
+        </h2>
+      <h2>
+          <span id="quarterInfo" *ngIf="quarterDatesStart != undefined">
+          </span>
+        </h2>
+      <div id="tooltip">
+        <p><span id="value"></span>&nbsp;&nbsp;Meetings</p>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

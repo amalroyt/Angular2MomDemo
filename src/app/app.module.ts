@@ -11,6 +11,7 @@ import { LoginModule } from './login/login.module';
 import { MeetingListModule } from './meetingList/meetingList.module';
 import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
+import { HeatMapModule } from './HeatMap/heatmap.module';
 import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
@@ -19,7 +20,9 @@ import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
-
+import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
+import { AdminGuard } from './guards/admin.guard';
+import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -33,11 +36,14 @@ import { ErrorPageModule } from './errorPage/errorPage.module';
     MeetingListModule,
     MoreDetailsModule,
     MeetingModule,
+    HeatMapModule,
     ActionDiscussionModule,
     ErrorPageModule,
+    QuarterMeetingsModule,
+    D3GroupBarChartModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService, SharedService, AuthGuard],
+  providers: [AuthenticationService, SharedService, AuthGuard,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

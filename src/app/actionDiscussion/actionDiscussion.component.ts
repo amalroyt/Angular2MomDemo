@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import { contentHeaders } from '../common/headers';
 import { ActionDiscussion, Action } from './actionDiscussion';
 declare var jQuery: any;
+declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
 
 @Component({
@@ -156,7 +157,9 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post('http://localhost:8081/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
-                document.getElementById("errorId").innerHTML = "Update successfull";
+                document.getElementById("successId").innerHTML = "Update successfull";
+                setTimeout(function() {
+                document.getElementById("successId").innerHTML = ""; }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -172,7 +175,9 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
-                document.getElementById("errorId").innerHTML = "Update successfull";
+                document.getElementById("successId").innerHTML = "Update successfull";
+                setTimeout(function() {
+                document.getElementById("successId").innerHTML = ""; }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -181,7 +186,9 @@ export class ActionDiscussionComponent implements OnInit {
               });
           }
           else {
-            document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          //   document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          //   setTimeout(function() {
+          //  document.getElementById("errorId").innerHTML = ""; }, 5000);
           }
         }
       }
@@ -193,7 +200,9 @@ export class ActionDiscussionComponent implements OnInit {
           this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
-              document.getElementById("errorId").innerHTML = "Insert successfull";
+              document.getElementById("successId").innerHTML = "Insert successfull";
+              setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
               this.router.navigate(['/meetingList']);
             },
             error => {
@@ -203,6 +212,8 @@ export class ActionDiscussionComponent implements OnInit {
         }
         else {
           document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          setTimeout(function() {
+           document.getElementById("errorId").innerHTML = ""; }, 5000);
         }
       }
     }
@@ -257,7 +268,9 @@ export class ActionDiscussionComponent implements OnInit {
         this.http.delete('http://localhost:8081/deleteDiscussionPoints/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
-            document.getElementById("errorId").innerHTML = "Selected row/s from Discussion Points has/have been deleted";
+            document.getElementById("successId").innerHTML = "Selected row/s from Discussion Points has/have been deleted";
+            setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
             this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
@@ -284,6 +297,8 @@ export class ActionDiscussionComponent implements OnInit {
     }
     else {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
+      setTimeout(function() {
+           document.getElementById("errorId").innerHTML = ""; }, 5000);
     }
   }
   // to select/deselect all discussion points
@@ -319,15 +334,21 @@ export class ActionDiscussionComponent implements OnInit {
           {
             this.actionCounter++;
             if (this.actionCounter === this.actionPublic.length && this.discussionCounter === this.discussionPublic.length) {
-              document.getElementById("errorId").innerHTML = "Discussion points & Action points are already up-to-date";
+              document.getElementById("successId").innerHTML = "Discussion points & Action points are already up-to-date";
+              setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
             }
             else
               if (this.actionCounter === this.actionPublic.length && this.discussionCounter != this.discussionPublic.length) {
-                document.getElementById("errorId").innerHTML = "Discussion points updated & Action points already up-to-date";
+                document.getElementById("successId").innerHTML = "Discussion points updated & Action points already up-to-date";
+                setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
               }
               else
                 if (this.actionCounter != this.actionPublic.length && this.discussionCounter === this.discussionPublic.length) {
-                  document.getElementById("errorId").innerHTML = "Discussion points already up-to-date & Action points updated";
+                  document.getElementById("successId").innerHTML = "Discussion points already up-to-date & Action points updated";
+                  setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
                 }
           }
           else {
@@ -336,7 +357,9 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post('http://localhost:8081/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
-                document.getElementById("errorId").innerHTML = "Update Successful";
+                document.getElementById("successId").innerHTML = "Update Successful";
+                setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -352,7 +375,9 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post('http://localhost:8081/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
-                document.getElementById("errorId").innerHTML = "Insert successfull";
+                document.getElementById("successId").innerHTML = "Insert successfull";
+                setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -360,7 +385,7 @@ export class ActionDiscussionComponent implements OnInit {
                 this.router.navigate(['/errorPage']);
               });
           } else {
-            document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          //  document.getElementById("errorId").innerHTML = "Rows should be filled completely";
           }
         }
       }
@@ -371,7 +396,9 @@ export class ActionDiscussionComponent implements OnInit {
           this.http.post('http://localhost:8081/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
-              document.getElementById("errorId").innerHTML = "Insert successfull";
+              document.getElementById("successId").innerHTML = "Insert successfull";
+              setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
               this.router.navigate(['/meetingList']);
             },
             error => {
@@ -379,7 +406,7 @@ export class ActionDiscussionComponent implements OnInit {
               this.router.navigate(['/errorPage']);
             });
         } else {
-          document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          //document.getElementById("errorId").innerHTML = "Rows should be filled completely";
         }
       }
     }
@@ -431,7 +458,9 @@ export class ActionDiscussionComponent implements OnInit {
         this.http.delete('http://localhost:8081/deleteActionItem/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
-            document.getElementById("errorId").innerHTML = "Selected row/s from Action Items has/have been deleted";
+            document.getElementById("successId").innerHTML = "Selected row/s from Action Items has/have been deleted";
+            setTimeout(function() {
+           document.getElementById("successId").innerHTML = ""; }, 5000);
             this.http.get('http://localhost:8081/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
@@ -457,6 +486,8 @@ export class ActionDiscussionComponent implements OnInit {
     }
     else {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
+      setTimeout(function() {
+           document.getElementById("errorId").innerHTML = ""; }, 5000);
     }
   }
   // to select/deselect all action items

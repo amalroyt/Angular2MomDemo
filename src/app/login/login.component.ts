@@ -6,7 +6,7 @@ import { contentHeaders } from '../common/headers';
 import { User } from './login.interface';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
-
+declare var d3: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private router: Router, private sharedService: SharedService, private authService: AuthenticationService) {
     document.getElementById("errorId").innerHTML = "";
+	d3.select("svg").remove();
   }
   ngOnInit() {
     this.user = new FormGroup({
