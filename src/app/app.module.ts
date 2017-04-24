@@ -21,7 +21,6 @@ import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
-import { AdminGuard } from './guards/admin.guard';
 import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module';
 
 @NgModule({
@@ -44,7 +43,7 @@ import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module'
     D3GroupBarChartModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService, SharedService, AuthGuard,AdminGuard],
+  providers: [AuthenticationService, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
