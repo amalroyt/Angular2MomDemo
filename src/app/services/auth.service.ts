@@ -29,17 +29,6 @@ export class AuthenticationService {
       return true;
     }
   }
-  checkIfAdmin: () => boolean
-  = function(): boolean {
-    this.storageVal = JSON.parse(localStorage.getItem("user"));
-    if (this.storageVal[0].isAdmin == true) {
-      return true;
-    }
-    else {
-      this.router.navigate(['/login']);
-      return false;
-    }
-  }
   getUserdetails: () => any
   = function(): any {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
