@@ -7,7 +7,6 @@ import { AuthenticationService } from '../services/auth.service';
 //import {LoginComponent} from './login/login.component';
 //import * as moment from 'moment';
 declare var jQuery: any;
-declare var d3: any;
 //declare var moment: any;
 @Component({
   selector: 'app-meeting',
@@ -45,7 +44,6 @@ export class MeetingComponent implements OnInit {
   public counts = [];
   public csv : any;
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
-	d3.select("svg").remove();
    jQuery("#editsuccess").css("display", "none");
     jQuery("#createsuccess").css("display", "none");
     this.cancelMeet = false;
