@@ -6,7 +6,6 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MoreDetails} from './moreDetails/moreDetailsList';
 import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
-declare var d3: any;
 
 @Component({
   selector: 'app-moreDetails',
@@ -22,7 +21,6 @@ export class MoreDetailsComponent implements OnInit {
   public meetingId: number;
   ngOnInit() { }
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router) {
-	d3.select("svg").remove();
 	document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];

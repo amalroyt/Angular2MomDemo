@@ -5,7 +5,6 @@ import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 declare var jQuery: any;
-declare var d3: any;
 @Component({
   selector: 'app-meetingList',
   templateUrl: './meetingList.component.html',
@@ -18,7 +17,6 @@ export class MeetingListComponent {
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
-	d3.select("svg").remove();
 	this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
