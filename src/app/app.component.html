@@ -1,6 +1,6 @@
 <section id="beforeHeader">
   <nav class="navbar navbar-default navbar-static-top links">
-    <div class="navbar-default" *ngIf="isLog.logValue">
+    <div class="navbar-default" *ngIf="userDetails.firstName">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item"><a class="nav-link" routerLink="meetingList" (click)="svgCleanUp()">Meetinglist</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="meeting" (click)="svgCleanUp()">Create new meeting</a></li>
@@ -8,7 +8,7 @@
       </ul>
     </div>
   </nav>
-  <div id="displayDetails" *ngIf="isLog.logValue">
+  <div id="displayDetails" *ngIf="userDetails.firstName">
     <button type="button" class="btn btn-danger btn-sm logoutBtn" (click)="onLogout()">
       <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
     </button>

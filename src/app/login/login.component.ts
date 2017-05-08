@@ -14,7 +14,11 @@ import { SharedService } from '../services/sharedDetails.service';
 })
 export class LoginComponent implements OnInit {
   user: FormGroup;
-  constructor(private http: Http, private router: Router, private sharedService: SharedService, private authService: AuthenticationService) {
+  constructor(private http: Http, private location: Location, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
+    if ( this.location.path() == '/login' && this.authService.checkCredentials() ) {
+      this.authService.logout();
+      this.sharedService.resetDetails();
+    }
   }
   ngOnInit() {
     this.user = new FormGroup({

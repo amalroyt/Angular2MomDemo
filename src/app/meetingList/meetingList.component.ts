@@ -18,8 +18,8 @@ export class MeetingListComponent {
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
-	d3.select("svg").remove();
-	this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
+    console.log(this.authService.checkCredentials());
+    this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
         this.meetingList = response.json();
