@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 @Injectable()
 export class AuthenticationService {
-  constructor(private router: Router, private http: Http) { }
+  constructor(private router: Router) { }
 
   login: (user) => boolean
   = function(user): boolean {
