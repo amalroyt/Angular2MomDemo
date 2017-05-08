@@ -40,8 +40,8 @@
     </div>
     <div id="actionTimespan" class="tab-pane fade">
       <div class="chartBody">
-        <h4>Select Date: <input type="date" [(ngModel)]="selectDate" (change)="generateGraph(selectDate);"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" data-toggle="tooltip" title="Data will be displayed for next five meetings from selected date"></span>
-        </h4>
+        <h4>Select Date: <input type="date" [(ngModel)]="selectDate" (change)="generateGraph(selectDate);"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" data-toggle="tooltip" title="Meeting/s Information for the Selected Date will be Displayed"></span></h4>
+
         <h4>
             <span id="informationNotValid" style="color:red;"></span>
         </h4>
@@ -50,7 +50,7 @@
         </h4>
         <svg width="960" height="500"></svg>
       </div>
-      <div id="tooltipVal">
+      <div id="tooltip">
         <p>
           <span id="value"></span>
         </p>
@@ -60,12 +60,10 @@
       <div class="modal fade" id="infoModal" role="dialog">
         <div class="modal-dialog">
           <!-- Discussion Modal content-->
-          <div class="modal-content" *ngIf="!showDetails" id="detailsModal">
+          <div class="modal-content">
             <div class="modal-header">
               <div class="modal-title">
-                <button type="button" class="btn btn-default btn-lg floatPosition close" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove floatPositionIcon" aria-hidden="true" data-toggle="tooltip" title="Close"></span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <span>{{selectedMeetingType}}&nbsp;meetings information</span>
               </div>
             </div>
@@ -91,7 +89,7 @@
                             {{meeting.meetingDate}}
                           </td>
                           <td class="col-md-2 centreTh">
-                            <a  routerLinkActive="active" (click)="moreDetails(meeting.meetingId);showDetails = true;">{{meeting.meetingTitle}}</a>
+                            <a [routerLink]="['/moreDetails',meeting.meetingId]" routerLinkActive="active" (click)="edit()">{{meeting.meetingTitle}}</a>
                           </td>
                         </tr>
                       </tbody>
@@ -101,217 +99,9 @@
               </div>
             </div>
           </div>
-
-          <div class="modal-content" *ngIf="showDetails" id="moreDetailsModal">
-            <div class="modal-header">
-              <div class="modal-title">
-                <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                <button type="button" class="btn btn-default btn-lg floatPosition close" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove floatPositionIcon" aria-hidden="true" data-toggle="tooltip" title="Close"></span>
-                </button>
-                <span>Meeting information</span>
-                <button type="button" class="btn btn-default btn-lg floatPosition close" (click)="showDetails = false">
-                    <span class="glyphicon glyphicon-repeat floatPositionIcon icon-flipped" aria-hidden="true" data-toggle="tooltip" title="Return to Meetinglist"></span>
-                </button>
-              </div>
-            </div>
-            <div class="modal-body">
-              <div class="tableSection">
-                <section class="primaryDetails row">
-                  <div class="table-responsive">
-                    <table class="table table-hover table table-striped primaryDetailsTable">
-                      <tr *ngFor="let meeting of moreDetailsList">
-                        <th>
-                          <span>Date:</span>
-                        </th>
-                        <td>
-                          {{meeting.meetingDate}}
-                        </td>
-                      </tr>
-                      <tr *ngFor="let meeting of moreDetailsList">
-                        <th>
-                          <span>Meeting Title:</span>
-                        </th>
-                        <td>
-                          {{meeting.meetingTitle}}
-                        </td>
-                      </tr>
-                      <tr *ngFor="let meeting of moreDetailsList">
-                        <th>
-                          <span>Agenda:</span>
-                        </th>
-                        <td>
-                          {{meeting.meetingAgenda}}
-                        </td>
-                      </tr>
-                      <tr *ngFor="let meeting of moreDetailsList">
-                        <th>
-                          <span>Attendees:</span>
-                        </th>
-                        <td>
-                          {{meeting.meetingAttendees}}
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </section>
-                <ul class="nav nav-tabs nav-justified">
-                  <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#discussion">Dicussion Points</a></li>
-                  <li style="text-align:centre;"><a data-toggle="pill" href="#action">Action Items</a></li>
-                  <li style="text-align:centre;"><a data-toggle="pill" href="#downloadLinks">History</a></li>
-                </ul>
-                <br/>
-                <div class="tab-content">
-                  <div id="discussion" class="tab-pane fade in active">
-                    <!--Table-->
-                    <div class="panel panel-primary">
-                      <div class="panel-body">
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <th class="col-md-2 centreTh">
-                                  <span>Discussion By</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Discussion Type</span>
-                                </th>
-                                <th class="col-md-4 centreTh">
-                                  <span>Discussion</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Decision By</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Decision</span>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let meeting of moreDetailsPointsList">
-                                <td class="centreTh">
-                                  {{meeting.discussionBy}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.discussionType}}
-                                </td>
-                                <td>
-                                  {{meeting.discussion}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.decisionBy}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.decision}}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="action" class="tab-pane fade">
-                    <!--Table-->
-                    <div class="panel panel-primary">
-                      <div class="panel-body">
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <th class="col-md-4 centreTh">
-                                  <span>Action Description</span>
-                                </th>
-                                <th class="col-md-1 centreTh">
-                                  <span>Responsible</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Open Since</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Expected Completion</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Actual Completion</span>
-                                </th>
-                                <th class="col-md-1 centreTh">
-                                  <span>Status</span>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let meeting of moreDetailsActionList">
-                                <td>
-                                  {{meeting.actionDesc}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.responsible}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.openSince}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.expectedCompletion}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.actualCompletion}}
-                                </td>
-                                <td class="centreTh">
-                                  {{meeting.status}}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="downloadLinks" class="tab-pane fade">
-                    <div class="panel panel-primary">
-                      <div class="panel-body">
-                        <div class="table-responsive">
-                          <table class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <th class="col-md-4 centreTh">
-                                  <span>Date</span>
-                                </th>
-                                <th class="col-md-1 centreTh">
-                                  <span>File Name</span>
-                                </th>
-                                <th class="col-md-2 centreTh">
-                                  <span>Download</span>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let meeting of moreDetailsHistoryList">
-                                <td class="centreTh">
-                                  <span>{{meeting.dateStamp}}&nbsp;&nbsp;&nbsp;&nbsp;{{meeting.timeStamp}}</span>
-                                </td>
-                                <td class="centreTh">
-                                  <span>{{meeting.fileName}}</span>
-                                </td>
-                                <td class="centreTh">
-                                  <button type="button"  class="btn btn-default btn-sm" (click)="downloadPrevExcel(meeting.fileName)">
-                                      <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Download"></span>
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
-      <input id="getQuarter" class="form-control" type="date" [(ngModel)]="quarterDatesStart" (change)="getQuarterMeetings(quarterDatesStart)" name="date" #date />
+      <input id="getQuarter" class="form-control" placeholder="Quarter Start Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="quarterDatesStart" (change)="getQuarterMeetings(quarterDatesStart)" name="date" #date />
       <h2>
           <span id="aheadOfTime">
           </span>

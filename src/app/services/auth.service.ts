@@ -7,6 +7,7 @@ export class AuthenticationService {
 
   login: (user) => boolean
   = function(user): boolean {
+    console.log(user);
     var authenticatedUser = JSON.stringify(user.userDetails);
     var authenticatedToken = JSON.stringify(user.token);
     if (authenticatedUser) {
@@ -31,10 +32,6 @@ export class AuthenticationService {
   getUserdetails: () => any
   = function(): any {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
-     if ( this.storageVal == undefined ) {
-       this.router.navigate(['/login']);
-       return null;
-     }
     return this.storageVal[0];
   }
   getToken: () => any

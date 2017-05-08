@@ -108,12 +108,12 @@
                 </div>
                 <div class="form-group">
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label for="discussionBy">Discussion By</label>
                     </div>
-                    <div class="col-md-1">
+                    <!-- <div class="col-md-1">
                       <label for="discussionType">Type</label>
-                    </div>
+                    </div> -->
                     <div class="col-md-3">
                       <label for="discussion">Discussion</label>
                     </div>
@@ -132,15 +132,16 @@
                   <tr *ngFor="let model of models">
                     <div class="form-group">
                       <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                           <select class="form-control" id="discussionBy" required [(ngModel)]="model.discussionBy" [ngModelOptions]="{standalone: true}" name="discussionBy" #discussionBy="ngModel">
                         <option *ngFor="let dec of userName" [value]="dec.id">{{dec.firstlast}}</option>
                       </select>
                           <div [hidden]="discussionBy.valid || discussionBy.pristine" style="color:red;">
                             Discussion By is required
                           </div>
-                        </div>
-                        <div class="col-md-1">
+                        <!-- </div>
+                        <div class="col-md-1"> -->
+                          <label>Type</label>
                           <select class="form-control" id="discussionType" required [(ngModel)]="model.discussionType" [ngModelOptions]="{standalone: true}" name="discussionType" #discussionType="ngModel">
                         <option *ngFor="let type of discussionTypes" [value]="type.id">{{type.discussionType}}</option>
                       </select>
@@ -149,7 +150,7 @@
                           </div>
                         </div>
                         <div class="col-md-3">
-                          <textarea type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" [ngModelOptions]="{standalone: true}" name="discussion" #discussion="ngModel" placeholder="Discussion Points"></textarea>
+                          <textarea type="text" class="form-control" id="discussion" required [(ngModel)]="model.discussion" [ngModelOptions]="{standalone: true}" name="discussion" #discussion="ngModel" placeholder="Discussion Points" rows="4" cols="50"></textarea>
                           <div [hidden]="discussion.valid || discussion.pristine" style="color:red;">
                             Discussion is required
                           </div>
@@ -163,7 +164,7 @@
                           </div>
                         </div>
                         <div class="col-md-3">
-                          <textarea type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" [ngModelOptions]="{standalone: true}" name="decision" #decision="ngModel" placeholder="Decision Taken"></textarea>
+                          <textarea type="text" class="form-control" id="decision" required [(ngModel)]="model.decision" [ngModelOptions]="{standalone: true}" name="decision" #decision="ngModel" placeholder="Decision Taken" rows="4" cols="50"></textarea>
                           <div [hidden]="decision.valid || decision.pristine" style="color:red;">
                             Decision is required
                           </div>

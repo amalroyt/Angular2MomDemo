@@ -20,7 +20,7 @@ import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ActionDiscussionModule,
     ErrorPageModule,
     QuarterMeetingsModule,
-    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, SharedService, AuthGuard],
