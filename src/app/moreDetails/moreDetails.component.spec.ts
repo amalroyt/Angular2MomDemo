@@ -54,10 +54,10 @@ describe('MoreDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should check search true', (): void => {
-    // var self = [{searchText:}];
-
-  });
+  // it('should check search true', (): void => {
+  //   // var self = [{searchText:}];
+  //
+  // });
 
 
 });
