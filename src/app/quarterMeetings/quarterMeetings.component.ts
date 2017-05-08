@@ -499,7 +499,6 @@ var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
      .on("click", function(d)  {
        self.selectedMeetingType = d.data.label;
        getMeetingData();
-       self.showDetails = false;
        jQuery('#infoModal').modal('show');
      });
 
@@ -562,13 +561,7 @@ legend.append('text')
     }
   }
 
-  // To open create new meeting form
-  edit: () => void
-  = function(): void {
-  jQuery('.modal-backdrop').remove();
-  }
-
-  removeSvg: () => void
+    removeSvg: () => void
   = function(): void {
   d3.select("svg").remove();
   }

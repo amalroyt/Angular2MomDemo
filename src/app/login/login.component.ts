@@ -6,7 +6,7 @@ import { contentHeaders } from '../common/headers';
 import { User } from './login.interface';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
-import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,27 +32,21 @@ export class LoginComponent implements OnInit {
     this.http.post('http://localhost:8081/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
-        this.toVerify(response.json());
+        if (response.json().token) {
+          document.getElementById("errorId").innerHTML = "";
+          if (this.authService.login(response.json())) {
+            this.sharedService.setDetails(this.authService.getUserdetails());
+            this.sharedService.setLog(true);
+            this.router.navigate(['/meetingList']);
+          }
+          else {
+            this.router.navigate(['/login']);
+          }
+        }
       },
       error => {
         document.getElementById("loginError").innerHTML = "Enter Valid Credentials.";
         console.log(error.text());
       });
-  }
-
-  //To verify the token and to set values
-  toVerify: (res) => void
-  = function(res): void {
-    if (res.token) {
-      document.getElementById("errorId").innerHTML = "";
-      if (this.authService.login(res)) {
-        this.sharedService.setDetails(this.authService.getUserdetails());
-        this.sharedService.setLog(true);
-        this.router.navigate(['/meetingList']);
-      }
-      else {
-        this.router.navigate(['/login']);
-      }
-    }
   }
 }
