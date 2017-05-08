@@ -14,7 +14,7 @@ import { SharedService } from '../services/sharedDetails.service';
 })
 export class LoginComponent implements OnInit {
   user: FormGroup;
-  constructor(private http: Http, private router: Router, private sharedService: SharedService, private authService: AuthenticationService) {
+  constructor(private http: Http, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
   }
   ngOnInit() {
     this.user = new FormGroup({
@@ -28,21 +28,27 @@ export class LoginComponent implements OnInit {
     this.http.post('http://localhost:8081/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
-        if (response.json().token) {
-          document.getElementById("errorId").innerHTML = "";
-          if (this.authService.login(response.json())) {
-            this.sharedService.setDetails(this.authService.getUserdetails());
-            this.sharedService.setLog(true);
-            this.router.navigate(['/meetingList']);
-          }
-          else {
-            this.router.navigate(['/login']);
-          }
-        }
+        this.toVerify(response.json());
       },
       error => {
         document.getElementById("loginError").innerHTML = "Enter Valid Credentials.";
         console.log(error.text());
       });
+  }
+
+  //To verify the token and to set values
+  toVerify: (res) => void
+  = function(res): void {
+    if (res.token) {
+      document.getElementById("errorId").innerHTML = "";
+      if (this.authService.login(res)) {
+        this.sharedService.setDetails(this.authService.getUserdetails());
+        this.sharedService.setLog(true);
+        this.router.navigate(['/meetingList']);
+      }
+      else {
+        this.router.navigate(['/login']);
+      }
+    }
   }
 }

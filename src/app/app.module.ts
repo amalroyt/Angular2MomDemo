@@ -21,7 +21,7 @@ import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
-import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { D3GroupBarChartModule } from './d3GroupBarChart/d3GroupBarChart.module'
     ActionDiscussionModule,
     ErrorPageModule,
     QuarterMeetingsModule,
-    D3GroupBarChartModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, SharedService, AuthGuard],

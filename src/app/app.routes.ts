@@ -10,7 +10,6 @@ import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.c
 import { AuthGuard } from './guards/auth.guard';
 import { CanActivate } from '@angular/router';
 import { QuarterMeetingsComponent } from './quarterMeetings';
-import { D3GroupBarChartComponent } from './d3GroupBarChart';
 
 // Define which component should be loaded based on the current URL
 export const routes: Routes = [
@@ -25,5 +24,5 @@ export const routes: Routes = [
   { path: 'actionDiscussion/:id', component: ActionDiscussionComponent, canActivate: [AuthGuard] },
   { path: 'actionDiscussion', component: ActionDiscussionComponent, canActivate: [AuthGuard] },
   { path: 'quarterMeetings', component: QuarterMeetingsComponent, canActivate: [AuthGuard] },
-  { path: 'd3GroupBarChart', component: D3GroupBarChartComponent, canActivate: [AuthGuard] }
+  { path: 'quarterMeetings/:startDateVal', component: QuarterMeetingsComponent, canActivate: [AuthGuard] }
 ];

@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="loginmodal-container">
       <h1>Login to Your Account</h1><br>
-      <form novalidate (ngSubmit)="onSubmit(user)" [formGroup]="user">
+      <form novalidate (ngSubmit)="onSubmit()" [formGroup]="user">
         <span id="loginError"></span>
         <input type="text" placeholder="Username" formControlName="userName">
         <div class="error" style="color:red" *ngIf="user.get('userName').touched && user.get('userName').hasError('required')">
