@@ -81,15 +81,15 @@ it('should check moreDetails', (): void => {
   });
 });
 
-it('should check search false', (): void => {
-  component.search();
-  expect(component.search()).toBeFalsy();
-});
-
-it('should check search true', (): void => {
-  // var self = [{searchText:}];
-  component.search();
-  expect(component.search()).toBeFalsy();
-});
+// it('should check search false', (): void => {
+//   component.search();
+//   expect(component.search()).toBeFalsy();
+// });
+//
+// it('should check search true', (): void => {
+//   // var self = [{searchText:}];
+//   component.search();
+//   expect(component.search()).toBeFalsy();
+// });
 
 });

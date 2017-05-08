@@ -1,7 +1,9 @@
 /*#quarterInfoError {
   color: red;
 }*/
-
+body svg{
+  margin-top: 50px;
+}
 #getQuarter {
   width: 40%;
 }
