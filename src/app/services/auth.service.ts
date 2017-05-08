@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 @Injectable()
 export class AuthenticationService {
-  constructor(private router: Router, private http: Http) { }
+  constructor(private router: Router) { }
 
   login: (user) => boolean
   = function(user): boolean {
+    console.log(user);
     var authenticatedUser = JSON.stringify(user.userDetails);
     var authenticatedToken = JSON.stringify(user.token);
     if (authenticatedUser) {
@@ -27,17 +27,6 @@ export class AuthenticationService {
     }
     else {
       return true;
-    }
-  }
-  checkIfAdmin: () => boolean
-  = function(): boolean {
-    this.storageVal = JSON.parse(localStorage.getItem("user"));
-    if (this.storageVal[0].isAdmin == true) {
-      return true;
-    }
-    else {
-      this.router.navigate(['/login']);
-      return false;
     }
   }
   getUserdetails: () => any

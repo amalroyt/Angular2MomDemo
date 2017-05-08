@@ -5,6 +5,7 @@ import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { Location } from '@angular/common';
 import { contentHeaders } from './common/headers';
+declare var d3: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -47,5 +48,9 @@ export class AppComponent {
       error => {
         console.log(error.text());
       });
+  }
+  svgCleanUp: () => void
+  = function(): void {
+    d3.select("svg").remove();
   }
 }

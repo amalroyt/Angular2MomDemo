@@ -29,6 +29,7 @@ text {
     font-size: 16px;
     line-height: 20px;
 }
+
 #quarterInfo {
   position: absolute;
   top: 300px;
@@ -37,4 +38,19 @@ text {
   position: absolute;
   top: 260px;
   color: red;
+}
+.centreTh {
+  text-align: center;
+}
+.tableBody {
+  max-height: 250px;
+  min-height: 100px;
+  overflow: auto;
+}
+.axis .domain {
+  display: none;
+}
+
+.container {
+  height:500px;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginDetails } from './sharedDetails.interface';
 import { SharedDetails } from './sharedDetails.interface';
-import { AuthenticationService } from './auth.service';
+//import { AuthenticationService } from './auth.service';
 @Injectable()
 export class SharedService {
   public sharedDetails: SharedDetails = {
@@ -20,9 +20,9 @@ export class SharedService {
     this.sharedDetails.lastName = details.lastName;
     this.sharedDetails.isAdmin = details.isAdmin;
     this.sharedDetails.isLoggedIn = true;
-  }
-  setLog: (val: boolean) => any
-  = function(val: boolean): any {
+  console.log(details);}
+  setLog: (val) => any
+  = function(val): any {
     this.loginDetails.logValue = val;
   }
   resetDetails: () => any
@@ -32,6 +32,7 @@ export class SharedService {
     this.sharedDetails.isLoginPage = true;
     this.sharedDetails.isLoggedIn = false;
     this.sharedDetails.isAdmin = false;
+    console.log("inside reset " + this.sharedDetails.isAdmin);
   }
-  constructor(private authService: AuthenticationService) { }
+  constructor() { }
 }

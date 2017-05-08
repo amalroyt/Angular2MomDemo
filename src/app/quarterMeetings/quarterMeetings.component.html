@@ -1,18 +1,106 @@
 <div class="container">
   <ul class="nav nav-tabs nav-justified">
-    <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#meetingsYearly">Meetings Conducted Yearly</a></li>
-    <li style="text-align:centre;"><a data-toggle="pill" href="#actionTimespan">Action Items average Timespan</a></li>
-    <li style="text-align:centre;"><a data-toggle="pill" href="#quarterMeetings">Meetings per quarter</a></li>
+    <li class="active" style="text-align:centre;"><a data-toggle="pill" href="#meetingsYearly"  (click)="removeSvg();displayHeatMap()">Meetings Conducted Yearly</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#actionTimespan" (click)="removeSvg()" >Action Items average Timespan</a></li>
+    <li style="text-align:centre;"><a data-toggle="pill" href="#quarterMeetings" (click)="removeSvg()">Meetings per quarter</a></li>
   </ul>
   <br/>
   <div class="tab-content">
     <div id="meetingsYearly" class="tab-pane fade in active">
-
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Details : {{d}}</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Meeting Title</th>
+                    <th>Meeting Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let detail of details">
+                    <td><a [routerLink]="['/meeting',detail.meetingId]" routerLinkActive="active" (click)="edit()">{{detail.meetingTitle}}</a></td>
+                    <td>{{detail.meetingType}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <strong> MEETINGS- 2017 </strong> <br><br>
     </div>
     <div id="actionTimespan" class="tab-pane fade">
+      <div class="chartBody">
+        <h4>Select Date: <input type="date" [(ngModel)]="selectDate" (change)="generateGraph(selectDate);"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" data-toggle="tooltip" title="Meeting/s Information for the Selected Date will be Displayed"></span></h4>
 
+        <h4>
+            <span id="informationNotValid" style="color:red;"></span>
+        </h4>
+        <h4>
+            <span id="informationNotAvailable" *ngIf="selectDate != undefined" style="color:red;"></span>
+        </h4>
+        <svg width="960" height="500"></svg>
+      </div>
+      <div id="tooltip">
+        <p>
+          <span id="value"></span>
+        </p>
+      </div>
     </div>
     <div id="quarterMeetings" class="tab-pane fade">
+      <div class="modal fade" id="infoModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Discussion Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span>{{selectedMeetingType}}&nbsp;meetings information</span>
+              </div>
+            </div>
+            <div class="modal-body">
+              <!--Table-->
+              <div class="panel panel-primary tableBody">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th class="col-md-2 centreTh">
+                            <span>Date</span>
+                          </th>
+                          <th class="col-md-2 centreTh">
+                            <span>Meeting</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let meeting of displayMeetingData">
+                          <td class="col-md-2 centreTh">
+                            {{meeting.meetingDate}}
+                          </td>
+                          <td class="col-md-2 centreTh">
+                            <a [routerLink]="['/moreDetails',meeting.meetingId]" routerLinkActive="active" (click)="edit()">{{meeting.meetingTitle}}</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <input id="getQuarter" class="form-control" placeholder="Quarter Start Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="quarterDatesStart" (change)="getQuarterMeetings(quarterDatesStart)" name="date" #date />
       <h2>
           <span id="aheadOfTime">
@@ -21,9 +109,11 @@
       <h2>
           <span id="quarterInfo" *ngIf="quarterDatesStart != undefined">
           </span>
-        </h2>
+      </h2>
       <div id="tooltip">
-        <p><span id="value"></span>&nbsp;&nbsp;Meetings</p>
+        <p>
+          <span id="value"></span> &nbsp;&nbsp;Meetings
+        </p>
       </div>
     </div>
   </div>
