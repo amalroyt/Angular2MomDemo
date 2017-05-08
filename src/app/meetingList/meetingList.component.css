@@ -1,9 +1,13 @@
-
 .createButton {
   float: right;
   font-size: 20px;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
 }
 
 .meetingList {
@@ -14,10 +18,10 @@
   height: 450px;
 }
 
-.meetingListModal,.container {
+.meetingListModal {
   width: 100% !important;
   /*background-color: #F7F7F7;*/
-  height: 673px;
+  height: 499px;
 }
 
 .tableForm {

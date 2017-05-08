@@ -3,9 +3,6 @@ import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 declare var d3: any;
 declare var jQuery: any;
-import {MoreDetails} from '../moreDetails/moreDetails/moreDetailsList';
-import {MoreDetailsPoints} from '../moreDetails/moreDetailsPoints/moreDetailsPointsList';
-import {MoreDetailsAction} from '../moreDetails/moreDetailsAction/moreDetailsActionList';
 @Component({
   selector: 'app-quarterMeetings',
   templateUrl: './quarterMeetings.component.html',
@@ -23,12 +20,6 @@ export class QuarterMeetingsComponent implements OnInit {
   public details = [];
   public test = [];
   public d;
-  public moreDetailsList: MoreDetails[];
-  public moreDetailsPointsList: MoreDetailsPoints[];
-  public moreDetailsActionList: MoreDetailsAction[];
-  public moreDetailsHistoryList: any;
-  public meetingId: number;
-  public showDetails = false;
   constructor(private http: Http) {
     this.displayHeatMap();
   //  document.getElementById("errorId").innerHTML = "";
@@ -233,9 +224,7 @@ generateGraph: () => any
           }
           this.datasetValues.push(obj);
         }
-
-
-
+var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
         var svg = d3.select("svg"),
           margin = { top: 20, right: 20, bottom: 30, left: 40 },
           width = +svg.attr("width") - margin.left - margin.right,
@@ -244,7 +233,7 @@ generateGraph: () => any
 
         var x0 = d3.scaleBand()
           .rangeRound([0, width])
-          .paddingInner(0.5);
+          .paddingInner(0.1);
 
         var x1 = d3.scaleBand()
           .padding(0.05);
@@ -334,64 +323,61 @@ generateGraph: () => any
           .attr("text-anchor", "start")
           .text("Days");
 
-          g.append("g")
-          .selectAll("rect")
-          .data(data)
-          .enter().append("g")
-          .on("mouseover", function (d) {
-          d3.select("#tooltipVal")
-            .style("left", d3.event.pageX + "px")
-            .style("top", d3.event.pageY + "px")
-            .style("opacity", 1)
-            .style("z-index",100)
-            .style("visibility",'visible')
-            .select("#value")
-            .text(d.value)
-          })
-        .on("mouseout", function () {
-        // Hide the tooltip
-        d3.select("#tooltipVal")
-            .style("opacity", 0);
-          })
-        .on("mouseenter", function(d) {
-            d3.select(this)
-                   .attr("stroke","white")
-                   .transition()
-                   .duration(1000)
-                   .attr("d", "rect")
-                   .attr("stroke-width",6);
-            })
-        .on("mouseleave", function(d) {
-          d3.select(this).transition()
-           .attr("d", "rect")
-           .attr("stroke","none");
-         });
+          var legend = g.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keys.slice().reverse())
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        var legend = g.append("g")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", 10)
-          .attr("text-anchor", "end")
-          .selectAll("g")
-          .data(keys.slice().reverse())
-          .enter().append("g")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+          legend.append("rect")
+            .attr("x", width - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", z);
 
-        legend.append("rect")
-          .attr("x", width - 19)
-          .attr("width", 19)
-          .attr("height", 19)
-          .attr("fill", z);
+          legend.append("text")
+            .attr("x", width - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .text(function(d) { return d; });
 
-        legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9.5)
-          .attr("dy", "0.32em")
-          .text(function(d) { return d; });
-        //      });
-
+            var g = svg.selectAll("rect")
+              .data(data)
+              .enter().append("g")
+              .on("mouseover", function (d) {
+              d3.select("#tooltip")
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px")
+                .style("opacity", 1)
+                .style("z-index",100)
+                .style("visibility",'visible')
+                .select("#value")
+                .text(d.value)
+              })
+            .on("mouseout", function () {
+            // Hide the tooltip
+            d3.select("#tooltip")
+                .style("opacity", 0);
+              })
+            .on("mouseenter", function(d) {
+                d3.select(this)
+                       .attr("stroke","white")
+                       .transition()
+                       .duration(1000)
+                       .attr("d", "rect")
+                       .attr("stroke-width",6);
+                })
+            .on("mouseleave", function(d) {
+              d3.select(this).transition()
+               .attr("d", "rect")
+               .attr("stroke","none");
+             });
 
       } else {
-        document.getElementById("informationNotValid").innerHTML = "Information is not Available for the Selected Time Period";
+        document.getElementById("informationNotValid").innerHTML = "Meeting Information is not Available for the Selected Date";
         setTimeout(function() {
         document.getElementById("informationNotValid").innerHTML = ""; }, 3000);
       }
@@ -405,7 +391,8 @@ generateGraph: () => any
   } else {
     document.getElementById("informationNotAvailable").innerHTML = "Select Valid Date";
     setTimeout(function() {
-    document.getElementById("informationNotAvailable").innerHTML = ""; }, 3000);
+    document.getElementById("informationNotAvailable").innerHTML = "";
+  }, 3000);
 
   }
 }
@@ -438,6 +425,9 @@ generateGraph: () => any
         if ( this.quarterDates.length != 0 ) {
           this.createQuarterMeetings();
          document.getElementById("quarterInfo").innerHTML = "  Meetings conducted in the quarter : "+this.quarterDisplayStart+" - "+this.quarterDisplayEnd;
+         setTimeout(function() {
+           document.getElementById("quarterInfo").innerHTML = ""; }, 7000);
+
         }
         else {
           document.getElementById("aheadOfTime").innerHTML = "No information is available for the selected quarter period";
@@ -542,7 +532,6 @@ generateGraph: () => any
      .on("click", function(d)  {
        self.selectedMeetingType = d.data.label;
        getMeetingData();
-       self.showDetails = false;
        jQuery('#infoModal').modal('show');
      });
 
@@ -583,6 +572,17 @@ legend.append('text')
     .attr('y', legendRectSize - legendSpacing)
     .text(function(d) { return d; });
 
+
+    // append text
+    // g.append("text")
+    //   .transition()
+    //   .ease(d3.easeLinear)
+    //   .duration(2000)
+    //   .style("text-anchor","middle")
+    //   .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+    //   .attr("dy", ".35em")
+    //   .text(function(d) { return d.data.label; });
+
     // svg repositioning
     jQuery("svg").css({top: 300, left: 100, position:'absolute'});
 
@@ -594,67 +594,16 @@ legend.append('text')
     }
   }
 
+  // To open create new meeting form
+  edit: () => void
+  = function(): void {
+  jQuery('.modal-backdrop').remove();
+  }
+
   removeSvg: () => void
   = function(): void {
   d3.select("svg").remove();
-  }
-
-  moreDetails: (id: number) => void
-  = function(id: number): void {
-    this.meetingId = id;
-    //To get the meeting details
-    this.http.get('http://localhost:8081/moreDetails/' + this.meetingId, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.moreDetailsList = response.json();
-      },
-      error => {
-        console.log(error.text());
-      });
-    //To get the meeting discussion points details
-    this.http.get('http://localhost:8081/moreDetailsPoints/' + this.meetingId, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.moreDetailsPointsList = response.json();
-      },
-      error => {
-        console.log(error.text());
-      });
-    //To get the meeting action details
-    this.http.get('http://localhost:8081/moreDetailsAction/' + this.meetingId, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.moreDetailsActionList = response.json();
-      },
-      error => {
-        console.log(error.text());
-      });
-    //To get the history of MOM's generated
-    this.http.get('http://localhost:8081/moreDetailsHistory/' + this.meetingId, { headers: contentHeaders })
-      .subscribe(
-      response => {
-        this.moreDetailsHistoryList = response.json();
-      },
-      error => {
-        console.log(error.text());
-      });
-  }
-
-  //To download previous MOM's
-  downloadPrevExcel: (fileName: string) => void
-  = function(fileName: string): void {
-    var download = JSON.stringify({fileName:fileName,meetingId:this.meetingId});
-    this.http.get('http://localhost:8081/downloadPrev/'+download, { headers: contentHeaders })
-      .subscribe(
-      response => {
-         window.location.href = "http://localhost:8081/downloadPrev/"+download;
-        document.getElementById("successId").innerHTML = "Download successfull.";
-        setTimeout(function() {
-          document.getElementById("successId").innerHTML = ""; }, 5000);
-      },
-      error => {
-        console.log(error.text());
-      });
+ //document.getElementById("quarterInfo").innerHTML = "Hello ";
   }
 
 }

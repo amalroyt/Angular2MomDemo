@@ -1,12 +1,7 @@
 /*#quarterInfoError {
   color: red;
 }*/
-.chartBody {
-  height: 600px;
-}
-.container {
-  height: 673px;
-}
+
 #getQuarter {
   width: 40%;
 }
@@ -34,6 +29,7 @@ text {
     font-size: 16px;
     line-height: 20px;
 }
+
 #quarterInfo {
   position: absolute;
   top: 300px;
@@ -55,80 +51,6 @@ text {
   display: none;
 }
 
-
-.moreDetails {
-  width: 100% ;
-}
-.primaryDetails {
-  float: left;
-  margin: 0px 10px;
-}
-.secondaryDetails {
-  margin-top: 10px;
-}
-table {
-  table-layout: fixed;
-  width: 100%;
-  /*text-align: center;*/
-}
-table th{
-  width: 15%;
-}
-table td {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
-.discussionType, .discussionBy, .discussion, .decisionBy, .decision  {
-  width: 20%;
-}
-.agenda,.attendees {
-  width: 30%;
-}
-.actionDesc {
-  width: 20%;
-}
-.responsible {
-  width: 20%;
-}
-.open {
-  width: 10%;
-}
-.expected {
-  width: 20%;
-}
-.actual {
-  width: 20%;
-}
-.statusAction {
-  width: 10%;
-}
-table td:hover {
-  overflow: visible;
-  white-space: normal;
-  word-break: keep-all;
-}
-.centreTh {
-  text-align: center;
-}
-
-#detailsModal {
-  width: auto;
-  max-width: 500px;
-}
-#moreDetailsModal {
-  width: auto;
-  max-width: 1000px;
-}
-button.floatPosition {
-  margin-right: 10px;
-  float: right;
-  margin-top: -10px;
-}
-.floatPositionIcon  {
-  font-size: 15px;
-}
-.icon-flipped {
-    transform: scaleX(-1);
+.container {
+  height:500px;
 }
