@@ -6,7 +6,7 @@ import { contentHeaders } from '../common/headers';
 import { User } from './login.interface';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +14,11 @@ import { SharedService } from '../services/sharedDetails.service';
 })
 export class LoginComponent implements OnInit {
   user: FormGroup;
-  constructor(private http: Http, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
+  constructor(private http: Http, private location: Location, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
+    if ( this.location.path() == '/login' && this.authService.checkCredentials() ) {
+      console.log("it works");
+      this.authService.logout();
+    }
   }
   ngOnInit() {
     this.user = new FormGroup({

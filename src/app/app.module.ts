@@ -11,7 +11,6 @@ import { LoginModule } from './login/login.module';
 import { MeetingListModule } from './meetingList/meetingList.module';
 import { MoreDetailsModule } from './moreDetails/moreDetails.module';
 import { MeetingModule } from './meeting/meeting.module';
-import { HeatMapModule } from './HeatMap/heatmap.module';
 import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
 import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
@@ -36,7 +35,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MeetingListModule,
     MoreDetailsModule,
     MeetingModule,
-    HeatMapModule,
     ActionDiscussionModule,
     ErrorPageModule,
     QuarterMeetingsModule,
