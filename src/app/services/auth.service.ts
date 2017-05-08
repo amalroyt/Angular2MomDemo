@@ -33,9 +33,10 @@ export class AuthenticationService {
     this.storageVal = JSON.parse(localStorage.getItem("user"));
      if ( this.storageVal == undefined ) {
        this.router.navigate(['/login']);
-       return null;
      }
-    return this.storageVal[0];
+     else {
+        return this.storageVal[0];
+     }
   }
   getToken: () => any
   = function(): any {

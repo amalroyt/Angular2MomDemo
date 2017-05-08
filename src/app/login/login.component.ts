@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private location: Location, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
     if ( this.location.path() == '/login' && this.authService.checkCredentials() ) {
-      console.log("it works");
       this.authService.logout();
+      this.sharedService.resetDetails();
     }
   }
   ngOnInit() {

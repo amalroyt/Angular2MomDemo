@@ -54,8 +54,8 @@ describe('MoreDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should check search true', (): void => {
-  //   // var self = [{searchText:}];
+  // it('should check download is working', (): void => {
+  //   component.downloadPrevExcel('1494230954');
   //
   // });
 
