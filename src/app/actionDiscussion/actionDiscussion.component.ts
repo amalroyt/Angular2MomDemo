@@ -28,7 +28,7 @@ export class ActionDiscussionComponent implements OnInit {
   public actionPublic;
   public discussionCounter = 0;
   public actionCounter = 0;
-  public userId = this.authService.getUserdetails();
+  public userId ;
   public graphValue = [];
   public displayGraph = [];
   public dataset = [];
@@ -38,6 +38,7 @@ export class ActionDiscussionComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
     });
+    this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
     this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
@@ -117,6 +118,10 @@ export class ActionDiscussionComponent implements OnInit {
     document.getElementById("errorId").innerHTML = "";
   }
 
+  userDetailsFunction: () => any
+  = function() {
+    this.userId = this.authService.getUserdetails();
+  }
   // for displaying loading sign untill the page gets loaded completely
   loadingFunction: () => any
   = function() {
@@ -214,7 +219,7 @@ export class ActionDiscussionComponent implements OnInit {
             });
         }
         else {
-          document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+          //document.getElementById("errorId").innerHTML = "Rows should be filled completely";
           setTimeout(function() {
            document.getElementById("errorId").innerHTML = ""; }, 5000);
         }

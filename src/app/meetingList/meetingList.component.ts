@@ -5,6 +5,7 @@ import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 declare var jQuery: any;
+declare var d3: any;
 @Component({
   selector: 'app-meetingList',
   templateUrl: './meetingList.component.html',
@@ -13,6 +14,7 @@ declare var jQuery: any;
 })
 export class MeetingListComponent {
   public meetingList: Meeting[];
+  public userId = this.authService.getUserdetails();
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
@@ -46,8 +48,8 @@ export class MeetingListComponent {
     this.router.navigate(['/moreDetails', id]);
   }
 
-  search: () => any
-  = function(): any {
+  search: () => void
+  = function() {
     var self = this;
     if (self.searchText) {
       this.meetingList1 = this.meetingList.filter(function(meeting: Meeting) {
@@ -55,7 +57,6 @@ export class MeetingListComponent {
       });
     } else {
       this.meetingList1 = this.meetingList;
-      return false;
     }
   }
   //To generate excel for the selected meeting
@@ -104,7 +105,7 @@ export class MeetingListComponent {
   toDelete: () => void
   = function(): void {
     //document.getElementById("errorId").innerHTML = "";
-    var userId = this.authService.getUserdetails().userId;
+    var userId = this.userId.userId;
     var meetingIds = jQuery('input:checkbox:checked').map(function() {
       return jQuery(this).val();
     }).get();
@@ -134,7 +135,8 @@ export class MeetingListComponent {
       document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";
       setTimeout(function() {
         document.getElementById("errorId").innerHTML = ""; }, 5000);
-    }}
+    }
+  }
 
   // to select/deselect all meetinglist
 checkAll: () => any
@@ -149,5 +151,7 @@ checkAll: () => any
         jQuery('.deleteCheckbox').prop('checked', false);
         jQuery(this).val('Check All Rows');
       }
-    }});
-}}
+    }
+  });
+};
+}

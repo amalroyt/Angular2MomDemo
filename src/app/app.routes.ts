@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'errorPage', component: ErrorPageComponent },
-  { path: 'heatmap', component: QuarterMeetingsComponent, canActivate: [AuthGuard] },
+  { path: 'heatmap', component: QuarterMeetingsComponent },
   { path: 'meeting', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meeting/:id', component: MeetingComponent, canActivate: [AuthGuard] },
   { path: 'meetingList', component: MeetingListComponent, canActivate: [AuthGuard] },
@@ -23,5 +23,5 @@ export const routes: Routes = [
   { path: 'actionDiscussion/:id', component: ActionDiscussionComponent, canActivate: [AuthGuard] },
   { path: 'actionDiscussion', component: ActionDiscussionComponent, canActivate: [AuthGuard] },
   { path: 'quarterMeetings', component: QuarterMeetingsComponent, canActivate: [AuthGuard] },
-  { path: 'quarterMeetings/:startDateVal', component: QuarterMeetingsComponent, canActivate: [AuthGuard] }
+  { path: 'quarterMeetings/:startDateVal', component: QuarterMeetingsComponent }
 ];
