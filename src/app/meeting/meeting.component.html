@@ -109,21 +109,6 @@
             </div>
 
           </div>
-          <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
-          <div class="col-md-4">
-            <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
-                    <option [ngValue]="userName"  selected="selected">{{userName}}</option>
-                    <option *ngFor="let rec of recorder" [ngValue]="rec.id">{{rec.firstlast}}</option>
-              </select>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="example-url-input" class="col-md-2 col-form-label">End Time* : </label>
-          <div class="col-md-4 ">
-            <input readonly="readonly" class="form-control" name="endTime" type="text" placeholder="End Time" id="example-text-input" required [(ngModel)]="meetings.endTime" #id="ngModel">
-          </div>
-
           <label for="example-url-input" class="col-md-2 col-form-label">Duration* : </label>
             <div class="col-md-4 ">
               <select class="form-control" name="duration" [(ngModel)]="meetings.duration" (ngModelChange)="onChangeDuration($event)" required>
@@ -131,6 +116,22 @@
                     <option *ngFor="let hour of duration | slice:1" [attr.value]="hour">{{hour}} hrs</option>
                 </select>
             </div>
+
+        </div>
+
+        <div class="form-group row">
+          <label for="example-url-input" class="col-md-2 col-form-label">End Time* : </label>
+          <div class="col-md-4 ">
+            <input readonly="readonly" class="form-control" name="endTime" type="text" placeholder="End Time" id="example-text-input" required [(ngModel)]="meetings.endTime" #id="ngModel">
+          </div>
+          <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
+          <div class="col-md-4">
+            <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
+                    <option [ngValue]="userName"  selected="selected">{{userName}}</option>
+                    <option *ngFor="let rec of recorder" [ngValue]="rec.id">{{rec.firstlast}}</option>
+              </select>
+          </div>
+
         </div>
 
         <div class="form-group row">
@@ -166,7 +167,7 @@
                           Cancel        <span class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" title="Go Back to List"></span>
             </button>
 
-          
+
           </div>
         </div>
       </form>

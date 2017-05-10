@@ -1,7 +1,6 @@
 /*#quarterInfoError {
   color: red;
 }*/
-
 body svg{
   margin-top: 50px;
 }
@@ -56,4 +55,12 @@ text {
 
 .container {
   height:500px;
+}
+
+.inputYear {
+  margin-bottom: 70px;
+}
+
+.icon-flipped {
+  transform: scaleX(-1);
 }

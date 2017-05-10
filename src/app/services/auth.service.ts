@@ -7,7 +7,6 @@ export class AuthenticationService {
 
   login: (user) => boolean
   = function(user): boolean {
-    console.log(user);
     var authenticatedUser = JSON.stringify(user.userDetails);
     var authenticatedToken = JSON.stringify(user.token);
     if (authenticatedUser) {
