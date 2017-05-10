@@ -54,3 +54,12 @@ table td:hover {
 .centreTh {
   text-align: center;
 }
+
+.container {
+  height: 500px;
+}
+
+.historyTab, .actionTab, .discussionTab {
+  height: 250px;
+  overflow:auto;
+}

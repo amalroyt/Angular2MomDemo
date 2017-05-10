@@ -348,6 +348,7 @@ export class MeetingComponent implements OnInit {
         document.getElementById('successId').innerHTML = "Meeting Created Successfully!!";
         setTimeout(function() {
          document.getElementById("successId").innerHTML = ""; }, 5000);
+         //this.router.navigate(['/meetingList']);
     }
     else {
       this.http.put('http://localhost:8081/updateMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })

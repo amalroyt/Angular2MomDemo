@@ -58,7 +58,7 @@ export class QuarterMeetingsComponent implements OnInit {
           .range(["#FFF8DC", "#FFEBCD", "#ccd9ff", "#FFDEAD", "#4d79ff", "#F08080", "#0040ff", "#FFA07A", "#002699", "#8B0000", "#00134d"]);
         var colors = ["#FFF8DC", "#FFEBCD", "#ccd9ff", "#FFDEAD", "#4d79ff", "#F08080", "#0040ff", "#FFA07A", "#002699", "#8B0000", "#00134d"];
 
-        var svg = d3.select("body")
+        var svg = d3.select(".container")
           .selectAll("svg")
           .data(d3.range(this.year1, this.year2))
           .enter().append("svg")
@@ -392,10 +392,7 @@ var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
         if ( this.quarterDates.length != 0 ) {
           this.createQuarterMeetings();
          document.getElementById("quarterInfo").innerHTML = "  Meetings conducted in the quarter : "+this.quarterDisplayStart+" - "+this.quarterDisplayEnd;
-         setTimeout(function() {
-           document.getElementById("quarterInfo").innerHTML = ""; }, 7000);
-
-        }
+       }
         else {
           document.getElementById("aheadOfTime").innerHTML = "No information is available for the selected quarter period";
           setTimeout(function() {
@@ -499,6 +496,7 @@ var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
      .on("click", function(d)  {
        self.selectedMeetingType = d.data.label;
        getMeetingData();
+       self.showDetails = false;
        jQuery('#infoModal').modal('show');
      });
 
@@ -561,7 +559,13 @@ legend.append('text')
     }
   }
 
-    removeSvg: () => void
+  // To open create new meeting form
+  edit: () => void
+  = function(): void {
+  jQuery('.modal-backdrop').remove();
+  }
+
+  removeSvg: () => void
   = function(): void {
   d3.select("svg").remove();
   }
@@ -622,6 +626,12 @@ legend.append('text')
       error => {
         console.log(error.text());
       });
+  }
+  clearQuarterInfo: () => void
+  = function(): void {
+    if ( document.getElementById("quarterInfo") ) {
+      document.getElementById("quarterInfo").innerHTML = "";
+    }
   }
 
 }

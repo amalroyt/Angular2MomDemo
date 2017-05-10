@@ -32,6 +32,7 @@ export class SharedService {
     this.sharedDetails.isLoginPage = true;
     this.sharedDetails.isLoggedIn = false;
     this.sharedDetails.isAdmin = false;
+    console.log("inside reset " + this.sharedDetails.isAdmin);
   }
   constructor() { }
 }

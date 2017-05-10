@@ -10,7 +10,7 @@ import { Http, HttpModule,ConnectionBackend, BaseRequestOptions, Response, Respo
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
-import { setBaseTestProviders } from '@angular/testing';
+//import { setBaseTestProviders } from '@angular/testing';
 import { FormControl, FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -57,29 +57,29 @@ describe('MeetingListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should check edit', (): void => {
-    fakeAsync(() => {
-        component.edit(1);
-        expect(component.edit(1)).toHaveBeenCalled();
-        expect(router.navigate).toHaveBeenCalledWith(['/meeting',1]);
-    });
-});
-
-it('should check openActionDiscussionForm', (): void => {
-  fakeAsync(() => {
-      component.openActionDiscussionForm(1);
-      expect(component.openActionDiscussionForm(1)).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/actionDiscussion',1]);
-  });
-});
-
-it('should check moreDetails', (): void => {
-  fakeAsync(() => {
-      component.moreDetails(1);
-      expect(component.moreDetails(1)).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/moreDetails',1]);
-  });
-});
+//   it('should check edit', (): void => {
+//     fakeAsync(() => {
+//         component.edit(1);
+//         expect(component.edit(1)).toHaveBeenCalled();
+//         expect(router.navigate).toHaveBeenCalledWith(['/meeting',1]);
+//     });
+// });
+//
+// it('should check openActionDiscussionForm', (): void => {
+//   fakeAsync(() => {
+//       component.openActionDiscussionForm(1);
+//       expect(component.openActionDiscussionForm(1)).toHaveBeenCalled();
+//       expect(router.navigate).toHaveBeenCalledWith(['/actionDiscussion',1]);
+//   });
+// });
+//
+// it('should check moreDetails', (): void => {
+//   fakeAsync(() => {
+//       component.moreDetails(1);
+//       expect(component.moreDetails(1)).toHaveBeenCalled();
+//       expect(router.navigate).toHaveBeenCalledWith(['/moreDetails',1]);
+//   });
+//});
 
 // it('should check search false', (): void => {
 //   component.search();

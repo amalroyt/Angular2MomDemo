@@ -41,8 +41,9 @@ export class AppComponent {
       .subscribe(
       response => {
         this.authService.logout();
-        this.isLog.logValue = this.authService.checkCredentials();
+        this.userDetails.firstName = "";
         this.sharedService.resetDetails();
+        this.svgCleanUp();
         this.router.navigate(['/login']);
       },
       error => {
