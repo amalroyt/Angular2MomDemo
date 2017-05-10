@@ -6,6 +6,8 @@ import { contentHeaders } from '../common/headers';
 import { User } from './login.interface';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
