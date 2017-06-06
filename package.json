@@ -59,7 +59,7 @@
     "sinon": "^2.2.0",
     "ts-node": "1.2.1",
     "tslint": "^4.0.2",
-    "typescript": "~2.0.3"
+    "typescript": "~2.1"
   },
   "optionaldependencies": {
     "body-parser": "^1.15.2",
