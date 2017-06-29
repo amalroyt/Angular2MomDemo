@@ -7,7 +7,7 @@ import { ActionDiscussion, Action } from './actionDiscussion';
 declare var jQuery: any;
 declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
-declare var _ : any;
+declare var _: any;
 @Component({
   selector: 'app-discussion',
   templateUrl: './actionDiscussion.component.html',
@@ -28,7 +28,7 @@ export class ActionDiscussionComponent implements OnInit {
   public actionPublic;
   public discussionCounter = 0;
   public actionCounter = 0;
-  public userId ;
+  public userId;
   public graphValue = [];
   public displayGraph = [];
   public dataset = [];
@@ -40,7 +40,7 @@ export class ActionDiscussionComponent implements OnInit {
     });
     this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
-    this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+    this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.existingMettingInfoDisc = response.json();
@@ -56,7 +56,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // to fetch data of action items for existing meeting
-    this.http.get('http://localhost:8081/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+    this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.existingMettingInfoAction = response.json();
@@ -72,7 +72,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // for displaying meeting title using meetingid
-    this.http.get('http://localhost:8081/actionDiscussion/' + this.meetingId, { headers: contentHeaders })
+    this.http.get('/actionDiscussion/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsList = response.json();
@@ -82,7 +82,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // for fetching types(dynamic dropdown)
-    this.http.get('http://localhost:8081/getTypes', { headers: contentHeaders })
+    this.http.get('/getTypes', { headers: contentHeaders })
       .subscribe(
       response => {
         this.discussionTypes = response.json();
@@ -93,7 +93,7 @@ export class ActionDiscussionComponent implements OnInit {
       }
       );
     // for fetching user names(dynamic dropdown)
-    this.http.get('http://localhost:8081/getUserNames/' + this.meetingId, { headers: contentHeaders })
+    this.http.get('/getUserNames/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.userName = response.json();
@@ -104,7 +104,7 @@ export class ActionDiscussionComponent implements OnInit {
       }
       );
     // for fetching status values(dynamic dropdown)
-    this.http.get('http://localhost:8081/getStatus', { headers: contentHeaders })
+    this.http.get('/getStatus', { headers: contentHeaders })
       .subscribe(
       response => {
         this.statusValue = response.json();
@@ -149,7 +149,6 @@ export class ActionDiscussionComponent implements OnInit {
   /***********DISCUSSION***********/
   onSubmit: () => any
   = function() {
-    console.log(this.models);
     //To check if any discussion data is present for that particular meeting.
     if (this.discussionPublic.length != 0) {
       for (var val in this.models) {
@@ -162,12 +161,14 @@ export class ActionDiscussionComponent implements OnInit {
           else {
             var discussionId = this.discussionPublic[val].id;
             //To update that particular discussion points row.
-            this.http.post('http://localhost:8081/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
+            this.http.post('/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
+
                 document.getElementById("successId").innerHTML = "Update successfull";
                 setTimeout(function() {
-                document.getElementById("successId").innerHTML = ""; }, 5000);
+                  document.getElementById("successId").innerHTML = "";
+                }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -180,12 +181,13 @@ export class ActionDiscussionComponent implements OnInit {
           //To insert a new row for that discussion point.
           //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
           if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
-            this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
+            this.http.post('/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Update successfull";
                 setTimeout(function() {
-                document.getElementById("successId").innerHTML = ""; }, 5000);
+                  document.getElementById("successId").innerHTML = "";
+                }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -194,9 +196,9 @@ export class ActionDiscussionComponent implements OnInit {
               });
           }
           else {
-          //   document.getElementById("errorId").innerHTML = "Rows should be filled completely";
-          //   setTimeout(function() {
-          //  document.getElementById("errorId").innerHTML = ""; }, 5000);
+            //   document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+            //   setTimeout(function() {
+            //  document.getElementById("errorId").innerHTML = ""; }, 5000);
           }
         }
       }
@@ -205,12 +207,13 @@ export class ActionDiscussionComponent implements OnInit {
       for (var val in this.models) {
         //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
         if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
-          this.http.post('http://localhost:8081/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
+          this.http.post('/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
               document.getElementById("successId").innerHTML = "Insert successfull";
               setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                document.getElementById("successId").innerHTML = "";
+              }, 5000);
               this.router.navigate(['/meetingList']);
             },
             error => {
@@ -221,7 +224,8 @@ export class ActionDiscussionComponent implements OnInit {
         else {
           //document.getElementById("errorId").innerHTML = "Rows should be filled completely";
           setTimeout(function() {
-           document.getElementById("errorId").innerHTML = ""; }, 5000);
+            document.getElementById("errorId").innerHTML = "";
+          }, 5000);
         }
       }
     }
@@ -233,7 +237,7 @@ export class ActionDiscussionComponent implements OnInit {
     for (var i = 0; i < (this.models).length; i++) {
       var currentModel = this.models[i];
       if (currentModel.id != undefined) {
-        this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+        this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
           .subscribe(
           response => {
             this.existingMettingInfoDisc = response.json();
@@ -250,7 +254,6 @@ export class ActionDiscussionComponent implements OnInit {
           currentModel.discussion =
           currentModel.decisionBy =
           currentModel.decision = null;
-        console.log(currentModel);
       }
     }
     return false;
@@ -273,13 +276,14 @@ export class ActionDiscussionComponent implements OnInit {
     }).get();
     if (indexValue.length != 0) {
       if (trackIndex.length != 0) {
-        this.http.delete('http://localhost:8081/deleteDiscussionPoints/' + trackIndex, { headers: contentHeaders })
+        this.http.delete('/deleteDiscussionPoints/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
             document.getElementById("successId").innerHTML = "Selected row/s from Discussion Points has/have been deleted";
             setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
-            this.http.get('http://localhost:8081/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+              document.getElementById("successId").innerHTML = "";
+            }, 5000);
+            this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
                 this.existingMettingInfoDisc = response.json();
@@ -306,22 +310,20 @@ export class ActionDiscussionComponent implements OnInit {
     else {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
       setTimeout(function() {
-           document.getElementById("errorId").innerHTML = ""; }, 5000);
+        document.getElementById("errorId").innerHTML = "";
+      }, 5000);
     }
   }
   // to select/deselect all discussion points
   checkAllDiscussion: () => any
   = function() {
     jQuery(document).on('click', '#checkAll', function(event) {
-      console.log("Discussion");
       if (!event.isPropagationStopped()) {
         event.stopPropagation();
         if ((jQuery(this).val()) == 'Check All') {
-          console.log("Discussion if part");
           jQuery('.button input').prop('checked', true);
           jQuery(this).val('Uncheck All');
         } else {
-          console.log("Discussion else");
           jQuery('.button input').prop('checked', false);
           jQuery(this).val('Check All');
         }
@@ -338,36 +340,39 @@ export class ActionDiscussionComponent implements OnInit {
         //To check if that particular action points row is empty.
         if (this.actionPublic[val] != undefined) {
           //To check if data for that particular action points row is modified or not.
-          if (this.actionPublic[val].actionDesc === this.modelValues[val].actionDesc && this.actionPublic[val].responsible === this.modelValues[val].responsible && this.actionPublic[val].openSince === this.modelValues[val].openSince && this.actionPublic[val].expectedCompletion === this.modelValues[val].expectedCompletion && this.actionPublic[val].actualCompletion === this.modelValues[val].actualCompletion && this.actionPublic[val].status === this.modelValues[val].status)
-          {
+          if (this.actionPublic[val].actionDesc === this.modelValues[val].actionDesc && this.actionPublic[val].responsible === this.modelValues[val].responsible && this.actionPublic[val].openSince === this.modelValues[val].openSince && this.actionPublic[val].expectedCompletion === this.modelValues[val].expectedCompletion && this.actionPublic[val].actualCompletion === this.modelValues[val].actualCompletion && this.actionPublic[val].status === this.modelValues[val].status) {
             this.actionCounter++;
             if (this.actionCounter === this.actionPublic.length && this.discussionCounter === this.discussionPublic.length) {
               document.getElementById("successId").innerHTML = "Discussion points & Action points are already up-to-date";
               setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                document.getElementById("successId").innerHTML = "";
+              }, 5000);
             }
             else
               if (this.actionCounter === this.actionPublic.length && this.discussionCounter != this.discussionPublic.length) {
                 document.getElementById("successId").innerHTML = "Discussion points updated & Action points already up-to-date";
                 setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                  document.getElementById("successId").innerHTML = "";
+                }, 5000);
               }
               else
                 if (this.actionCounter != this.actionPublic.length && this.discussionCounter === this.discussionPublic.length) {
                   document.getElementById("successId").innerHTML = "Discussion points already up-to-date & Action points updated";
                   setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                    document.getElementById("successId").innerHTML = "";
+                  }, 5000);
                 }
           }
           else {
             var actionId = this.actionPublic[val].id;
             //To update that particular action points row.
-            this.http.post('http://localhost:8081/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
+            this.http.post('/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Update Successful";
                 setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                  document.getElementById("successId").innerHTML = "";
+                }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -380,12 +385,13 @@ export class ActionDiscussionComponent implements OnInit {
           //To insert a new row for that action point.
           //To check if any action data is present for that particular meeting if not then insert a new row for that action point.
           if ((this.modelValues[val]).actionDesc != "" && (this.modelValues[val]).responsible != "" && (this.modelValues[val]).openSince != "" && (this.modelValues[val]).expectedCompletion != "" && (this.modelValues[val]).status != "") {
-            this.http.post('http://localhost:8081/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
+            this.http.post('/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Insert successfull";
                 setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                  document.getElementById("successId").innerHTML = "";
+                }, 5000);
                 this.router.navigate(['/meetingList']);
               },
               error => {
@@ -393,7 +399,7 @@ export class ActionDiscussionComponent implements OnInit {
                 this.router.navigate(['/errorPage']);
               });
           } else {
-          //  document.getElementById("errorId").innerHTML = "Rows should be filled completely";
+            //  document.getElementById("errorId").innerHTML = "Rows should be filled completely";
           }
         }
       }
@@ -401,12 +407,13 @@ export class ActionDiscussionComponent implements OnInit {
       for (var val in this.modelValues) {
         //To check if any action data is present for that particular meeting if not then insert a new row for that action point.
         if ((this.modelValues[val]).actionDesc != "" && (this.modelValues[val]).responsible != "" && (this.modelValues[val]).openSince != "" && (this.modelValues[val]).expectedCompletion != "" && (this.modelValues[val]).status != "") {
-          this.http.post('http://localhost:8081/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
+          this.http.post('/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
               document.getElementById("successId").innerHTML = "Insert successfull";
               setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
+                document.getElementById("successId").innerHTML = "";
+              }, 5000);
               this.router.navigate(['/meetingList']);
             },
             error => {
@@ -425,7 +432,7 @@ export class ActionDiscussionComponent implements OnInit {
   = function() {
     for (var i = 0; i < (this.modelValues).length; i++) {
       if ((this.modelValues[i]).id != undefined) {
-        this.http.get('http://localhost:8081/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+        this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
           .subscribe(
           response => {
             this.existingMettingInfoAction = response.json();
@@ -463,13 +470,14 @@ export class ActionDiscussionComponent implements OnInit {
     }).get();
     if (indexValue.length != 0) {
       if (trackIndex.length != 0) {
-        this.http.delete('http://localhost:8081/deleteActionItem/' + trackIndex, { headers: contentHeaders })
+        this.http.delete('/deleteActionItem/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
             document.getElementById("successId").innerHTML = "Selected row/s from Action Items has/have been deleted";
             setTimeout(function() {
-           document.getElementById("successId").innerHTML = ""; }, 5000);
-            this.http.get('http://localhost:8081/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+              document.getElementById("successId").innerHTML = "";
+            }, 5000);
+            this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
                 this.existingMettingInfoAction = response.json();
@@ -495,22 +503,20 @@ export class ActionDiscussionComponent implements OnInit {
     else {
       document.getElementById("errorId").innerHTML = "Select atleast one row to delete";
       setTimeout(function() {
-           document.getElementById("errorId").innerHTML = ""; }, 5000);
+        document.getElementById("errorId").innerHTML = "";
+      }, 5000);
     }
   }
   // to select/deselect all action items
   checkAllAction: () => any
   = function() {
     jQuery(document).on('click', '#check', function(event) {
-      console.log("Action");
       if (!event.isPropagationStopped()) {
         event.stopPropagation();
         if ((jQuery(this).val()) == 'Check All Rows') {
-          console.log("Action if part");
           jQuery('.buttonVal input').prop('checked', true);
           jQuery(this).val('Uncheck All');
         } else {
-          console.log("Action else");
           jQuery('.buttonVal input').prop('checked', false);
           jQuery(this).val('Check All Rows');
         }

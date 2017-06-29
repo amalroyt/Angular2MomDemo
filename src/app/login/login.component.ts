@@ -16,9 +16,10 @@ import { Location } from '@angular/common';
 export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService) {
-    // if ( this.authService.checkCredentials() ) {
-    //   this.authService.logout();
-    // }
+    if ( this.authService.checkCredentials() ) {
+      this.authService.logout();
+      this.sharedService.resetDetails();
+    }
   }
   ngOnInit() {
     this.user = new FormGroup({
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   //ON submit the username and password is verified
   onSubmit: () => void
   = function(): void {
-    this.http.post('http://localhost:8081/login', JSON.stringify(this.user.value), { headers: contentHeaders })
+    this.http.post('/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
         this.toVerify(response.json());

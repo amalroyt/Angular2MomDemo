@@ -24,7 +24,7 @@
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Status* :</label>
           <div class="radio col-md-4">
             <label>
-					          <input #open name="radio" type="radio" value="1"  (change)="meetings.meetingStatus = open.value" (click)="reasonclose()" checked />
+					          <input #open name="radio" type="radio" value="1"  (onload)="meetings.meetingStatus = open.value"  (click)="reasonclose()" checked />
 					              Open
             </label>
             <label>
@@ -166,8 +166,6 @@
             <button type="button" class="btn btn-danger btn-md addButton" routerLink="/meetingList" routerLinkActive="active">
                           Cancel        <span class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" title="Go Back to List"></span>
             </button>
-
-
           </div>
         </div>
       </form>
