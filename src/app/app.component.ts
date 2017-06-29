@@ -29,7 +29,7 @@ export class AppComponent {
       }
     }
     var date = new Date();
-    this.dateString = ("0" + (date.getMonth() + 1).toString()).substr(-2) + "-" + ("0" + date.getDate().toString()).substr(-2) + "-" + (date.getFullYear().toString());
+    this.dateString = ("0" + date.getDate().toString()).substr(-2) + "-" + ("0" + (date.getMonth() + 1).toString()).substr(-2) + "-" + (date.getFullYear().toString());
     var hours = date.getHours();
     var minutes = date.getMinutes();
     this.timeString = ((hours % 12) ? (hours % 12) : 12) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + (hours >= 12 ? 'pm' : 'am');

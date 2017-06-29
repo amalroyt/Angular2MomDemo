@@ -16,19 +16,20 @@ export class MeetingListComponent {
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
-    console.log(this.authService.checkCredentials());
-    this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
+    this.http.get('/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
+        console.log("constructor");
         this.meetingList = response.json();
-        this.search();
+        console.log(this.meetingList);
+        // this.search();
       },
       error => {
         console.log(error.text());
       });
   }
 
-  // To open create new meeting form
+  //To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
     this.router.navigate(['/meeting',id]);
@@ -46,30 +47,31 @@ export class MeetingListComponent {
     this.router.navigate(['/moreDetails', id]);
   }
 
-  search: () => any
-  = function(): any {
-    var self = this;
-    if (self.searchText) {
-      this.meetingList1 = this.meetingList.filter(function(meeting: Meeting) {
-        return meeting.meetingTitle.indexOf(self.searchText) != -1 ;
-      });
-    } else {
-      this.meetingList1 = this.meetingList;
-      return false;
-    }
-  }
+  // search: () => any
+  // = function(): any {
+  //   var self = this;
+  //   if (self.searchText) {
+  //     this.meetingList1 = this.meetingList.filter(function(meeting: Meeting) {
+  //       return meeting.meetingTitle.indexOf(self.searchText) != -1 ;
+  //     });
+  //   } else {
+  //     this.meetingList1 = this.meetingList;
+  //     return false;
+  //   }
+  // }
+
   //To generate excel for the selected meeting
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.post('http://localhost:8081/generateExcel/' + meetingId, { headers: contentHeaders })
+    this.http.post('/generateExcel/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         //To update the meetinglist after generating excelsheet operation.
-        this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
+        this.http.get('/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
-            this.meetingList1 = response.json();
+            this.meetingList = response.json();
             document.getElementById("successId").innerHTML = "Excel generated successfully.";
             setTimeout(function() {
               document.getElementById("successId").innerHTML = ""; }, 5000);
@@ -87,10 +89,10 @@ export class MeetingListComponent {
   downloadExcel: (meetingId: number) => void
   = function(meetingId: number): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.get('http://localhost:8081/download/' + meetingId, { headers: contentHeaders })
+    this.http.get('/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
-        window.location.href = "http://localhost:8081/download/" + meetingId;
+        window.location.href = "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
           document.getElementById("successId").innerHTML = ""; }, 5000);
@@ -110,14 +112,14 @@ export class MeetingListComponent {
     }).get();
     if (meetingIds.length != 0) {
     //To delete the selected meetings
-    this.http.put('http://localhost:8081/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
+    this.http.put('/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(
       response => {
         //To update the meetinglist after deletion operation.
-        this.http.get('http://localhost:8081/meetingList', { headers: contentHeaders })
+        this.http.get('/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
-            this.meetingList1 = response.json();
+            this.meetingList = response.json();
             document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
             setTimeout(function() {
               document.getElementById("successId").innerHTML = ""; }, 5000);

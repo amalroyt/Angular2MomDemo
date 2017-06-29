@@ -17,9 +17,9 @@
     </div>
     <div class="panel panel-primary tableForm">
       <div class="panel-heading text-center">Meeting List</div>
-      <div class="search">
+      <!-- <div class="search">
       <span>Search Here: </span><input type="text" [(ngModel)]="searchText" (keyup)="search()"/>
-    </div>
+    </div> -->
       <div class="panel-body">
         <!--Table-->
         <div class="table-responsive">
@@ -57,7 +57,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let meeting of meetingList1">
+              <tr *ngFor="let meeting of meetingList">
                 <td class="col-md-2 meeting">
                   <span *ngIf="meeting.status != 'Open'">{{meeting.meetingTitle}}</span>
                   <a *ngIf="meeting.status == 'Open'" href="" routerLink="/meeting" routerLinkActive="active" (click)="edit(meeting.meetingId)">{{meeting.meetingTitle}}</a>
