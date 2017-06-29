@@ -17,6 +17,7 @@ export class MeetingListComponent {
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
+    console.log(ServerAddress + '/meetingList');
     this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
@@ -93,7 +94,7 @@ export class MeetingListComponent {
     this.http.get(ServerAddress + '/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
-        window.location.href = "/download/" + meetingId;
+        window.location.href = ServerAddress + "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
           document.getElementById("successId").innerHTML = ""; }, 5000);
