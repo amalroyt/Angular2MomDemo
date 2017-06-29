@@ -5,6 +5,7 @@ import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { Location } from '@angular/common';
 import { contentHeaders } from './common/headers';
+import { ServerAddress } from './common/serverAddress';
 declare var d3: any;
 @Component({
   selector: 'app-root',
@@ -37,7 +38,7 @@ export class AppComponent {
   onLogout: () => any
   = function(): any {
     var token = this.authService.getToken();
-    this.http.put('http://localhost:8081/logoutToken', JSON.stringify({ "token": this.authService.getToken() }), { headers: contentHeaders })
+    this.http.put(ServerAddress + '/logoutToken', JSON.stringify({ "token": this.authService.getToken() }), { headers: contentHeaders })
       .subscribe(
       response => {
         this.authService.logout();
