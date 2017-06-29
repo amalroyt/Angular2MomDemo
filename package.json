@@ -61,7 +61,7 @@
     "tslint": "^4.0.2",
     "typescript": "~2.1",
     "shelljs": "4.2.0",
-    "json2xls": "4.2.0"
+    "json2xls": "0.1.2"
   },
   "optionaldependencies": {
     "body-parser": "^1.15.2",
