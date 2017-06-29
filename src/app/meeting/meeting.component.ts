@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import { contentHeaders } from '../common/headers';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
+import {ServerAddress } from '../common/serverAddress';
 declare var jQuery: any;
 declare var d3: any;
 @Component({
@@ -53,7 +54,7 @@ export class MeetingComponent implements OnInit {
       this.edit_view = 0;
     }
 
-    this.http.get('/getMeetingTypes', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getMeetingTypes', { headers: contentHeaders })
       .subscribe(
       response => {
         this.types = response.json();
@@ -63,7 +64,7 @@ export class MeetingComponent implements OnInit {
       }
       );
 
-    this.http.get('/getAttendees', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getAttendees', { headers: contentHeaders })
       .subscribe(
       response => {
         this.options = response.json();
@@ -73,7 +74,7 @@ export class MeetingComponent implements OnInit {
       }
       );
     if ((this.meeting_id) != undefined) {
-      this.http.get('/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
+      this.http.get(ServerAddress + '/getMeetingInfo/' + this.meeting_id, { headers: contentHeaders })
         .subscribe(
         response => {
           this.meetingInfo = response.json();
@@ -105,7 +106,7 @@ export class MeetingComponent implements OnInit {
         }
         );
     }
-    this.http.get('/getFaci', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getFaci', { headers: contentHeaders })
       .subscribe(
       response => {
         this.facilitator = response.json();
@@ -115,7 +116,7 @@ export class MeetingComponent implements OnInit {
       }
       );
 
-    this.http.get('/getRec', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getRec', { headers: contentHeaders })
       .subscribe(
       response => {
         this.recorder = response.json();
@@ -127,7 +128,7 @@ export class MeetingComponent implements OnInit {
 
 
     if ((this.meeting_id) != undefined) {
-      this.http.get('/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
+      this.http.get(ServerAddress + '/checkIfAllItemsClosed/' + this.meeting_id, { headers: contentHeaders })
         .subscribe(
         response => {
           this.checkAllValues = response.json();
@@ -144,7 +145,7 @@ export class MeetingComponent implements OnInit {
         });
     }
 
-    this.http.get('/generateheatmap', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/generateheatmap', { headers: contentHeaders })
       .subscribe(
       response => {
         this.counts = response.json();
@@ -310,7 +311,7 @@ export class MeetingComponent implements OnInit {
       reason: meeting.meetingReason
     }
     if (this.meeting_id == undefined) {
-      this.http.post('/postMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
+      this.http.post(ServerAddress + '/postMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
         .subscribe(
         response => {
           this.router.navigate(['/meetingList']);
@@ -324,7 +325,7 @@ export class MeetingComponent implements OnInit {
         );
     }
     else {
-      this.http.put('/updateMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
+      this.http.put(ServerAddress + '/updateMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
         .subscribe(
         response => {
           this.router.navigate(['/meetingList']);

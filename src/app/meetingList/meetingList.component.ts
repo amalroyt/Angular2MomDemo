@@ -4,6 +4,7 @@ import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
+import { ServerAddress } from '../common/serverAddress';
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -16,7 +17,7 @@ export class MeetingListComponent {
   public searchText: "";
 
   constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
-    this.http.get('/meetingList', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
       .subscribe(
       response => {
         console.log("constructor");
@@ -64,11 +65,11 @@ export class MeetingListComponent {
   generateExcel: (meetingId: string) => void
   = function(meetingId: string): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.post('/generateExcel/' + meetingId, { headers: contentHeaders })
+    this.http.post(ServerAddress + '/generateExcel/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         //To update the meetinglist after generating excelsheet operation.
-        this.http.get('/meetingList', { headers: contentHeaders })
+        this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
             this.meetingList = response.json();
@@ -89,7 +90,7 @@ export class MeetingListComponent {
   downloadExcel: (meetingId: number) => void
   = function(meetingId: number): void {
     //document.getElementById("errorId").innerHTML = "";
-    this.http.get('/download/' + meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         window.location.href = "/download/" + meetingId;
@@ -112,11 +113,11 @@ export class MeetingListComponent {
     }).get();
     if (meetingIds.length != 0) {
     //To delete the selected meetings
-    this.http.put('/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
+    this.http.put(ServerAddress + '/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(
       response => {
         //To update the meetinglist after deletion operation.
-        this.http.get('/meetingList', { headers: contentHeaders })
+        this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
             this.meetingList = response.json();

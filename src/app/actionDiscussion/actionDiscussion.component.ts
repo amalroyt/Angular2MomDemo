@@ -7,6 +7,7 @@ import { ActionDiscussion, Action } from './actionDiscussion';
 declare var jQuery: any;
 declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
+import { ServerAddress } from '../common/serverAddress';
 declare var _: any;
 @Component({
   selector: 'app-discussion',
@@ -40,7 +41,7 @@ export class ActionDiscussionComponent implements OnInit {
     });
     this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
-    this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.existingMettingInfoDisc = response.json();
@@ -56,7 +57,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // to fetch data of action items for existing meeting
-    this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.existingMettingInfoAction = response.json();
@@ -72,7 +73,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // for displaying meeting title using meetingid
-    this.http.get('/actionDiscussion/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/actionDiscussion/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsList = response.json();
@@ -82,7 +83,7 @@ export class ActionDiscussionComponent implements OnInit {
         this.router.navigate(['/errorPage']);
       });
     // for fetching types(dynamic dropdown)
-    this.http.get('/getTypes', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getTypes', { headers: contentHeaders })
       .subscribe(
       response => {
         this.discussionTypes = response.json();
@@ -93,7 +94,7 @@ export class ActionDiscussionComponent implements OnInit {
       }
       );
     // for fetching user names(dynamic dropdown)
-    this.http.get('/getUserNames/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getUserNames/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.userName = response.json();
@@ -104,7 +105,7 @@ export class ActionDiscussionComponent implements OnInit {
       }
       );
     // for fetching status values(dynamic dropdown)
-    this.http.get('/getStatus', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getStatus', { headers: contentHeaders })
       .subscribe(
       response => {
         this.statusValue = response.json();
@@ -161,7 +162,7 @@ export class ActionDiscussionComponent implements OnInit {
           else {
             var discussionId = this.discussionPublic[val].id;
             //To update that particular discussion points row.
-            this.http.post('/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
+            this.http.post(ServerAddress + '/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
 
@@ -181,7 +182,7 @@ export class ActionDiscussionComponent implements OnInit {
           //To insert a new row for that discussion point.
           //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
           if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
-            this.http.post('/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
+            this.http.post(ServerAddress + '/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Update successfull";
@@ -207,7 +208,7 @@ export class ActionDiscussionComponent implements OnInit {
       for (var val in this.models) {
         //To check if any discussion data is present for that particular meeting if not then insert a new row for that discussion point.
         if ((this.models[val]).discussionBy != "" && (this.models[val]).discussionType != "" && (this.models[val]).discussion != "" && (this.models[val]).decisionBy != "" && (this.models[val]).decision != "") {
-          this.http.post('/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
+          this.http.post(ServerAddress + '/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
               document.getElementById("successId").innerHTML = "Insert successfull";
@@ -237,7 +238,7 @@ export class ActionDiscussionComponent implements OnInit {
     for (var i = 0; i < (this.models).length; i++) {
       var currentModel = this.models[i];
       if (currentModel.id != undefined) {
-        this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+        this.http.get(ServerAddress + '/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
           .subscribe(
           response => {
             this.existingMettingInfoDisc = response.json();
@@ -276,14 +277,14 @@ export class ActionDiscussionComponent implements OnInit {
     }).get();
     if (indexValue.length != 0) {
       if (trackIndex.length != 0) {
-        this.http.delete('/deleteDiscussionPoints/' + trackIndex, { headers: contentHeaders })
+        this.http.delete(ServerAddress + '/deleteDiscussionPoints/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
             document.getElementById("successId").innerHTML = "Selected row/s from Discussion Points has/have been deleted";
             setTimeout(function() {
               document.getElementById("successId").innerHTML = "";
             }, 5000);
-            this.http.get('/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
+            this.http.get(ServerAddress + '/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
                 this.existingMettingInfoDisc = response.json();
@@ -366,7 +367,7 @@ export class ActionDiscussionComponent implements OnInit {
           else {
             var actionId = this.actionPublic[val].id;
             //To update that particular action points row.
-            this.http.post('/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
+            this.http.post(ServerAddress + '/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Update Successful";
@@ -385,7 +386,7 @@ export class ActionDiscussionComponent implements OnInit {
           //To insert a new row for that action point.
           //To check if any action data is present for that particular meeting if not then insert a new row for that action point.
           if ((this.modelValues[val]).actionDesc != "" && (this.modelValues[val]).responsible != "" && (this.modelValues[val]).openSince != "" && (this.modelValues[val]).expectedCompletion != "" && (this.modelValues[val]).status != "") {
-            this.http.post('/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
+            this.http.post(ServerAddress + '/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
                 document.getElementById("successId").innerHTML = "Insert successfull";
@@ -407,7 +408,7 @@ export class ActionDiscussionComponent implements OnInit {
       for (var val in this.modelValues) {
         //To check if any action data is present for that particular meeting if not then insert a new row for that action point.
         if ((this.modelValues[val]).actionDesc != "" && (this.modelValues[val]).responsible != "" && (this.modelValues[val]).openSince != "" && (this.modelValues[val]).expectedCompletion != "" && (this.modelValues[val]).status != "") {
-          this.http.post('/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
+          this.http.post(ServerAddress + '/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
               document.getElementById("successId").innerHTML = "Insert successfull";
@@ -432,7 +433,7 @@ export class ActionDiscussionComponent implements OnInit {
   = function() {
     for (var i = 0; i < (this.modelValues).length; i++) {
       if ((this.modelValues[i]).id != undefined) {
-        this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+        this.http.get(ServerAddress + '/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
           .subscribe(
           response => {
             this.existingMettingInfoAction = response.json();
@@ -470,14 +471,14 @@ export class ActionDiscussionComponent implements OnInit {
     }).get();
     if (indexValue.length != 0) {
       if (trackIndex.length != 0) {
-        this.http.delete('/deleteActionItem/' + trackIndex, { headers: contentHeaders })
+        this.http.delete(ServerAddress + '/deleteActionItem/' + trackIndex, { headers: contentHeaders })
           .subscribe(
           response => {
             document.getElementById("successId").innerHTML = "Selected row/s from Action Items has/have been deleted";
             setTimeout(function() {
               document.getElementById("successId").innerHTML = "";
             }, 5000);
-            this.http.get('/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
+            this.http.get(ServerAddress + '/getExistingMeetingInfoAction/' + this.meetingId, { headers: contentHeaders })
               .subscribe(
               response => {
                 this.existingMettingInfoAction = response.json();

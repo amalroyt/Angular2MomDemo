@@ -7,6 +7,7 @@ import { User } from './login.interface';
 import { AuthenticationService } from '../services/auth.service';
 import { SharedService } from '../services/sharedDetails.service';
 import { Location } from '@angular/common';
+import { ServerAddress } from '../common/serverAddress';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
   //ON submit the username and password is verified
   onSubmit: () => void
   = function(): void {
-    this.http.post('/login', JSON.stringify(this.user.value), { headers: contentHeaders })
+    this.http.post(ServerAddress + '/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
         this.toVerify(response.json());

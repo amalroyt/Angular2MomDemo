@@ -4,6 +4,7 @@ import { contentHeaders } from '../common/headers';
 import {MoreDetails} from '../moreDetails/moreDetails/moreDetailsList';
 import {MoreDetailsPoints} from '../moreDetails/moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from '../moreDetails/moreDetailsAction/moreDetailsActionList';
+import {ServerAddress} from '../common/serverAddress';
 declare var d3: any;
 declare var jQuery: any;
 @Component({
@@ -48,7 +49,7 @@ export class QuarterMeetingsComponent implements OnInit {
       legendElementWidth = gridSize * 2,
       radius = (width - 400) / 2,
       self = this;
-    this.http.get('/generateheatmap', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/generateheatmap', { headers: contentHeaders })
       .subscribe(
       response => {
         this.counts = response.json();
@@ -165,7 +166,7 @@ generateGraph: () => any
     .attr("height", 350);
   d3.selectAll('g').remove();
   if (currDate >= startDateVal) {
-    this.http.get('/getActionItemsInformationForGraph/' + startDateValue, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getActionItemsInformationForGraph/' + startDateValue, { headers: contentHeaders })
       .subscribe(
       response => {
         this.graphValue = [];
@@ -384,7 +385,7 @@ var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
     var endDate = (startDateEndDate.getFullYear().toString()) + "-" + ("0" + (startDateEndDate.getMonth() + 1).toString()).substr(-2) + "-" + ("0" + startDateEndDate.getDate().toString()).substr(-2);
     this.quarterDisplayEnd =  ("0" + startDateEndDate.getDate().toString()).substr(-2) + "-" + ("0" + (startDateEndDate.getMonth() + 1).toString()).substr(-2) + "-" + (startDateEndDate.getFullYear().toString());
     var quarterDates = JSON.stringify({ "startDate": startDate, "endDate": endDate });
-    this.http.get('/quarterMeetings/' + quarterDates, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/quarterMeetings/' + quarterDates, { headers: contentHeaders })
       .subscribe(
       response => {
         this.quarterDates = (response.json())[0].countData;
@@ -574,7 +575,7 @@ legend.append('text')
   = function(id: number): void {
     this.meetingId = id;
     //To get the meeting details
-    this.http.get('/moreDetails/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/moreDetails/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsList = response.json();
@@ -583,7 +584,7 @@ legend.append('text')
         console.log(error.text());
       });
     //To get the meeting discussion points details
-    this.http.get('/moreDetailsPoints/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/moreDetailsPoints/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsPointsList = response.json();
@@ -592,7 +593,7 @@ legend.append('text')
         console.log(error.text());
       });
     //To get the meeting action details
-    this.http.get('/moreDetailsAction/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/moreDetailsAction/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsActionList = response.json();
@@ -601,7 +602,7 @@ legend.append('text')
         console.log(error.text());
       });
     //To get the history of MOM's generated
-    this.http.get('/moreDetailsHistory/' + this.meetingId, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/moreDetailsHistory/' + this.meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.moreDetailsHistoryList = response.json();
@@ -615,7 +616,7 @@ legend.append('text')
   downloadPrevExcel: (fileName: string) => void
   = function(fileName: string): void {
     var download = JSON.stringify({fileName:fileName,meetingId:this.meetingId});
-    this.http.get('/downloadPrev/'+download, { headers: contentHeaders })
+    this.http.get(ServerAddress + '/downloadPrev/'+download, { headers: contentHeaders })
       .subscribe(
       response => {
          window.location.href = "/downloadPrev/"+download;
