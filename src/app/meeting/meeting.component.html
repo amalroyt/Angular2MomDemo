@@ -18,7 +18,7 @@
           <label for="example-text-input" class="col-md-2 col-form-label">Meeting Title* :</label>
           <div class="col-md-4">
             <!-- <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="^[a-zA-Z0-9_]*$"> -->
-            <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel">
+            <input class="form-control" name="title" type="text" placeholder="Enter the Meeting Title" id="example-text-input" required [(ngModel)]="meetings.meetingTitle" #title="ngModel" pattern="[a-zA-Z0-9\s]+">
             <div [hidden]="title.valid || title.pristine" class="alert alert-danger">Meeting title is required & must be valid.</div>
           </div>
           <span id="openStatus"></span>
