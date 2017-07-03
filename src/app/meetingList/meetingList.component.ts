@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Http} from '@angular/http';
 import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
-import { Router, CanActivate } from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { ServerAddress } from '../common/serverAddress';
 declare var jQuery: any;
@@ -13,28 +13,32 @@ declare var jQuery: any;
   providers: []
 })
 export class MeetingListComponent {
-  public meetingList: Meeting[];
+  public meetingList;
   public searchText: "";
-
-  constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
+  public meetingListCall;
+  public meetingId: number;
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
     console.log(ServerAddress + '/meetingList');
-    this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
-      .subscribe(
-      response => {
-        console.log("constructor");
-        this.meetingList = response.json();
-        console.log(this.meetingList);
-        // this.search();
-      },
-      error => {
-        console.log(error.text());
-      });
+    this.meetingListCall = function() {
+      this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
+        .subscribe(
+        response => {
+          this.meetingList = response.json();
+          console.log('inside constructor');
+          console.log(this.meetingList);
+        },
+        error => {
+          console.log(error.text());
+        });
+    }
+    this.meetingListCall();
   }
+
 
   //To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
-    this.router.navigate(['/meeting',id]);
+    this.router.navigate(['/meeting', id]);
   }
 
   //To open actionDiscussion form
@@ -76,7 +80,8 @@ export class MeetingListComponent {
             this.meetingList = response.json();
             document.getElementById("successId").innerHTML = "Excel generated successfully.";
             setTimeout(function() {
-              document.getElementById("successId").innerHTML = ""; }, 5000);
+              document.getElementById("successId").innerHTML = "";
+            }, 5000);
           },
           error => {
             console.log(error.text());
@@ -94,12 +99,19 @@ export class MeetingListComponent {
     this.http.get(ServerAddress + '/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
+        console.log("response ");
         window.location.href = ServerAddress + "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
-          document.getElementById("successId").innerHTML = ""; }, 5000);
+          document.getElementById("successId").innerHTML = "";
+        }, 5000);
       },
       error => {
+        this.meetingListCall();
+        document.getElementById("errorId").innerHTML = "Download Failed.";
+        setTimeout(function() {
+          document.getElementById("errorId").innerHTML = "";
+        }, 5000);
         console.log(error.text());
       });
   }
@@ -113,45 +125,50 @@ export class MeetingListComponent {
       return jQuery(this).val();
     }).get();
     if (meetingIds.length != 0) {
-    //To delete the selected meetings
-    this.http.put(ServerAddress + '/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
-      .subscribe(
-      response => {
-        //To update the meetinglist after deletion operation.
-        this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
-          .subscribe(
-          response => {
-            this.meetingList = response.json();
-            document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
-            setTimeout(function() {
-              document.getElementById("successId").innerHTML = ""; }, 5000);
-          },
-          error => {
-            console.log(error.text());
-          });
-      },
-      error => {
-        console.log(error.text());
-      });
+      //To delete the selected meetings
+      this.http.put(ServerAddress + '/deleteMeeting/' + userId, JSON.stringify({ meetingIds: meetingIds }), { headers: contentHeaders })
+        .subscribe(
+        response => {
+          //To update the meetinglist after deletion operation.
+          this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
+            .subscribe(
+            response => {
+              this.meetingList = response.json();
+              document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
+              setTimeout(function() {
+                document.getElementById("successId").innerHTML = "";
+              }, 5000);
+            },
+            error => {
+              console.log(error.text());
+            });
+        },
+        error => {
+          console.log(error.text());
+        });
     }
     else {
       document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";
       setTimeout(function() {
-        document.getElementById("errorId").innerHTML = ""; }, 5000);
-    }}
+        document.getElementById("errorId").innerHTML = "";
+      }, 5000);
+    }
+  }
 
   // to select/deselect all meetinglist
-checkAll: () => any
-= function() {
-  jQuery(document).on('click', '#check', function(event) {
-    if (!event.isPropagationStopped()) {
-      event.stopPropagation();
-      if ((jQuery(this).val()) == 'Check All Rows') {
-        jQuery('.deleteCheckbox').prop('checked', true);
-        jQuery(this).val('Uncheck All Rows');
-      } else {
-        jQuery('.deleteCheckbox').prop('checked', false);
-        jQuery(this).val('Check All Rows');
+  checkAll: () => any
+  = function() {
+    jQuery(document).on('click', '#check', function(event) {
+      if (!event.isPropagationStopped()) {
+        event.stopPropagation();
+        if ((jQuery(this).val()) == 'Check All Rows') {
+          jQuery('.deleteCheckbox').prop('checked', true);
+          jQuery(this).val('Uncheck All Rows');
+        } else {
+          jQuery('.deleteCheckbox').prop('checked', false);
+          jQuery(this).val('Check All Rows');
+        }
       }
-    }});
-}}
+    });
+  }
+}
