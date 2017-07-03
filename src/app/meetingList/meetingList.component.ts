@@ -18,14 +18,11 @@ export class MeetingListComponent {
   public meetingListCall;
   public meetingId: number;
   constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
-    console.log(ServerAddress + '/meetingList');
     this.meetingListCall = function() {
       this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
         .subscribe(
         response => {
           this.meetingList = response.json();
-          console.log('inside constructor');
-          console.log(this.meetingList);
         },
         error => {
           console.log(error.text());
@@ -78,7 +75,7 @@ export class MeetingListComponent {
           .subscribe(
           response => {
             this.meetingList = response.json();
-            document.getElementById("successId").innerHTML = "Excel generated successfully.";
+            document.getElementById("successId").innerHTML = "Excel file generated successfully.";
             setTimeout(function() {
               document.getElementById("successId").innerHTML = "";
             }, 5000);
@@ -99,7 +96,6 @@ export class MeetingListComponent {
     this.http.get(ServerAddress + '/download/' + meetingId, { headers: contentHeaders })
       .subscribe(
       response => {
-        console.log("response ");
         window.location.href = ServerAddress + "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
@@ -108,7 +104,7 @@ export class MeetingListComponent {
       },
       error => {
         this.meetingListCall();
-        document.getElementById("errorId").innerHTML = "Download Failed.";
+        document.getElementById("errorId").innerHTML = "File not available, Kindly generate it again..";
         setTimeout(function() {
           document.getElementById("errorId").innerHTML = "";
         }, 5000);
