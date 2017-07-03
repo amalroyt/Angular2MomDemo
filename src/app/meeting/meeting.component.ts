@@ -22,6 +22,7 @@ export class MeetingComponent implements OnInit {
   public duration = ["30", "01", "02", "03", "04", "05", "06", "07", "08"];
   public userId = this.authService.getUserdetails();
   userName = this.userId.firstName + " " + this.userId.lastName;
+  recorderId = this.userId.userId;
   public meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingFacilitator: '', meetingRecorder: this.userName, meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '', startHours: '', startMinutes: '', startForm: '', endHours: '', endMinutes: '', endForm: '' }];
   public attendees = [];
   types = [];
@@ -116,7 +117,7 @@ export class MeetingComponent implements OnInit {
       }
       );
 
-    this.http.get(ServerAddress + '/getRec', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getRec/' + this.userId.userId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.recorder = response.json();
