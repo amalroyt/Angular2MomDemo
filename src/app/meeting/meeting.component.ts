@@ -292,6 +292,9 @@ export class MeetingComponent implements OnInit {
     if (attendeesId.length != 0) {
       meeting.meeting_attendees = attendeesId;
     }
+    var initialTitle = meeting.meetingTitle;
+    initialTitle = initialTitle.replace(/\s+/g, " ");
+    meeting.meetingTitle = initialTitle.replace(/^\s+|\s+$/g, "");
     var et = meeting.endTime.split(" ");
     var meetingObj = {
       id: this.meeting_id,
