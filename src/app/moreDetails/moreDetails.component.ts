@@ -71,7 +71,7 @@ export class MoreDetailsComponent implements OnInit {
     this.http.get(ServerAddress + '/downloadPrev/'+download, { headers: contentHeaders })
       .subscribe(
       response => {
-         window.location.href = "/downloadPrev/"+download;
+         window.location.href = ServerAddress + "/downloadPrev/"+download;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
           document.getElementById("successId").innerHTML = ""; }, 5000);
