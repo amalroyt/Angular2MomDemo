@@ -122,7 +122,7 @@
           <label for="example-text-input" class="col-md-2 col-form-label">Recorder* :</label>
           <div class="col-md-4">
             <select class="form-control" name="recorder" [(ngModel)]="meetings.meetingRecorder" required>
-              <option [ngValue]="recorderId"  selected="selected">{{userName}}</option>
+              <option [ngValue]="recorderId" selected="selected">{{userName}}</option>
               <option *ngFor="let rec of recorder" [ngValue]="rec.id">{{rec.firstlast}}</option>
             </select>
           </div>
