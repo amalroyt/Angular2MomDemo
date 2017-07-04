@@ -91,16 +91,16 @@
                     <div class=col-md-1></div>
                     <div class=col-md-8>
                       <input type="Submit" value="Submit" class="btn btn-success discmodal-submit" data-toggle="modal" data-target="#myConfirmationModal">
-                      <button type="button" id="checkAll" value="Check All" class="btn btn-default btn-md addButton" (click)="checkAllDiscussion()">
+                      <button type="button" id="checkAll" value="Check All" class="btn btn-default btn-md addButton" (click)="checkAllDiscussion()" data-toggle="tooltip" title="Select All">
                         <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" title="Select All"></span>
                       </button>
-                      <button type="button" class="btn btn-default btn-md addButton" (click)="resetDiscussionForm()">
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="resetDiscussionForm()" data-toggle="tooltip" title="Reset Form">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true" data-toggle="tooltip" title="Reset Form"></span>
                       </button>
-                      <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myModal">
+                      <button type="button" class="btn btn-default btn-md addButton" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" title="Delete Selected">
                         <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" data-toggle="tooltip" title="Delete Selected"></span>
                       </button>
-                      <button type="button" class="btn btn-default btn-md addButton" (click)="addNewChoice()">
+                      <button type="button" class="btn btn-default btn-md addButton" (click)="addNewChoice()" data-toggle="tooltip" title="Add New Row">
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="tooltip" title="Add New Row"></span>
                       </button>
                     </div>

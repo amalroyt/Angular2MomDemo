@@ -23,6 +23,7 @@ export class MeetingComponent implements OnInit {
   public duration = ["30", "01", "02", "03", "04", "05", "06", "07", "08"];
   public userId = this.authService.getUserdetails();
   userName = this.userId.firstName + " " + this.userId.lastName;
+  recorderId = this.userId.userId;
   public meetings = [{ meetingId: '', meetingType: '', meetingStatus: '', meetingTitle: '', meetingFacilitator: '', meetingRecorder: this.userName, meetingVenue: '', meetingDate: '', startTime: '', endTime: '', meetingAgenda: '', meetingAttendees: '', startHours: '', startMinutes: '', startForm: '', endHours: '', endMinutes: '', endForm: '' }];
   public attendees = [];
   types = [];
@@ -117,7 +118,7 @@ export class MeetingComponent implements OnInit {
       }
       );
 
-    this.http.get(ServerAddress + '/getRec', { headers: contentHeaders })
+    this.http.get(ServerAddress + '/getRec/' + this.userId.userId, { headers: contentHeaders })
       .subscribe(
       response => {
         this.recorder = response.json();
@@ -137,7 +138,7 @@ export class MeetingComponent implements OnInit {
             if (this.checkAllValues[i].status != 2) {
               jQuery("input[type=radio][value=" + 2 + "]").prop("disabled",true);
               jQuery("input[type=radio][value=" + 5 + "]").prop("disabled",true);
-              document.getElementById('openStatus').innerHTML = "Can't close or cancel the meeting status as all action items are closed";
+              document.getElementById('openStatus').innerHTML = "Can't close or cancel the meeting status as all action items are not closed";
             }
           }
         },
@@ -294,6 +295,9 @@ export class MeetingComponent implements OnInit {
     if (attendeesId.length != 0) {
       meeting.meeting_attendees = attendeesId;
     }
+    var initialTitle = meeting.meetingTitle;
+    initialTitle = initialTitle.replace(/\s+/g, " ");
+    meeting.meetingTitle = initialTitle.replace(/^\s+|\s+$/g, "");
     var et = meeting.endTime.split(" ");
     var meetingObj = {
       id: this.meeting_id,

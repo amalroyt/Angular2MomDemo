@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Http} from '@angular/http';
 import {contentHeaders } from '../common/headers';
 import {Meeting} from './meetingList';
-import { Router, CanActivate } from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { ServerAddress } from '../common/serverAddress';
 import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
@@ -14,32 +14,33 @@ declare var jQuery: any;
   providers: []
 })
 export class MeetingListComponent {
-  public meetingList: Meeting[];
+  public meetingList;
   public searchText: "";
+  public meetingListCall;
+  public meetingId: number;
   public userId = this.authService.getUserdetails();
   userName = this.userId.firstName + " " + this.userId.lastName;
-
-  constructor(private http: Http, private router: Router, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-    console.log(ServerAddress + '/meetingList');
-    this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
-      .subscribe(
-      response => {
-        console.log("constructor");
-        this.meetingList = response.json();
-        console.log(this.meetingList);
-        // this.search();
-      },
-      error => {
-        console.log(error.text());
-      });
-      //set pageView tracker
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+    this.meetingListCall = function() {
+      this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
+        .subscribe(
+        response => {
+          this.meetingList = response.json();
+        },
+        error => {
+          console.log(error.text());
+        });
+    }
+    this.meetingListCall();
+     //set pageView tracker
       this.googleAnalyticsEventsService.emitPageView('Meeting List');
   }
+
 
   //To open create new meeting form
   edit: (id: number) => void
   = function(id: number): void {
-    this.router.navigate(['/meeting',id]);
+    this.router.navigate(['/meeting', id]);
   }
 
   //To open actionDiscussion form
@@ -82,7 +83,8 @@ export class MeetingListComponent {
             document.getElementById("successId").innerHTML = "Excel generated successfully.";
             this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Exel Generated', 'Meeting Id', meetingId);
             setTimeout(function() {
-              document.getElementById("successId").innerHTML = ""; }, 5000);
+              document.getElementById("successId").innerHTML = "";
+            }, 5000);
           },
           error => {
             console.log(error.text());
@@ -104,9 +106,15 @@ export class MeetingListComponent {
         document.getElementById("successId").innerHTML = "Download successfull.";
         this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Excel Download', 'Meeting Id', meetingId);
         setTimeout(function() {
-          document.getElementById("successId").innerHTML = ""; }, 5000);
+          document.getElementById("successId").innerHTML = "";
+        }, 5000);
       },
       error => {
+        this.meetingListCall();
+        document.getElementById("errorId").innerHTML = "File not available, Kindly generate it again..";
+        setTimeout(function() {
+          document.getElementById("errorId").innerHTML = "";
+        }, 5000);
         console.log(error.text());
       });
   }
@@ -120,6 +128,7 @@ export class MeetingListComponent {
       return jQuery(this).val();
     }).get();
     if (meetingIds.length != 0) {
+
     //To delete the selected meetings
     this.http.put(ServerAddress + '/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(
@@ -147,21 +156,25 @@ export class MeetingListComponent {
     else {
       document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";
       setTimeout(function() {
-        document.getElementById("errorId").innerHTML = ""; }, 5000);
-    }}
+        document.getElementById("errorId").innerHTML = "";
+      }, 5000);
+    }
+  }
 
   // to select/deselect all meetinglist
-checkAll: () => any
-= function() {
-  jQuery(document).on('click', '#check', function(event) {
-    if (!event.isPropagationStopped()) {
-      event.stopPropagation();
-      if ((jQuery(this).val()) == 'Check All Rows') {
-        jQuery('.deleteCheckbox').prop('checked', true);
-        jQuery(this).val('Uncheck All Rows');
-      } else {
-        jQuery('.deleteCheckbox').prop('checked', false);
-        jQuery(this).val('Check All Rows');
+  checkAll: () => any
+  = function() {
+    jQuery(document).on('click', '#check', function(event) {
+      if (!event.isPropagationStopped()) {
+        event.stopPropagation();
+        if ((jQuery(this).val()) == 'Check All Rows') {
+          jQuery('.deleteCheckbox').prop('checked', true);
+          jQuery(this).val('Uncheck All Rows');
+        } else {
+          jQuery('.deleteCheckbox').prop('checked', false);
+          jQuery(this).val('Check All Rows');
+        }
       }
-    }});
-}}
+    });
+  }
+}
