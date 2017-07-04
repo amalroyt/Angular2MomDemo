@@ -35,6 +35,7 @@ export class AppComponent {
     var minutes = date.getMinutes();
     this.timeString = ((hours % 12) ? (hours % 12) : 12) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + (hours >= 12 ? 'pm' : 'am');
   }
+
   onLogout: () => any
   = function(): any {
     var token = this.authService.getToken();
