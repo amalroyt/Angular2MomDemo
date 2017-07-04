@@ -18,7 +18,7 @@ import { GoogleAnalyticsEventsService } from "../services/google-analytics-event
 export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-    if ( this.authService.checkCredentials() ) {
+    if ( this.authService.checkCredentials()  ) {
       this.authService.logout();
       this.sharedService.resetDetails();
     }
