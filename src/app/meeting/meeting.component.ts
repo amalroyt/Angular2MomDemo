@@ -5,6 +5,7 @@ import { contentHeaders } from '../common/headers';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import {ServerAddress } from '../common/serverAddress';
+import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 declare var jQuery: any;
 declare var d3: any;
 @Component({
@@ -43,7 +44,7 @@ export class MeetingComponent implements OnInit {
   checkAllValues = [];
   public counts = [];
   public csv : any;
-  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 	d3.select("svg").remove();
    jQuery("#editsuccess").css("display", "none");
     jQuery("#createsuccess").css("display", "none");
@@ -155,6 +156,8 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
+      //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView('Meeting Form');
 }
 
   updateChecked: (option, event) => any
@@ -318,6 +321,7 @@ export class MeetingComponent implements OnInit {
       this.http.post(ServerAddress + '/postMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
         .subscribe(
         response => {
+          this.googleAnalyticsEventsService.emitEvent('Meeting Form', 'Meeting Created', 'User Name', this.userName);
           this.router.navigate(['/meetingList']);
           document.getElementById('successId').innerHTML = "Meeting Created Successfully!!";
           setTimeout(function() {
@@ -332,6 +336,8 @@ export class MeetingComponent implements OnInit {
       this.http.put(ServerAddress + '/updateMeeting', [this.userId.userId, JSON.stringify(meetingObj)], { headers: contentHeaders })
         .subscribe(
         response => {
+          var userMeetingIdAnalytics = this.userName + " - " + this.meeting_id;
+          this.googleAnalyticsEventsService.emitEvent('Meeting Form', 'Meeting Updated', 'User Name- MeetinId', userMeetingIdAnalytics);
           this.router.navigate(['/meetingList']);
           document.getElementById('successId').innerHTML = "Meeting Updated Successfully!!";
           setTimeout(function() {

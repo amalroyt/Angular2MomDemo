@@ -5,6 +5,7 @@ import {Meeting} from './meetingList';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { ServerAddress } from '../common/serverAddress';
+import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -17,7 +18,9 @@ export class MeetingListComponent {
   public searchText: "";
   public meetingListCall;
   public meetingId: number;
-  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService) {
+  public userId = this.authService.getUserdetails();
+  userName = this.userId.firstName + " " + this.userId.lastName;
+  constructor(private http: Http, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     this.meetingListCall = function() {
       this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
         .subscribe(
@@ -29,6 +32,8 @@ export class MeetingListComponent {
         });
     }
     this.meetingListCall();
+     //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView('Meeting List');
   }
 
 
@@ -75,7 +80,8 @@ export class MeetingListComponent {
           .subscribe(
           response => {
             this.meetingList = response.json();
-            document.getElementById("successId").innerHTML = "Excel file generated successfully.";
+            document.getElementById("successId").innerHTML = "Excel generated successfully.";
+            this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Exel Generated', 'Meeting Id', meetingId);
             setTimeout(function() {
               document.getElementById("successId").innerHTML = "";
             }, 5000);
@@ -98,6 +104,7 @@ export class MeetingListComponent {
       response => {
         window.location.href = ServerAddress + "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
+        this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Excel Download', 'Meeting Id', meetingId);
         setTimeout(function() {
           document.getElementById("successId").innerHTML = "";
         }, 5000);
@@ -121,27 +128,30 @@ export class MeetingListComponent {
       return jQuery(this).val();
     }).get();
     if (meetingIds.length != 0) {
-      //To delete the selected meetings
-      this.http.put(ServerAddress + '/deleteMeeting/' + userId, JSON.stringify({ meetingIds: meetingIds }), { headers: contentHeaders })
-        .subscribe(
-        response => {
-          //To update the meetinglist after deletion operation.
-          this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
-            .subscribe(
-            response => {
-              this.meetingList = response.json();
-              document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
-              setTimeout(function() {
-                document.getElementById("successId").innerHTML = "";
-              }, 5000);
-            },
-            error => {
-              console.log(error.text());
-            });
-        },
-        error => {
-          console.log(error.text());
-        });
+
+    //To delete the selected meetings
+    this.http.put(ServerAddress + '/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
+      .subscribe(
+      response => {
+
+        //To update the meetinglist after deletion operation.
+        this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
+          .subscribe(
+          response => {
+            var userMeetingId = this.userName + " - " + meetingIds;
+            this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Meeting Deleted', 'User - MeetingId', userMeetingId);
+            this.meetingList = response.json();
+            document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
+            setTimeout(function() {
+              document.getElementById("successId").innerHTML = ""; }, 5000);
+          },
+          error => {
+            console.log(error.text());
+          });
+      },
+      error => {
+        console.log(error.text());
+      });
     }
     else {
       document.getElementById("errorId").innerHTML = "Select atleast a meeting to delete.";

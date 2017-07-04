@@ -8,6 +8,7 @@ declare var jQuery: any;
 declare var d3: any;
 import { AuthenticationService } from '../services/auth.service';
 import { ServerAddress } from '../common/serverAddress';
+import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 declare var _: any;
 @Component({
   selector: 'app-discussion',
@@ -33,12 +34,20 @@ export class ActionDiscussionComponent implements OnInit {
   public graphValue = [];
   public displayGraph = [];
   public dataset = [];
+  public userIdAnalytics = this.authService.getUserdetails();
+  userNameAnalytics = this.userIdAnalytics.firstName + " " + this.userIdAnalytics.lastName;
 
-  constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, private router: Router) {
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private authService: AuthenticationService, private router: Router, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     // to get id from parameter qyerry
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
     });
+
+    var meetingIdAnalytics = this.userNameAnalytics + " - " + this.meetingId
+
+    //set pageView tracker
+    this.googleAnalyticsEventsService.emitPageView('Action Discussion');
+
     this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
     this.http.get(ServerAddress + '/getExistingMettingInfo/' + this.meetingId, { headers: contentHeaders })
@@ -165,7 +174,7 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post(ServerAddress + '/updateDiscussion/' + discussionId, [this.userId.userId, JSON.stringify(this.models[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
-
+                this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Discussion Points Updated', 'User Name', this.meetingIdAnalytics);
                 document.getElementById("successId").innerHTML = "Update successfull";
                 setTimeout(function() {
                   document.getElementById("successId").innerHTML = "";
@@ -185,7 +194,8 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post(ServerAddress + '/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
-                document.getElementById("successId").innerHTML = "Update successfull";
+                this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Discussion Points Created & Updated', 'User Name', this.meetingIdAnalytics);
+                document.getElementById("successId").innerHTML = "Inserted successfull";
                 setTimeout(function() {
                   document.getElementById("successId").innerHTML = "";
                 }, 5000);
@@ -211,6 +221,7 @@ export class ActionDiscussionComponent implements OnInit {
           this.http.post(ServerAddress + '/discussionPoints', [this.meetingId, JSON.stringify(this.models[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
+              this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Discussion Points Created', 'User Name', this.meetingIdAnalytics);
               document.getElementById("successId").innerHTML = "Insert successfull";
               setTimeout(function() {
                 document.getElementById("successId").innerHTML = "";
@@ -370,6 +381,7 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post(ServerAddress + '/updateAction/' + actionId, [this.userId.userId, JSON.stringify(this.modelValues[val]), this.meetingId], { headers: contentHeaders })
               .subscribe(
               response => {
+                this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Action Items Updated', 'User Name', this.meetingIdAnalytics);
                 document.getElementById("successId").innerHTML = "Update Successful";
                 setTimeout(function() {
                   document.getElementById("successId").innerHTML = "";
@@ -389,6 +401,7 @@ export class ActionDiscussionComponent implements OnInit {
             this.http.post(ServerAddress + '/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
               .subscribe(
               response => {
+                this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Action Items Updated & Created', 'User Name', this.meetingIdAnalytics);
                 document.getElementById("successId").innerHTML = "Insert successfull";
                 setTimeout(function() {
                   document.getElementById("successId").innerHTML = "";
@@ -411,6 +424,7 @@ export class ActionDiscussionComponent implements OnInit {
           this.http.post(ServerAddress + '/actionItems', [this.meetingId, JSON.stringify(this.modelValues[val]), this.userId.userId], { headers: contentHeaders })
             .subscribe(
             response => {
+              this.googleAnalyticsEventsService.emitEvent('Action Discussion', 'Action Items Created', 'User Name', this.meetingIdAnalytics);
               document.getElementById("successId").innerHTML = "Insert successfull";
               setTimeout(function() {
                 document.getElementById("successId").innerHTML = "";

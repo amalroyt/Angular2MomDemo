@@ -7,6 +7,7 @@ import {MoreDetails} from './moreDetails/moreDetailsList';
 import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
 import {ServerAddress} from '../common/serverAddress';
+import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 
 @Component({
   selector: 'app-moreDetails',
@@ -22,7 +23,8 @@ export class MoreDetailsComponent implements OnInit {
   public meetingId: number;
   public moreDetailsListCall;
   ngOnInit() { }
-  constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	document.getElementById("errorId").innerHTML = "";) {
     document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
@@ -66,6 +68,8 @@ export class MoreDetailsComponent implements OnInit {
         });
     }
     this.moreDetailsListCall();
+    //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView('More Details');
   }
 
   //To download previous MOM's
@@ -75,6 +79,7 @@ export class MoreDetailsComponent implements OnInit {
     this.http.get(ServerAddress + '/downloadPrev/' + download, { headers: contentHeaders })
       .subscribe(
       response => {
+         this.googleAnalyticsEventsService.emitEvent('More Details', 'Excel Download', 'Meeting Id', this.meetingId);
         window.location.href = ServerAddress + "/downloadPrev/" + download;
         document.getElementById("successId").innerHTML = "Download successfull.";
         setTimeout(function() {
