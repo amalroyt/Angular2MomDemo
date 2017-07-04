@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import {Http} from '@angular/http';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
@@ -19,6 +19,14 @@ export class AppComponent {
   public dateString: string;
   public timeString: string;
   constructor(private http: Http, public location: Location, public router: Router, private authService: AuthenticationService, private sharedService: SharedService) {
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        ga('set', 'page', event.urlAfterRedirects);
+        ga('send', 'pageview');
+      }
+    });
+
     this.userDetails = this.sharedService.sharedDetails;
     this.isLog = this.sharedService.loginDetails;
     if (location.path() != "" && location.path() != "/login" && !this.userDetails.isLoggedIn && !this.userDetails.isLoginPage) {
@@ -35,6 +43,7 @@ export class AppComponent {
     var minutes = date.getMinutes();
     this.timeString = ((hours % 12) ? (hours % 12) : 12) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + (hours >= 12 ? 'pm' : 'am');
   }
+
   onLogout: () => any
   = function(): any {
     var token = this.authService.getToken();

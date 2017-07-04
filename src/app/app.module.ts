@@ -21,7 +21,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
 
-
 @NgModule({
   declarations: [
     AppComponent
