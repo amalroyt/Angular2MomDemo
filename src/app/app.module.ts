@@ -20,6 +20,7 @@ import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
+import { GoogleAnalyticsEventsService } from "./services/google-analytics-events.service";
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module'
     QuarterMeetingsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService, SharedService, AuthGuard],
+  providers: [AuthenticationService, SharedService, AuthGuard, GoogleAnalyticsEventsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

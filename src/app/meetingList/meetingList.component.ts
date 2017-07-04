@@ -5,6 +5,7 @@ import {Meeting} from './meetingList';
 import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { ServerAddress } from '../common/serverAddress';
+import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 declare var jQuery: any;
 @Component({
   selector: 'app-meetingList',
@@ -15,8 +16,10 @@ declare var jQuery: any;
 export class MeetingListComponent {
   public meetingList: Meeting[];
   public searchText: "";
+  public userId = this.authService.getUserdetails();
+  userName = this.userId.firstName + " " + this.userId.lastName;
 
-  constructor(private http: Http, private router: Router, private authService: AuthenticationService) {
+  constructor(private http: Http, private router: Router, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
     console.log(ServerAddress + '/meetingList');
     this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
       .subscribe(
@@ -29,6 +32,8 @@ export class MeetingListComponent {
       error => {
         console.log(error.text());
       });
+      //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView('Meeting List');
   }
 
   //To open create new meeting form
@@ -75,6 +80,7 @@ export class MeetingListComponent {
           response => {
             this.meetingList = response.json();
             document.getElementById("successId").innerHTML = "Excel generated successfully.";
+            this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Exel Generated', 'Meeting Id', meetingId);
             setTimeout(function() {
               document.getElementById("successId").innerHTML = ""; }, 5000);
           },
@@ -96,6 +102,7 @@ export class MeetingListComponent {
       response => {
         window.location.href = ServerAddress + "/download/" + meetingId;
         document.getElementById("successId").innerHTML = "Download successfull.";
+        this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Excel Download', 'Meeting Id', meetingId);
         setTimeout(function() {
           document.getElementById("successId").innerHTML = ""; }, 5000);
       },
@@ -117,10 +124,13 @@ export class MeetingListComponent {
     this.http.put(ServerAddress + '/deleteMeeting/' +userId,JSON.stringify({meetingIds:meetingIds}), { headers: contentHeaders })
       .subscribe(
       response => {
+
         //To update the meetinglist after deletion operation.
         this.http.get(ServerAddress + '/meetingList', { headers: contentHeaders })
           .subscribe(
           response => {
+            var userMeetingId = this.userName + " - " + meetingIds;
+            this.googleAnalyticsEventsService.emitEvent('Meeting List', 'Meeting Deleted', 'User - MeetingId', userMeetingId);
             this.meetingList = response.json();
             document.getElementById("successId").innerHTML = "Selected meetings deleted successfully.";
             setTimeout(function() {
