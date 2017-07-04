@@ -24,8 +24,7 @@ export class MoreDetailsComponent implements OnInit {
   public moreDetailsListCall;
   ngOnInit() { }
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-	document.getElementById("errorId").innerHTML = "";) {
-    document.getElementById("errorId").innerHTML = "";
+	  document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
     });
