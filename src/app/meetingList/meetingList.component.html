@@ -45,11 +45,11 @@
                   <span>
                     <button type="button" id="check" value="Check All Rows" class="btn btn-default btn-lg" (click)="checkAll()" data-toggle="tooltip"  title="Select All Rows">
                       <span class="glyphicon glyphicon-check glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Select All Rows"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-lg toDelete" data-toggle="modal" data-target="#deleteModal" data-toggle="tooltip"  title="Delete">
+                  </button>
+                  <button type="button" class="btn btn-danger btn-lg toDelete" data-toggle="modal" data-target="#deleteModal" data-toggle="tooltip" title="Delete">
                       <span class="glyphicon glyphicon-trash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Delete"></span>
                     </button>
-                    <button type="button" class="btn btn-lg btn-success createButton" routerLink="/meeting" routerLinkActive="active" data-toggle="tooltip"  title="New meeting">
+                  <button type="button" class="btn btn-lg btn-success createButton" routerLink="/meeting" routerLinkActive="active" data-toggle="tooltip" title="New meeting">
                       <span class="glyphicon glyphicon-flash glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="New meeting"></span>
                     </button>
                   </span>
@@ -65,7 +65,7 @@
                 <td class="col-md-2 td">
                   {{meeting.meetingAgenda}}
                 </td>
-                <td class="col-md-2 td" data-toggle="tooltip" title="">
+                <td class="col-md-2 td">
                   {{meeting.meetingAttendees}}
                 </td>
                 <td class="col-md-1">
@@ -76,13 +76,13 @@
                 </td>
                 <td class="col-md-3">
                   <input class="deleteCheckbox" type="checkbox" value="{{meeting.meetingId}}">
-                  <button type="button" class="btn btn-default btn-lg floatPosition" (click)="moreDetails(meeting.meetingId)" data-toggle="tooltip"  title="Minutes of Meeting">
+                  <button type="button" class="btn btn-default btn-lg floatPosition" (click)="moreDetails(meeting.meetingId)" data-toggle="tooltip" title="Minutes of Meeting">
                       <span class="glyphicon glyphicon-expand glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Minutes of Meeting"></span>
                   </button>
-                  <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingId)" data-toggle="tooltip"  title="Download">
+                  <button *ngIf="meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="downloadExcel(meeting.meetingId)" data-toggle="tooltip" title="Download">
                       <span class="glyphicon glyphicon-download-alt glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Download"></span>
                   </button>
-                  <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="generateExcel(meeting.meetingId)" data-toggle="tooltip"  title="Generate MOM">
+                  <button *ngIf="!meeting.generatedExcel" type="button" class="btn btn-default btn-lg floatPosition" (click)="generateExcel(meeting.meetingId)" data-toggle="tooltip" title="Generate MOM">
                       <span class="glyphicon glyphicon-import glyphiconIcon" aria-hidden="true" data-toggle="tooltip" title="Generate MOM"></span>
                   </button>
                   <button *ngIf="meeting.status == 'Open'" type="button" class="btn btn-default btn-lg addButton floatPosition" (click)="openActionDiscussionForm(meeting.meetingId)" data-toggle="tooltip" title="Open/Delete ActionDiscussion Form">

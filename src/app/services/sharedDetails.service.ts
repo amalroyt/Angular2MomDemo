@@ -20,7 +20,7 @@ export class SharedService {
     this.sharedDetails.lastName = details.lastName;
     this.sharedDetails.isAdmin = details.isAdmin;
     this.sharedDetails.isLoggedIn = true;
-  console.log(details);}
+  }
   setLog: (val) => any
   = function(val): any {
     this.loginDetails.logValue = val;
@@ -32,7 +32,6 @@ export class SharedService {
     this.sharedDetails.isLoginPage = true;
     this.sharedDetails.isLoggedIn = false;
     this.sharedDetails.isAdmin = false;
-    console.log("reset");
   }
   constructor() { }
 }
