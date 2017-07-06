@@ -156,8 +156,10 @@ export class MeetingComponent implements OnInit {
         console.log(error.text());
       }
       );
+
+      var emitPageUserName = "Meeting Form"+" || "+ this.userName;
       //set pageView tracker
-      this.googleAnalyticsEventsService.emitPageView('Meeting Form');
+      this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
 }
 
   updateChecked: (option, event) => any

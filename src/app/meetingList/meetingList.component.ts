@@ -32,8 +32,9 @@ export class MeetingListComponent {
         });
     }
     this.meetingListCall();
-     //set pageView tracker
-      this.googleAnalyticsEventsService.emitPageView('Meeting List');
+      var emitPageUserName = "Meeting List"+" || "+ this.userName;
+      //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
   }
 
 

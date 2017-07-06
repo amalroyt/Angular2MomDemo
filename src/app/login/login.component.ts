@@ -38,9 +38,9 @@ export class LoginComponent implements OnInit {
     this.http.post(ServerAddress + '/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
-        this.toVerify(response.json());
-        var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName
+        var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName ;
         this.googleAnalyticsEventsService.emitEvent('Login', 'Click Login', 'User Name', loginUser);
+        this.toVerify(response.json());
       },
       error => {
         document.getElementById("loginError").innerHTML = "Enter Valid Credentials.";
