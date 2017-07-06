@@ -22,7 +22,6 @@ import { ErrorPageModule } from './errorPage/errorPage.module';
 import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
 import { GoogleAnalyticsEventsService } from "./services/google-analytics-events.service";
 
-
 @NgModule({
   declarations: [
     AppComponent

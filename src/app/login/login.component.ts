@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
         var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName ;
         this.googleAnalyticsEventsService.emitEvent('Login', 'Click Login', 'User Name', loginUser);
         this.toVerify(response.json());
+        var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName
+        this.googleAnalyticsEventsService.emitEvent('Login', 'Click Login', 'User Name', loginUser);
       },
       error => {
         document.getElementById("loginError").innerHTML = "Enter Valid Credentials.";

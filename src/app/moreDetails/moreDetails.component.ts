@@ -10,6 +10,7 @@ import {ServerAddress} from '../common/serverAddress';
 import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
 import { AuthenticationService } from '../services/auth.service';
 
+
 @Component({
   selector: 'app-moreDetails',
   templateUrl: './moreDetails.component.html',
@@ -26,6 +27,7 @@ export class MoreDetailsComponent implements OnInit {
   public userId = this.authService.getUserdetails();
   userName = this.userId.firstName + " " + this.userId.lastName;
   ngOnInit() { }
+
   constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 
     document.getElementById("errorId").innerHTML = "";
@@ -71,9 +73,7 @@ export class MoreDetailsComponent implements OnInit {
         });
     }
     this.moreDetailsListCall();
-    //set pageView tracker
-      this.googleAnalyticsEventsService.emitPageView('More Details');
-      var emitPageUserName = "Meeting Form"+" || "+ this.userName;
+      var emitPageUserName = "More Details"+" || "+ this.userName;
       //set pageView tracker
       this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
   }

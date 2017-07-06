@@ -47,7 +47,6 @@ export class ActionDiscussionComponent implements OnInit {
     var emitPageUserName = "Action Discussion"+" || "+ this.userNameAnalytics;
     //set pageView tracker
     this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
-		console.log("emitPageUserName"+emitPageUserName);
 
     this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
