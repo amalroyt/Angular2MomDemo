@@ -18,7 +18,7 @@ import { GoogleAnalyticsEventsService } from "../services/google-analytics-event
 export class LoginComponent implements OnInit {
   user: FormGroup;
   constructor(private http: Http, private router: Router, private authService: AuthenticationService,  private sharedService: SharedService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-    if ( this.authService.checkCredentials()  ) {
+    if ( this.authService.checkCredentials() ) {
       this.authService.logout();
       this.sharedService.resetDetails();
     }
@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit {
     this.http.post(ServerAddress + '/login', JSON.stringify(this.user.value), { headers: contentHeaders })
       .subscribe(
       response => {
+        var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName ;
+        this.googleAnalyticsEventsService.emitEvent('Login', 'Click Login', 'User Name', loginUser);
         this.toVerify(response.json());
         var loginUser = response.json().userDetails[0].firstName + " " + response.json().userDetails[0].lastName
         this.googleAnalyticsEventsService.emitEvent('Login', 'Click Login', 'User Name', loginUser);

@@ -8,6 +8,8 @@ import {MoreDetailsPoints} from './moreDetailsPoints/moreDetailsPointsList';
 import {MoreDetailsAction} from './moreDetailsAction/moreDetailsActionList';
 import {ServerAddress} from '../common/serverAddress';
 import { GoogleAnalyticsEventsService } from "../services/google-analytics-events.service";
+import { AuthenticationService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-moreDetails',
@@ -22,9 +24,13 @@ export class MoreDetailsComponent implements OnInit {
   public moreDetailsHistoryList: any;
   public meetingId: number;
   public moreDetailsListCall;
+  public userId = this.authService.getUserdetails();
+  userName = this.userId.firstName + " " + this.userId.lastName;
   ngOnInit() { }
-  constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
-	  document.getElementById("errorId").innerHTML = "";
+
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthenticationService, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+
+    document.getElementById("errorId").innerHTML = "";
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['id'];
     });
@@ -67,8 +73,9 @@ export class MoreDetailsComponent implements OnInit {
         });
     }
     this.moreDetailsListCall();
-    //set pageView tracker
-      this.googleAnalyticsEventsService.emitPageView('More Details');
+      var emitPageUserName = "More Details"+" || "+ this.userName;
+      //set pageView tracker
+      this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
   }
 
   //To download previous MOM's

@@ -43,10 +43,10 @@ export class ActionDiscussionComponent implements OnInit {
       this.meetingId = params['id'];
     });
 
-    var meetingIdAnalytics = this.userNameAnalytics + " - " + this.meetingId
-
+    var meetingIdAnalytics = this.userNameAnalytics + " - " + this.meetingId;
+    var emitPageUserName = "Action Discussion"+" || "+ this.userNameAnalytics;
     //set pageView tracker
-    this.googleAnalyticsEventsService.emitPageView('Action Discussion');
+    this.googleAnalyticsEventsService.emitPageView(emitPageUserName);
 
     this.userDetailsFunction();
     // to fetch data of discussion points for existing meeting
