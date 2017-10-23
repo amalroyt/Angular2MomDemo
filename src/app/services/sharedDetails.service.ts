@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoginDetails } from './sharedDetails.interface';
 import { SharedDetails } from './sharedDetails.interface';
-//import { AuthenticationService } from './auth.service';
 @Injectable()
 export class SharedService {
   public sharedDetails: SharedDetails = {
@@ -11,19 +9,12 @@ export class SharedService {
     isLoggedIn: false,
     isLoginPage: false
   };
-  public loginDetails: LoginDetails = {
-    logValue: false
-  };
   setDetails: (details) => any
   = function(details): any {
     this.sharedDetails.firstName = details.firstName;
     this.sharedDetails.lastName = details.lastName;
     this.sharedDetails.isAdmin = details.isAdmin;
     this.sharedDetails.isLoggedIn = true;
-  }
-  setLog: (val) => any
-  = function(val): any {
-    this.loginDetails.logValue = val;
   }
   resetDetails: () => any
   = function(): any {

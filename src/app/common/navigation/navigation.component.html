@@ -1,0 +1,33 @@
+<section id="beforeHeader">
+  <nav class="navbar navbar-default navbar-static-top links">
+    <div class="navbar-default">
+      <ul class="nav navbar-nav" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" routerLink="/meetingList" (click)="svgCleanUp()">Meetinglist</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/meeting" (click)="svgCleanUp()">Create new meeting</a></li>
+        <li *ngIf="userDetails.isAdmin" class="nav-item"><a class="nav-link" routerLink="/createUser" (click)="svgCleanUp()">Register User</a></li>
+        <li *ngIf="userDetails.isAdmin" class="nav-item"><a class="nav-link" routerLink="/quarterMeetings" (click)="svgCleanUp()">Graphical Design</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="btn-group dropdown">
+    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="dropDownNav"></span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="nav-link" routerLink="/meetingList" (click)="svgCleanUp()">Meetinglist</a>
+      <a class="nav-link" routerLink="/meeting" (click)="svgCleanUp()">Create new meeting</a>
+      <a *ngIf="userDetails.isAdmin" class="nav-link" routerLink="/createUser" (click)="svgCleanUp()">Register User</a>
+      <a *ngIf="userDetails.isAdmin" class="nav-link" routerLink="/quarterMeetings" (click)="svgCleanUp()">Graphical Design</a>
+    </div>
+  </div>
+  <div id="displayDetails">
+    <button type="button" class="btn btn-danger btn-sm logoutBtn" (click)="onLogout()">
+      <span class="glyphicon glyphicon-off logoutBtnGyl" aria-hidden="true" data-toggle="tooltip" title="Logout"></span>
+    </button>
+    <div class="menu">
+      <span id="usernameDisplay">
+        <b>{{dateString}},&nbsp;&nbsp;{{timeString}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome, {{userDetails.firstName}} {{userDetails.lastName}}</b>
+      </span>
+    </div>
+  </div>
+</section>

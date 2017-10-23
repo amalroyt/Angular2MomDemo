@@ -28,6 +28,16 @@ export class AuthenticationService {
       return true;
     }
   }
+  checkAdmin: () => boolean
+  = function(): boolean {
+    this.storageVal = JSON.parse(localStorage.getItem("user"));
+    if ( this.storageVal[0].isAdmin ) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
   getUserdetails: () => any
   = function(): any {
     this.storageVal = JSON.parse(localStorage.getItem("user"));

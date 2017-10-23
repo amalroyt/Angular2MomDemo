@@ -9,9 +9,7 @@ footer {
   border-top: 1px solid black;
   background-color: #25323a;
 }
-header {
-  height: 70px;
-}
+
 #beforeHeader {
   height: 50px;
   padding-left: 10px;
@@ -38,24 +36,11 @@ header {
 .logoutBtnGly {
   font-size: 20px;
 }
-#meetingTitle {
-  margin-left: 32%;
-  float: left;
-}
+
 #displayDetails {
   position: absolute;
   top: 8px;
   right: 10px;
-}
-#errorId {
-  font-size: 15px;
-  margin: 15px 20px;
-  color: red;
-}
-#successId {
-  font-size: 15px;
-  margin: 15px 20px;
-  color: green;
 }
 .links {
   background-color: rgba(36, 62, 77, 1);
@@ -68,4 +53,15 @@ header {
 }
 .navbar-default .navbar-nav>li>a:hover{
   color: #00ace6;
+}
+
+.dropdown-menu a { display: block; width: auto; }
+/*.dropdown-menu { left:auto; }*/
+
+.dropdown {
+  display: none;
+}
+@media (max-width: 960px) {
+  .navbar     { display: none; }
+  .dropdown { display: inline-block; }
 }
