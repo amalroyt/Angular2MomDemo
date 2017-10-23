@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
       document.getElementById("errorId").innerHTML = "";
       if (this.authService.login(res)) {
         this.sharedService.setDetails(this.authService.getUserdetails());
-        this.sharedService.setLog(true);
         this.router.navigate(['/meetingList']);
       }
       else {

@@ -5,6 +5,3 @@ export interface SharedDetails {
     isLoggedIn: boolean;
     isLoginPage: boolean;
 }
-export interface LoginDetails {
-  logValue: boolean;
-}

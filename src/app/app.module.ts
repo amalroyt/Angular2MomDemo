@@ -3,44 +3,51 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {APP_BASE_HREF} from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 //import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 import { AppComponent } from './app.component';
-import { HomeModule } from './home/home.module';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginModule } from './login/login.module';
-import { MeetingListModule } from './meetingList/meetingList.module';
-import { MoreDetailsModule } from './moreDetails/moreDetails.module';
-import { MeetingModule } from './meeting/meeting.module';
+import { LoginComponent } from './login/login.component';
+import { MoreDetailsComponent } from './moreDetails/moreDetails.component';
+import { MeetingComponent } from './meeting/meeting.component';
 import { MeetingListComponent } from './meetingList/meetingList.component';
 import { routes } from './app.routes';
-import { ActionDiscussionModule } from './actionDiscussion/actionDiscussion.module';
 import { ActionDiscussionComponent } from './actionDiscussion/actionDiscussion.component';
 import { AuthenticationService } from './services/auth.service';
 import { SharedService } from './services/sharedDetails.service';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { ErrorPageModule } from './errorPage/errorPage.module';
-import { QuarterMeetingsModule } from './quarterMeetings/quarterMeetings.module';
+import { QuarterMeetingsComponent } from './quarterMeetings/quarterMeetings.component';
 import { GoogleAnalyticsEventsService } from "./services/google-analytics-events.service";
+import { CreateUserComponent } from './createUser/createUser.component';
+import { NavigationComponent } from './common/navigation/navigation.component';
+import { AlertComponent } from './common/alert/alert.component';
+import { HeaderComponent } from './common/header/header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    CreateUserComponent,
+    MeetingListComponent,
+    MoreDetailsComponent,
+    MeetingComponent,
+    ActionDiscussionComponent,
+    NavigationComponent,
+    AlertComponent,
+    HeaderComponent,
+    QuarterMeetingsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    HomeModule,
-    LoginModule,
-    MeetingListModule,
-    MoreDetailsModule,
-    MeetingModule,
-    ActionDiscussionModule,
     ErrorPageModule,
-    QuarterMeetingsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationService, SharedService, AuthGuard, GoogleAnalyticsEventsService],
+  providers: [AuthenticationService, SharedService, AuthGuard, GoogleAnalyticsEventsService, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,10 @@
-<section id="beforeHeader">
+<!-- <section id="beforeHeader">
   <nav class="navbar navbar-default navbar-static-top links">
     <div class="navbar-default" *ngIf="userDetails.firstName">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item"><a class="nav-link" routerLink="meetingList" (click)="svgCleanUp()">Meetinglist</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="meeting" (click)="svgCleanUp()">Create new meeting</a></li>
+        <li *ngIf="userDetails.isAdmin" class="nav-item"><a class="nav-link" routerLink="createUser" (click)="svgCleanUp()">Register User</a></li>
         <li *ngIf="userDetails.isAdmin" class="nav-item"><a class="nav-link" routerLink="quarterMeetings" (click)="svgCleanUp()">Graphical Design</a></li>
       </ul>
     </div>
@@ -18,17 +19,9 @@
       </span>
     </div>
   </div>
-</section>  
+</section> -->
 
-<header>
-  <div id="logoDetails">
-    <h1 id="meetingTitle">PROJECT MEETINGS</h1>
-  </div>
-</header>
-<section id="errorIdSection">
-  <span id="errorId"></span>
-  <span id="successId"></span>
-</section>
+
 
 <router-outlet></router-outlet>
 <footer class="col-lg-10 col-lg-offset-3 text-center" id="footerDisp"><span style="font-family:Tahoma;color:Gray;">&#169; Cybage Software Pvt.Ltd.</span></footer>

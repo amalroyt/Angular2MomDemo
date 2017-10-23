@@ -1,0 +1,10 @@
+#errorId {
+  font-size: 15px;
+  margin: 15px 20px;
+  color: red;
+}
+#successId {
+  font-size: 15px;
+  margin: 15px 20px;
+  color: green;
+}
